@@ -1,0 +1,11 @@
+Django==3.2.*
+Pillow==9.3.0
+djangorestframework
+psycopg2
+progressbar2==4.2.0
+openpyxl==3.0.10
+django-embed-video
+django-allauth
+stripe
+uwsgi
+django-tinymce
