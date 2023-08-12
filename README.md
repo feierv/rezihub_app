@@ -1,1 +1,1 @@
-# rezihub_app
+# app
