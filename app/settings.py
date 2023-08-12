@@ -63,7 +63,13 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
-        },
+             'libraries': {
+                'buttons': 'templatetags.global.buttons', 
+                'inputs': 'templatetags.global.inputs',
+                'typography': 'templatetags.global.typography',
+                'cards': 'templatetags.components.cards.cards', 
+            }
+        },  
     },
 ]
 
