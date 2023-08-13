@@ -22,24 +22,24 @@ Generates a styled text input field for forms.
 """
 @register.simple_tag
 def text_input(label, custom_id, input_type='text', placeholder='', required=False, min_length=None, max_length=None, pattern=None, error_message=''):
-  input_attrs = f"""
-    id='{custom_id}' 
-    type='{input_type}' 
-    class='form__input' 
-    aria-labelledby='{custom_id}-label' 
-    placeholder='{placeholder}'
-  """
+    input_attrs = f"""
+        id='{custom_id}' 
+        type='{input_type}' 
+        class='form__input' 
+        aria-labelledby='{custom_id}-label' 
+        placeholder='{placeholder}'
+    """
   
-  if required:
-      input_attrs += " required"
-  if min_length is not None:
-      input_attrs += f" minlength='{min_length}'"
-  if max_length is not None:
-      input_attrs += f" maxlength='{max_length}'"
-  if pattern is not None:
-      input_attrs += f" pattern='{pattern}'"
+    if required:
+        input_attrs += " required"
+    if min_length is not None:
+        input_attrs += f" minlength='{min_length}'"
+    if max_length is not None:
+        input_attrs += f" maxlength='{max_length}'"
+    if pattern is not None:
+        input_attrs += f" pattern='{pattern}'"
       
-  input_element = f"<input {input_attrs} />"
+    input_element = f"<input {input_attrs} />"
 
     return f"""
         <!-- Start of text input field -->
