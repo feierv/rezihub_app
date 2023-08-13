@@ -8,3 +8,4 @@ django-allauth==0.52.0
 stripe==5.1.1
 uwsgi==2.0.21
 django-tinymce==3.5.0
+python-decouple
