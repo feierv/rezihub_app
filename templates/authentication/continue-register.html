@@ -1,11 +1,14 @@
 <!-- step_template.html -->
 {% extends '_base.html' %}
 {% load static %}
+{% load user_profile %}
+
 {% block content %}
 
-<form method="post" action="{% url 'continue-register' %}">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">Next</button>
-</form>
+
+
+{% user_profile_component form %}
+
+  
+
 {% endblock %}

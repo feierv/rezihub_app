@@ -71,6 +71,7 @@ TEMPLATES = [
             ],
              'libraries': {
                 'buttons': 'templatetags.global.buttons', 
+                'user_profile': 'templatetags.auth', 
                 'inputs': 'templatetags.global.inputs',
                 'typography': 'templatetags.global.typography',
                 'cards': 'templatetags.components.cards.cards', 

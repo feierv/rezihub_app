@@ -1,0 +1,37 @@
+{% extends '_base.html' %}
+
+
+{% load user_profile %}
+
+{% block content %}
+
+<div class="auth">
+    <div class="auth__left">
+        <div class="auth__content">
+            <h1 class="auth__title">ReziHub 🎓</h1>
+            <p class="auth__text">Lorem ipsum dolor sit amet
+                consectetur. Pellentesque quis sed eu egestas ultricies
+                dolor id.
+            </p>
+            <form method="post" action="{% url 'continue-register' %}">
+                {% csrf_token %}
+                {% user_profile_component form %}
+                <button type="submit">Next</button>
+            </form>
+    </div>
+</div>
+<div class="auth__right">
+    <div class="auth__right-wrapper">
+        <div class="auth__right-heading">Lorem ipsum dolor sit amet</div>
+        <div class="auth__right-text">Lorem ipsum dolor sit amet
+            consectetur. Tortor dui vitae proin viverra. Cursus mi
+            vel risus dolor nisi ac in euismod vel gravida mi
+            aliquet sit sit.</div>
+    </div>
+    <div class="auth__right-image">
+        <img src="/static/assets/images/dashboard-present-min.png"
+            alt="rezihub dashboard">
+    </div>
+</div>
+</div>
+{% endblock %}

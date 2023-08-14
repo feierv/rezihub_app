@@ -11,23 +11,28 @@
                 dolor id.
             </p>
             <form class="auth-form" method="post"
-                action="{% url 'continue-register' %}">
+                action="{% url 'register' %}">
                 {% csrf_token %}
                 <div class="auth-form__field">
-                    <label for="email" class="auth-form__label">Email:</label>
-                    <input id="email" class="auth-form__input"
-                        placeholder="Enter your email">
+                    <label for="id_email" class="auth-form__label">Email:</label>
+                    <input type="email" id="id_email" name="email" class="auth-form__input" placeholder="Enter your email">
+                    {% if errors.email %}
+                        <div class="auth-form__error">{{ errors.email }}</div>
+                    {% endif %}
                 </div>
                 <div class="auth-form__field">
-                    <label for="password1" class="auth-form__label">Password:</label>
-                    <input id="password1" class="auth-form__input"
-                        placeholder="Enter your password">
+                    <label for="id_password1" class="auth-form__label">Password:</label>
+                    <input type="password" id="id_password1" name="password1" class="auth-form__input" placeholder="Enter your password">
+                    {% if errors.password1 %}
+                    <div class="auth-form__error">{{ errors.password1 }}</div>
+                {% endif %}
                 </div>
                 <div class="auth-form__field">
-                    <label for="password2" class="auth-form__label">Confirm
-                        Password:</label>
-                    <input id="password2" class="auth-form__input"
-                        placeholder="Enter your password again">
+                    <label for="id_password2" class="auth-form__label">Confirm Password:</label>
+                    <input type="password" id="id_password2" name="password2" class="auth-form__input" placeholder="Enter your password again">
+                    {% if errors.password2 %}
+                    <div class="auth-form__error">{{ errors.password2 }}</div>
+                {% endif %}
                 </div>
                 <div class="auth-form__actions">
                     <button
