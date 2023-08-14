@@ -1,0 +1,23 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ro">
+    <head>
+        <!-- Metadata -->
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- Classes & script import -->
+        <link href="{% static '/css/_main.css' %}" rel="stylesheet">
+        <script src="{% static '/js/script.js' %}"></script>
+        <!-- Misc -->
+        <title>Rezihub</title>
+    </head>
+    <body>
+        {% csrf_token %}
+        <main id="main">
+            {% block content %}
+            <!-- page content -->
+            {% endblock %}
+        </main>
+    </body>
+</html>

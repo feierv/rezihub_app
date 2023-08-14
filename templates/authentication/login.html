@@ -1,0 +1,65 @@
+{% extends '_base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="auth">
+    <div class="auth__left">
+        <div class="auth__content">
+            <h1 class="auth__title">ReziHub 🎓</h1>
+            <p class="auth__text">Lorem ipsum dolor sit amet
+                consectetur. Pellentesque quis sed eu egestas ultricies
+                dolor id.
+            </p>
+            <form class="auth-form" method="post"
+                action="{% url 'continue-register' %}">
+                <div class="auth-form__field">
+                    <label for="email" class="auth-form__label">Email:</label>
+                    <input id="email" class="auth-form__input"
+                        placeholder="Enter your email">
+                </div>
+                <div class="auth-form__field">
+                    <label for="password1" class="auth-form__label">Password:</label>
+                    <input id="password1" class="auth-form__input"
+                        placeholder="Enter your password">
+                </div>
+                <div class="auth-form__field">
+                    <label for="password2" class="auth-form__label">Confirm
+                        Password:</label>
+                    <input id="password2" class="auth-form__input"
+                        placeholder="Enter your password again">
+                </div>
+                <div class="auth-form__actions">
+                    <button
+                        class="auth-form__button auth-form__button--primary">Register</button>
+                    <button
+                        class="auth-form__button auth-form__button--secondary">
+                        <img src="/static/assets/images/google-logo.svg"
+                            alt="google logo">
+                        Sign up with Google
+                    </button>
+                    <div class="auth-form__helper">
+                        <p>Don't have an account? <a
+                                href="/register.html">Create
+                                free account</a>
+                        </p>
+                        <a href="#">Forgot password?</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="auth__right">
+        <div class="auth__right-wrapper">
+            <div class="auth__right-heading">Lorem ipsum dolor sit amet</div>
+            <div class="auth__right-text">Lorem ipsum dolor sit amet
+                consectetur. Tortor dui vitae proin viverra. Cursus mi
+                vel risus dolor nisi ac in euismod vel gravida mi
+                aliquet sit sit.</div>
+        </div>
+        <div class="auth__right-image">
+            <img src="/static/assets/images/dashboard-present-min.png"
+                alt="rezihub dashboard">
+        </div>
+    </div>
+</div>
+{% endblock %}
