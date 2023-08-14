@@ -20,6 +20,8 @@ Generates a styled text input field for forms.
 {% text_input "Password" "password" input_type="password" placeholder="Enter your password" required min_length=8 error_message="Password must be at least 8 characters long" %}
 {% text_input "Email" "email" input_type="email" placeholder="Enter your email" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" error_message="Please enter a valid email address" %}
 """
+
+
 @register.simple_tag
 def text_input(label, custom_id, input_type='text', placeholder='', required=False, min_length=None, max_length=None, pattern=None, error_message=''):
     input_attrs = f"""
@@ -29,7 +31,7 @@ def text_input(label, custom_id, input_type='text', placeholder='', required=Fal
         aria-labelledby='{custom_id}-label' 
         placeholder='{placeholder}'
     """
-  
+
     if required:
         input_attrs += " required"
     if min_length is not None:
@@ -38,7 +40,7 @@ def text_input(label, custom_id, input_type='text', placeholder='', required=Fal
         input_attrs += f" maxlength='{max_length}'"
     if pattern is not None:
         input_attrs += f" pattern='{pattern}'"
-      
+
     input_element = f"<input {input_attrs} />"
 
     return f"""
@@ -54,12 +56,11 @@ def text_input(label, custom_id, input_type='text', placeholder='', required=Fal
     """
 
 
-
-@register.simple_tag  
+@register.simple_tag
 def select_input(label, options=None, required=False, custom_id=None):
     """
     Generates a styled select input field for forms.
-    
+
     :param label: The label text for the input field.
     :param options: A list of dictionaries representing options for the select. Each dictionary should have 'value' and 'text' keys.
     :param required: If True, the input will be marked as required.
@@ -69,7 +70,7 @@ def select_input(label, options=None, required=False, custom_id=None):
     <!-- Usage of select_input template tag -->
     {% select_input "Select an Option" options=options required custom_id="my-select" %}
     """
-    
+
     if options is None:
         options = []
 
@@ -77,7 +78,7 @@ def select_input(label, options=None, required=False, custom_id=None):
         class='select__input'
         aria-labelledby='{custom_id}-label' 
     """
-    
+
     if custom_id:
         select_attrs += f"id='{custom_id}'"
 
