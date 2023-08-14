@@ -130,7 +130,7 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-static/*
+# static/*
 staticfiles/*
 .import_data/*
 .import_flash/*

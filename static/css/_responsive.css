@@ -1,0 +1,62 @@
+/* styles.css */
+
+/* Styles for mobile devices */
+.is-mobile {
+    /* Your mobile-specific styles here */
+    display: block;
+    /* For example, show on mobile */
+}
+
+/* Styles for tablet devices */
+.is-tablet {
+    /* Your tablet-specific styles here */
+    display: none;
+    /* For example, hide on tablet */
+}
+
+/* Styles for desktop devices */
+.is-desktop {
+    /* Your desktop-specific styles here */
+    display: none;
+    /* For example, hide on desktop */
+}
+
+/* Example of using media queries to handle transitions */
+@media (max-width: 767px) {
+
+    /* Styles for screens with width up to 767px (mobile) */
+    .is-mobile {
+        display: block;
+    }
+
+    .is-tablet,
+    .is-desktop {
+        display: none;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+
+    /* Styles for screens with width between 768px and 1023px (tablet) */
+    .is-mobile,
+    .is-desktop {
+        display: none;
+    }
+
+    .is-tablet {
+        display: block;
+    }
+}
+
+@media (min-width: 1024px) {
+
+    /* Styles for screens with width 1024px and above (desktop) */
+    .is-mobile,
+    .is-tablet {
+        display: none;
+    }
+
+    .is-desktop {
+        display: block;
+    }
+}

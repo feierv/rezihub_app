@@ -1,0 +1,99 @@
+/* ====================
+1. Typhography
+==================== */
+
+.display-1 {
+    font-size  : 4rem;
+    font-style : normal;
+    font-weight: 700;
+    line-height: 5rem;
+    color      : var(--black);
+}
+
+.display-2 {
+    font-size  : 4rem;
+    font-style : normal;
+    font-weight: 400;
+    line-height: 5rem;
+    color      : var(--black);
+}
+
+.heading-1 {
+    font-size  : 2.5rem;
+    font-style : normal;
+    font-weight: 700;
+    line-height: 3.375rem;
+    color      : var(--black);
+}
+
+.heading-2 {
+    font-size  : 2rem;
+    font-style : normal;
+    font-weight: 700;
+    line-height: 2.75rem;
+    color      : var(--black);
+}
+
+.heading-3 {
+    font-size  : 1.75rem;
+    font-style : normal;
+    font-weight: 700;
+    line-height: 2.375rem;
+    color      : var(--black);
+}
+
+.heading-4 {
+    font-size  : 1.5rem;
+    font-style : normal;
+    font-weight: 700;
+    line-height: 2rem;
+    color      : var(--black);
+}
+
+.heading-5 {
+    font-size  : 1.25rem;
+    font-style : normal;
+    font-weight: 700;
+    line-height: 1.75rem;
+    color      : var(--black);
+}
+
+.heading-6 {
+    font-size  : 1rem;
+    font-style : normal;
+    font-weight: 700;
+    line-height: 1.5rem;
+    color      : var(--black);
+}
+
+.text-body-16 {
+    font-size  : 1rem;
+    font-style : normal;
+    font-weight: 400;
+    line-height: 1.5rem;
+    color      : var(--black);
+}
+
+.text-body-14 {
+    font-size  : 0.875rem;
+    font-style : normal;
+    font-weight: 400;
+    line-height: 1.375rem;
+    color      : var(--black);
+}
+
+.text-body-12 {
+    font-size  : 0.75rem;
+    font-style : normal;
+    font-weight: 400;
+    line-height: 1.375rem;
+    color      : var(--black);
+}
+
+.text-body-10 {
+    font-size  : 0.625rem;
+    font-style : normal;
+    font-weight: 400;
+    line-height: 1.375rem;
+    color      : var(--black);
+}

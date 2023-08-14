@@ -1,0 +1,25 @@
+/* ====================
+   1. COLORS
+   ==================== */
+:root {
+  --pale-violet : #C8ACEE;
+  --pale-gold   : #FADE7E;
+  --pale-liliac : #D1CFFD;
+  --pale-pink   : #F9D9E0;
+  --pastel-blue : #90C3FF;
+  --blue-hosta  : #69BFC8;
+  --black       : #000;
+  --white       : #fff;
+  --gray-50     : #f9fafb;
+  --gray-100    : #f3f4f6;
+  --gray-200    : #e5e7eb;
+  --gray-300    : #d1d5db;
+  --gray-400    : #9ca3af;
+  --gray-500    : #6b7280;
+  --gray-600    : #4b5563;
+  --gray-700    : #374151;
+  --gray-800    : #1f2937;
+  --gray-900    : #111827;
+  --gray-950    : #030712;
+  --blue-intense: #2563EB;
+}
