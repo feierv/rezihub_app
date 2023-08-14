@@ -3,7 +3,7 @@ from django.views import View
 from authentication.models import User
 from django.contrib.auth import login
 from  authentication.forms import RegisterForm
-from authentication.utils import calculate_remaining_hours, get_step_form, hash_password, send_email, create_register_token
+from authentication.utils import  get_step_form, send_email
 from django.core.exceptions import ObjectDoesNotExist
 from datetime import datetime, timedelta, timezone
 from django.contrib.auth.hashers import make_password
