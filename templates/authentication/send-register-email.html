@@ -1,50 +1,67 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Register</title>
-</head>
-<body>
-    <h2>Register</h2>
-    <form method="post">
-        {% csrf_token %}
-        
-        {{ form.email.label_tag }} <br>
-        {{ form.email }} <br>
-        {% if form.email.errors %}
-            <ul class="errorlist">
-                {% for error in form.email.errors %}
-                    <li>{{ error }}</li>
-                {% endfor %}
-            </ul>
-        {% endif %}
+{% extends '_base.html' %}
+{% load static %}
 
-        <br>
-
-        {{ form.password1.label_tag }} <br>
-        {{ form.password1 }} <br>
-        {% if form.password1.errors %}
-            <ul class="errorlist">
-                {% for error in form.password1.errors %}
-                    <li>{{ error }}</li>
-                {% endfor %}
-            </ul>
-        {% endif %}
-
-        <br>
-
-        {{ form.password2.label_tag }} <br>
-        {{ form.password2 }} <br>
-        {% if form.password2.errors %}
-            <ul class="errorlist">
-                {% for error in form.password2.errors %}
-                    <li>{{ error }}</li>
-                {% endfor %}
-            </ul>
-        {% endif %}
-
-        <br>
-
-        <button type="submit">Register</button>
-    </form>
-</body>
-</html>
+{% block content %}
+<div class="auth">
+    <div class="auth__left">
+        <div class="auth__content">
+            <h1 class="auth__title">ReziHub 🎓</h1>
+            <p class="auth__text">Lorem ipsum dolor sit amet
+                consectetur. Pellentesque quis sed eu egestas ultricies
+                dolor id.
+            </p>
+            <form class="auth-form" method="post"
+                action="{% url 'continue-register' %}">
+                {% csrf_token %}
+                <div class="auth-form__field">
+                    <label for="email" class="auth-form__label">Email:</label>
+                    <input id="email" class="auth-form__input"
+                        placeholder="Enter your email">
+                </div>
+                <div class="auth-form__field">
+                    <label for="password1" class="auth-form__label">Password:</label>
+                    <input id="password1" class="auth-form__input"
+                        placeholder="Enter your password">
+                </div>
+                <div class="auth-form__field">
+                    <label for="password2" class="auth-form__label">Confirm
+                        Password:</label>
+                    <input id="password2" class="auth-form__input"
+                        placeholder="Enter your password again">
+                </div>
+                <div class="auth-form__actions">
+                    <button
+                        class="auth-form__button auth-form__button--primary"
+                        type="submit">Register</button>
+                    <button
+                        class="auth-form__button auth-form__button--secondary">
+                        <img src="/static/assets/images/google-logo.svg"
+                            alt="google logo">
+                        Sign up with Google
+                    </button>
+                    <div class="auth-form__helper">
+                        <p>Don't have an account? <a
+                                href="/register.html">Create
+                                free account</a>
+                        </p>
+                        <a href="#">Forgot password?</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="auth__right">
+        <div class="auth__right-wrapper">
+            <div class="auth__right-heading">Lorem ipsum dolor sit amet</div>
+            <div class="auth__right-text">Lorem ipsum dolor sit amet
+                consectetur. Tortor dui vitae proin viverra. Cursus mi
+                vel risus dolor nisi ac in euismod vel gravida mi
+                aliquet sit sit.</div>
+        </div>
+        <div class="auth__right-image">
+            <img src="/static/assets/images/dashboard-present-min.png"
+                alt="rezihub dashboard">
+        </div>
+    </div>
+</div>
+{% endblock %}

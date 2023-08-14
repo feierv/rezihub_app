@@ -1,15 +1,11 @@
 <!-- step_template.html -->
-{% comment %} {% extends 'base.html' %} {% endcomment %}
+{% extends '_base.html' %}
+{% load static %}
+{% block content %}
 
-{% comment %} {% block content %} {% endcomment %}
-
-<h1>
-  {{token}}
-</h1>
-
-  <form method="post" action="{% url 'continue-register' %}">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Next</button>
-  </form>
-{% comment %} {% endblock %} {% endcomment %}
+<form method="post" action="{% url 'continue-register' %}">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Next</button>
+</form>
+{% endblock %}
