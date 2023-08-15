@@ -4,21 +4,21 @@ from django.shortcuts import render, redirect
 from django.views import View
 from authentication.decorators import login_required_decorator,  already_logged_in_decorator
 from django.contrib.auth import login
-from  authentication.forms import CustomLoginForm, RegisterForm
-from authentication.utils import  get_step_form, send_email
+from authentication.forms import CustomLoginForm, RegisterForm
+from authentication.utils import get_step_form, send_email
 from django.utils.decorators import method_decorator
 from django.contrib.auth.views import LoginView
 from django.contrib.auth import login
 
 
 class SendRegisterEmailView(View):
-    template_name = 'authentication/send-register-email.html'
+    template_name = 'authentication/register.html'
 
-    @method_decorator(already_logged_in_decorator) 
+    @method_decorator(already_logged_in_decorator)
     def get(self, request):
         return render(request, self.template_name, None)
 
-    @method_decorator(already_logged_in_decorator) 
+    @method_decorator(already_logged_in_decorator)
     def post(self, request):
         # Check if the user is already logged in
         # if request.user.is_authenticated:
@@ -33,20 +33,22 @@ class SendRegisterEmailView(View):
         else:
             context['errors'] = form.errors
         return render(request, self.template_name, context)
-    
+
 
 class ContinueRegisterView(View):
     template_name = 'authentication/auth_base.html'
 
-    @method_decorator(login_required_decorator)  # Apply the decorator to the view
+    # Apply the decorator to the view
+    @method_decorator(login_required_decorator)
     def get(self, request):
-            form = get_step_form(request.user.last_uncompleted_step)
-            context = {
-                'form': form,
-            }
-            return render(request, self.template_name, context)
-    
-    @method_decorator(login_required_decorator)  # Apply the decorator to the view
+        form = get_step_form(request.user.last_uncompleted_step)
+        context = {
+            'form': form,
+        }
+        return render(request, self.template_name, context)
+
+    # Apply the decorator to the view
+    @method_decorator(login_required_decorator)
     def post(self, request):
         step = request.user.last_uncompleted_step
         if step:
@@ -59,8 +61,8 @@ class ContinueRegisterView(View):
             elif step in ['2', '3', '4']:
                 form = form(data, instance=request.user)
             context = {
-                    'form': form,
-                }
+                'form': form,
+            }
             if form.is_valid():
                 form.save()
                 step = request.user.last_uncompleted_step
@@ -73,13 +75,13 @@ class ContinueRegisterView(View):
             return render(request, self.template_name, context)
         else:
             return redirect('/dashboard')
-    
-    
+
+
 class CustomLogInView(LoginView):
     template_name = 'authentication/login.html'
     form_class = CustomLoginForm
 
-    @method_decorator(already_logged_in_decorator) 
+    @method_decorator(already_logged_in_decorator)
     def post(self, request: HttpRequest, *args: str, **kwargs: Any) -> HttpResponse:
         form = self.get_form()
         context = dict()
@@ -97,6 +99,6 @@ class CustomLogInView(LoginView):
                 context['errors'] = form.errors
         return render(request, self.template_name, context)
 
-    @method_decorator(already_logged_in_decorator) 
+    @method_decorator(already_logged_in_decorator)
     def get(self, request: HttpRequest, *args: str, **kwargs: Any) -> HttpResponse:
         return super().get(request, *args, **kwargs)

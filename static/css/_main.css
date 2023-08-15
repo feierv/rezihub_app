@@ -1,4 +1,6 @@
 @import './_resets.css';
 @import './_colors.css';
 @import './_responsive.css';
-@import './_auth.css'
+@import './_auth.css';
+@import './_components.css';
+@import './_typho.css';

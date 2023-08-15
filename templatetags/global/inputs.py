@@ -1,8 +1,8 @@
+from django.utils.safestring import mark_safe
+from django.shortcuts import render, redirect
+from django.template.loader import render_to_string
 from django import template
 register = template.Library()
-from django.template.loader import render_to_string
-from django.shortcuts import render, redirect
-from django.utils.safestring import mark_safe
 
 """
 Generates a styled text input field for forms.
@@ -30,7 +30,7 @@ def text_input(label, custom_id, input_type='text', placeholder='', required=Fal
     input_attrs = f"""
         id='{custom_id}' 
         type='{input_type}' 
-        class='auth-form__input' 
+        class='form__input' 
         aria-labelledby='{custom_id}-label' 
         placeholder='{placeholder}'
         name='{custom_id}' 

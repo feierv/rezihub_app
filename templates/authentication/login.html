@@ -5,48 +5,48 @@
 <div class="auth">
     <div class="auth__left">
         <div class="auth__content">
-            <h1 class="auth__title">ReziHub 🎓</h1>
-            <p class="auth__text">Lorem ipsum dolor sit amet
+            <h1 class="display-1">ReziHub 🎓</h1>
+            <p class="text-body-16">Lorem ipsum dolor sit amet
                 consectetur. Pellentesque quis sed eu egestas ultricies
                 dolor id.
             </p>
-            <form class="auth-form" method="post"
-                action="{% url 'login' %}">
+            <form class="auth-form" method="post" action="{% url 'login' %}">
                 {% csrf_token %}
-                <div class="auth-form__field">
-                    <label for="email" class="auth-form__label">Email:</label>
-                    <input id="email" class="auth-form__input" name='email'
-                    required
+                <div class="form__field">
+                    <label for="email" class="form__label">Email:</label>
+                    <input id="email" class="form__input" name='email'
+                        required
                         placeholder="Enter your email">
-                    <h1>{{form.non_field_errors}}</h1>
                     {% if non_field_errors %}
-                    <div class="auth-form__error">{{ non_field_errors }}</div>
+                    <div class="form__error">{{ non_field_errors }}</div>
                     {% endif %}
                     {% if errors.email %}
-                        <div class="auth-form__error">{{ errors.password }}</div>
+                    <div class="form__error">{{ errors.password }}</div>
                     {% endif %}
                 </div>
-                <div class="auth-form__field">
-                    <label for="password" class="auth-form__label">Password:</label>
-                    <input id="password" type='password' class="auth-form__input" name='password'
-                    required
+                <div class="form__field">
+                    <label for="password" class="form__label">Password:</label>
+                    <input id="password" type='password'
+                        class="form__input" name='password'
+                        required
                         placeholder="Enter your password">
                     {% if errors.password %}
-                        <div class="auth-form__error">{{ errors.password }}</div>
+                    <div class="form__error">{{ errors.password }}</div>
                     {% endif %}
                 </div>
-                <div class="auth-form__actions">
+                <div class="form__actions">
                     <button
-                        class="auth-form__button auth-form__button--primar " type="submit">Log in</button>
+                        class="button button--primary"
+                        type="submit">Autentificare</button>
                     <button
-                        class="auth-form__button auth-form__button--secondary">
+                        class="button button--secondary">
                         <img src="/static/assets/images/google-logo.svg"
                             alt="google logo">
                         Sign up with Google
                     </button>
                     <div class="auth-form__helper">
                         <p>Don't have an account? <a
-                                href="/register.html">Create
+                                href="/authentication/register/">Create
                                 free account</a>
                         </p>
                         <a href="#">Forgot password?</a>
@@ -57,8 +57,8 @@
     </div>
     <div class="auth__right">
         <div class="auth__right-wrapper">
-            <div class="auth__right-heading">Lorem ipsum dolor sit amet</div>
-            <div class="auth__right-text">Lorem ipsum dolor sit amet
+            <div class="display-1">Lorem ipsum dolor sit amet</div>
+            <div class="text-body-16">Lorem ipsum dolor sit amet
                 consectetur. Tortor dui vitae proin viverra. Cursus mi
                 vel risus dolor nisi ac in euismod vel gravida mi
                 aliquet sit sit.</div>

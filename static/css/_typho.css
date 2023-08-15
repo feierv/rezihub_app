@@ -3,11 +3,13 @@
 ==================== */
 
 .display-1 {
-    font-size  : 4rem;
-    font-style : normal;
-    font-weight: 700;
-    line-height: 5rem;
-    color      : var(--black);
+    font-size    : 4rem;
+    font-style   : normal;
+    font-weight  : 700;
+    line-height  : 5rem;
+    margin-top   : 0;
+    margin-bottom: 1rem;
+    color        : var(--black);
 }
 
 .display-2 {
