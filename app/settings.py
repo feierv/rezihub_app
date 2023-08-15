@@ -64,7 +64,7 @@ AUTHENTICATION_BACKENDS = [
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        "DIRS": [ BASE_DIR / "templates" ],
+        "DIRS": [BASE_DIR / "templates"],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -73,14 +73,14 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
-             'libraries': {
-                'buttons': 'templatetags.global.buttons', 
-                'user_profile': 'templatetags.auth', 
+            'libraries': {
+                'buttons': 'templatetags.global.buttons',
+                'user_profile': 'templatetags.auth',
                 'inputs': 'templatetags.global.inputs',
                 'typography': 'templatetags.global.typography',
-                'cards': 'templatetags.components.cards.cards', 
+                'cards': 'templatetags.components.cards.cards',
             }
-        },  
+        },
     },
 ]
 
@@ -134,7 +134,7 @@ USE_TZ = True
 REPOSITORY_ROOT = os.path.dirname(BASE_DIR)
 STATIC_URL = "static/"
 STATIC_ROOT = os.path.join(REPOSITORY_ROOT, 'static/')
-STATICFILES_DIRS = [ BASE_DIR, "static" ]
+STATICFILES_DIRS = [BASE_DIR, "static"]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
@@ -143,22 +143,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = "authentication.User"
 
 
-# email settings
-# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-# EMAIL_HOST = 'smtp.gmail.com'
-# EMAIL_PORT = 587
-# EMAIL_USE_SSL = True
-# EMAIL_HOST_USER = 'danielfetico21@gmail.com'
-# EMAIL_HOST_PASSWORD = 'QFXHqmmm$M8BhXK$H7!$R#CczB9Y'
-
-
-
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'danielfetico21@gmail.com'
-EMAIL_HOST_PASSWORD = 'QFXHqmmm$M8BhXK$H7!$R#CczB9Y'
+EMAIL_HOST_USER = 'verificare@rezihub.ro'
+EMAIL_HOST_PASSWORD = 'TR7$XL!ELfgYQTnH5D5@?TPE74Qy'
