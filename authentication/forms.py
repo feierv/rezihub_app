@@ -29,21 +29,12 @@ class CustomLoginForm(AuthenticationForm):
     def clean(self):
         email = self.cleaned_data.get('email')
         password = self.cleaned_data.get('password')
-        print()
-        print(email)
-        print(password)
-        print()
+
         if email and password:
             self.user_cache = authenticate(self.request, email=email, password=password)
-            print()
-            u = User.objects.get(email=email)
-            
-            print(self.user_cache is None)
-            print(u.check_password(password))
-            print()
-            if self.user_cache is None:
+            if self.user_cache is False or self.user_cache is None:
                 raise self.get_invalid_login_error()
-            else:
+            elif self.user_cache:
                 self.confirm_login_allowed(self.user_cache)
 
         return self.cleaned_data

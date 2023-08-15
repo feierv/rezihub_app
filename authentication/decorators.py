@@ -11,7 +11,7 @@ def login_required_decorator(view_func):
                 return view_func(request, *args, **kwargs)
             else:
                 return redirect('/dashboard')
-        return redirect('/login')
+        return redirect('login')
     return _wrapped_view
 
 def already_logged_in_decorator(view_func):

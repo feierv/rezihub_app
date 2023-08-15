@@ -6,9 +6,9 @@ from authentication.decorators import login_required_decorator,  already_logged_
 from django.contrib.auth import login
 from  authentication.forms import CustomLoginForm, RegisterForm
 from authentication.utils import  get_step_form, send_email
-from django.core.exceptions import ObjectDoesNotExist
 from django.utils.decorators import method_decorator
 from django.contrib.auth.views import LoginView
+from django.contrib.auth import login
 
 
 class SendRegisterEmailView(View):
@@ -79,13 +79,14 @@ class CustomLogInView(LoginView):
     template_name = 'authentication/login.html'
     form_class = CustomLoginForm
 
+    @method_decorator(already_logged_in_decorator) 
     def post(self, request: HttpRequest, *args: str, **kwargs: Any) -> HttpResponse:
         form = self.get_form()
         context = dict()
         if form.is_valid():
-            pass
-            # Form is valid, perform login logic
-            # ...
+            user = form.get_user()
+            login(request, user)
+            return redirect('/dashboard')
         else:
             print("Form errors:", form.non_field_errors())
             print("Form errors:", form.errors)
@@ -96,5 +97,6 @@ class CustomLogInView(LoginView):
                 context['errors'] = form.errors
         return render(request, self.template_name, context)
 
+    @method_decorator(already_logged_in_decorator) 
     def get(self, request: HttpRequest, *args: str, **kwargs: Any) -> HttpResponse:
         return super().get(request, *args, **kwargs)
