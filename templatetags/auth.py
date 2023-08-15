@@ -8,9 +8,8 @@ register = template.Library()
 @register.simple_tag
 def user_profile_component(form):
     context = {'form': form}
+
     form_types = [StepTwoForm, StepThreeForm, StepFourForm]
-    print('_ _ ')
     if type(form) in form_types:
-        print('!!!')
         return render_to_string('authentication/select_component.html', context)
     return render_to_string('authentication/user_profile_component.html', context)

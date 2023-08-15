@@ -1,12 +1,52 @@
 from django import forms
+import authentication
 from authentication.models import City, Speciality, University, User, UserData
 from django.contrib.auth.forms import UserCreationForm
 
 from authentication.seed_data import UNIVERSITIES
+from django.contrib.auth.forms import AuthenticationForm
+from django.utils.translation import gettext_lazy as _
+from django.contrib.auth import authenticate
 
 # class RegisterForm(forms.Form):
 #     email = forms.EmailField(label='Email', max_length=30, widget=forms.\
 #         EmailInput())
+
+class CustomLoginForm(AuthenticationForm):
+    email = forms.EmailField(
+        label=_("Email"),
+        widget=forms.TextInput(attrs={"autofocus": True}),
+    )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['username'].required = False  # Set username field as not required
+        self.fields['username'].widget.attrs['autofocus'] = False
+        self.error_messages.update({
+            'invalid_login': "Please enter a correct email and password. Note that both fields may be case-sensitive."
+        })
+        
+    def clean(self):
+        email = self.cleaned_data.get('email')
+        password = self.cleaned_data.get('password')
+        print()
+        print(email)
+        print(password)
+        print()
+        if email and password:
+            self.user_cache = authenticate(self.request, email=email, password=password)
+            print()
+            u = User.objects.get(email=email)
+            
+            print(self.user_cache is None)
+            print(u.check_password(password))
+            print()
+            if self.user_cache is None:
+                raise self.get_invalid_login_error()
+            else:
+                self.confirm_login_allowed(self.user_cache)
+
+        return self.cleaned_data
 
 class RegisterForm(UserCreationForm):
     email = forms.EmailField(max_length=100, help_text='Required. Enter a valid email address.')
@@ -47,3 +87,4 @@ class StepFourForm(forms.ModelForm):
         model = User  # Import your User model
         fields = ['oras']
     oras = forms.ModelChoiceField(queryset=City.objects.all())
+

@@ -23,9 +23,9 @@
                 <div class="auth-form__field">
                     <label for="id_password1" class="auth-form__label">Password:</label>
                     <input type="password" id="id_password1" name="password1" class="auth-form__input" placeholder="Enter your password">
-                    {% if errors.password1 %}
-                    <div class="auth-form__error">{{ errors.password1 }}</div>
-                {% endif %}
+                     {% if errors.password1 %}
+                        <div class="auth-form__error">{{ errors.password1 }}</div>
+                    {% endif %}
                 </div>
                 <div class="auth-form__field">
                     <label for="id_password2" class="auth-form__label">Confirm Password:</label>

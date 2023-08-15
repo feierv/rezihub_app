@@ -11,26 +11,33 @@
                 dolor id.
             </p>
             <form class="auth-form" method="post"
-                action="{% url 'continue-register' %}">
+                action="{% url 'login' %}">
+                {% csrf_token %}
                 <div class="auth-form__field">
                     <label for="email" class="auth-form__label">Email:</label>
-                    <input id="email" class="auth-form__input"
+                    <input id="email" class="auth-form__input" name='email'
+                    required
                         placeholder="Enter your email">
+                    <h1>{{form.non_field_errors}}</h1>
+                    {% if non_field_errors %}
+                    <div class="auth-form__error">{{ non_field_errors }}</div>
+                    {% endif %}
+                    {% if errors.email %}
+                        <div class="auth-form__error">{{ errors.password }}</div>
+                    {% endif %}
                 </div>
                 <div class="auth-form__field">
-                    <label for="password1" class="auth-form__label">Password:</label>
-                    <input id="password1" class="auth-form__input"
+                    <label for="password" class="auth-form__label">Password:</label>
+                    <input id="password" type='password' class="auth-form__input" name='password'
+                    required
                         placeholder="Enter your password">
-                </div>
-                <div class="auth-form__field">
-                    <label for="password2" class="auth-form__label">Confirm
-                        Password:</label>
-                    <input id="password2" class="auth-form__input"
-                        placeholder="Enter your password again">
+                    {% if errors.password %}
+                        <div class="auth-form__error">{{ errors.password }}</div>
+                    {% endif %}
                 </div>
                 <div class="auth-form__actions">
                     <button
-                        class="auth-form__button auth-form__button--primary">Register</button>
+                        class="auth-form__button auth-form__button--primar " type="submit">Log in</button>
                     <button
                         class="auth-form__button auth-form__button--secondary">
                         <img src="/static/assets/images/google-logo.svg"

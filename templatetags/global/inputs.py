@@ -1,6 +1,8 @@
 from django import template
 register = template.Library()
-
+from django.template.loader import render_to_string
+from django.shortcuts import render, redirect
+from django.utils.safestring import mark_safe
 
 """
 Generates a styled text input field for forms.
@@ -24,12 +26,14 @@ Generates a styled text input field for forms.
 
 @register.simple_tag
 def text_input(label, custom_id, input_type='text', placeholder='', required=False, min_length=None, max_length=None, pattern=None, error_message=''):
+
     input_attrs = f"""
         id='{custom_id}' 
         type='{input_type}' 
-        class='form__input' 
+        class='auth-form__input' 
         aria-labelledby='{custom_id}-label' 
         placeholder='{placeholder}'
+        name='{custom_id}' 
     """
 
     if required:
@@ -43,17 +47,15 @@ def text_input(label, custom_id, input_type='text', placeholder='', required=Fal
 
     input_element = f"<input {input_attrs} />"
 
-    return f"""
-        <!-- Start of text input field -->
-        <div class='form__field'> 
+    input_field = f"""
             <label for='{custom_id}' class='form__label'>
                 {label}
             </label>
             {input_element}
             <div class='error-message'>{error_message}</div>
-        </div>
-        <!-- End of text input field -->
     """
+
+    return mark_safe(input_field)
 
 
 @register.simple_tag
