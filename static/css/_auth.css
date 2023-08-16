@@ -6,6 +6,10 @@
     height        : 100%;
 }
 
+.auth form {
+    overflow: auto;
+}
+
 
 .auth__left {
     width          : 50%;

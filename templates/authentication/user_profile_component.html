@@ -1,19 +1,21 @@
 {% load inputs %}
 {% for field in form %}
-<div class="auth-form__field">
+<div class="form__field">
     {% if field.name == 'phone' %}
-    {% text_input "Phone" "phone" "tel" "Enter your phone" required max_length=10%}
+    {% text_input "Phone" "phone" input_type="tel" placeholder="Enter your phone"
+    required max_length=10 %}
     {% else %}
-            <label for="{{ field.id_for_label }}" class="auth-form__label">{{ field.label }}</label>
-            <input type="{{ field.field.widget.input_type }}" id="{{ field.id_for_label }}"
-            name="{{ field.html_name }}" class="auth-form__input" value="{{ field.value|default:'' }}">
-        {% endif %}
-        
-            {% if form.errors %}
-                {% if form.errors.phone and field.name == 'phone'%}
-                        <div class="auth-form__error">{{ form.errors.phone }}</div>
-                {% endif %}
-            {% endif %}
-    </div>
-{% endfor %}
+    <label for="{{ field.id_for_label }}" class="form__label">{{ field.label }}</label>
+    <input type="{{ field.field.widget.input_type }}"
+        id="{{ field.id_for_label }}"
+        name="{{ field.html_name }}" class="form__input"
+        value="{{ field.value|default:'' }}">
+    {% endif %}
 
+    {% if form.errors %}
+    {% if form.errors.phone and field.name == 'phone'%}
+    <div class="form__error">{{ form.errors.phone }}</div>
+    {% endif %}
+    {% endif %}
+</div>
+{% endfor %}

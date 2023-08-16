@@ -1,6 +1,4 @@
 from django.utils.safestring import mark_safe
-from django.shortcuts import render, redirect
-from django.template.loader import render_to_string
 from django import template
 register = template.Library()
 
@@ -25,15 +23,13 @@ Generates a styled text input field for forms.
 
 
 @register.simple_tag
-def text_input(label, custom_id, input_type='text', placeholder='', required=False, min_length=None, max_length=None, pattern=None, error_message=''):
-
+def text_input(label='', custom_id='', input_type='text', placeholder='', required=False, min_length=None, max_length=None, pattern=None, error_message=''):
     input_attrs = f"""
-        id='{custom_id}' 
-        type='{input_type}' 
-        class='form__input' 
-        aria-labelledby='{custom_id}-label' 
+        id='{custom_id}'
+        type='{input_type}'
+        class='form__input'
         placeholder='{placeholder}'
-        name='{custom_id}' 
+        name='{custom_id}'
     """
 
     if required:
@@ -48,18 +44,22 @@ def text_input(label, custom_id, input_type='text', placeholder='', required=Fal
     input_element = f"<input {input_attrs} />"
 
     input_field = f"""
-            <label for='{custom_id}' class='form__label'>
-                {label}
-            </label>
-            {input_element}
-            <div class='error-message'>{error_message}</div>
+        <label for='{custom_id}' class='form__label'>
+        {label}
+        </label>
+
+        {input_element}
+
+        <div class='error-message'>
+        {error_message}
+        </div>
     """
 
     return mark_safe(input_field)
 
 
 @register.simple_tag
-def select_input(label, options=None, required=False, custom_id=None):
+def select_input(label='', options=None, required=False, custom_id=None):
     """
     Generates a styled select input field for forms.
 
@@ -90,7 +90,7 @@ def select_input(label, options=None, required=False, custom_id=None):
         select_element += f"<option value='{option['value']}'>{option['text']}</option>"
     select_element += "</select>"
 
-    return f"""
+    select = f"""
         <!-- Start of select input field -->
         <div class='select'>
             <label id='{custom_id}-label' class='select__label'>
@@ -100,3 +100,5 @@ def select_input(label, options=None, required=False, custom_id=None):
         </div>
         <!-- End of select input field -->
     """
+
+    return mark_safe(select)

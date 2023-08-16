@@ -5,6 +5,11 @@
    3.Cards
 */
 
+.error-message {
+    color    : firebrick;
+    font-size: 1rem;
+}
+
 
 /* ====================
 1. Inputs

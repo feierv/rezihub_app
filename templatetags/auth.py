@@ -5,6 +5,7 @@ from authentication.forms import StepFourForm, StepThreeForm, StepTwoForm
 
 register = template.Library()
 
+
 @register.simple_tag
 def user_profile_component(form):
     context = {'form': form}
