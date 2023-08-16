@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!-- Metadata -->
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- Classes import -->
+        <link rel="stylesheet" type="text/css" href="static/css/_main.css">
+        <link rel="stylesheet" type="text/css" href="static/css/auth/auth.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+        <script src="static/js/stepper.js"></script>
+        <!-- Misc -->
+        <title>Rezihub</title>
+    </head>
+    <body>
+        <div class="auth">
+            <div class="auth__left">
+                <div class="auth__content">
+                    <h1 class="auth__title-stepper">In ce facultate ai fost/esti?  🎓</h1>
+                    <form id="step-2"class="auth-form">
+                        <ul class="faculty-list">
+                            <li class="faculty-list__item">
+                                <div class="faculty-list__content">
+                                    <img class="faculty-list__img" src="https://ui-avatars.com/api/?name=John+Doe" alt="Faculty icon">
+                                    <span class="faculty-list__name">Facultate de Medicina din X</span>
+                                </div>
+                                    <input class="faculty-list__radio" type="radio" name="faculty" value="Facultate de Medicina din X">
+                            </li>
+                            <li class="faculty-list__item">
+                                <div class="faculty-list__content">
+                                    <img class="faculty-list__img" src="https://ui-avatars.com/api/?name=John+Doe" alt="Faculty icon">
+                                    <span class="faculty-list__name">Facultate de Medicina din Y</span>
+                                </div>
+                                    <input class="faculty-list__radio" type="radio" name="faculty" value="Facultate de Medicina din X">
+                            </li>
+                            <li class="faculty-list__item">
+                                <div class="faculty-list__content">
+                                    <img class="faculty-list__img" src="https://ui-avatars.com/api/?name=John+Doe" alt="Faculty icon">
+                                    <span class="faculty-list__name">Facultate de Medicina din Z</span>
+                                </div>
+                                    <input class="faculty-list__radio" type="radio" name="faculty" value="Facultate de Medicina din X">
+                            </li>
+                            <li class="faculty-list__item">
+                                <div class="faculty-list__content">
+                                    <img class="faculty-list__img" src="https://ui-avatars.com/api/?name=John+Doe" alt="Faculty icon">
+                                    <span class="faculty-list__name">Facultate de Medicina din A</span>
+                                </div>
+                                    <input class="faculty-list__radio" type="radio" name="faculty" value="Facultate de Medicina din X">
+                            </li>
+                          </ul>
+                    </form>
+
+                    <div class="auth-form__actions">
+                        <button
+                            id="button-stepper-2"
+                            class="auth-form__button auth-form__button--primary" data-url="/step3.html">
+                            <span style="display: block;">Continua</span>
+                        </button>
+                        <button
+                            id="button-stepper-back-2"
+                            class="auth-form__button auth-form__button--back" data-url="/step1.html">
+                            <span>
+                                <i class="fa-solid fa-arrow-left"></i>
+                                Inapoi
+                            </span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="auth__right">
+                <div class="auth__right-wrapper">
+                    <div class="auth__right-heading">Lorem ipsum dolor sit amet</div>
+                    <div class="auth__right-text">Lorem ipsum dolor sit amet consectetur. Tortor dui vitae proin viverra. Cursus mi vel risus dolor nisi ac in euismod vel gravida mi aliquet sit sit.</div>
+                </div>
+                <div class="auth__right-image">
+                    <img src="/static/assets/images/dashboard-present-min.png" alt="rezihub dashboard">
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!-- Metadata -->
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- Classes import -->
+        <link rel="stylesheet" type="text/css" href="static/css/_main.css">
+        <link rel="stylesheet" type="text/css" href="static/css/auth/auth.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script src="static/js/stepper.js"></script>
+        <!-- Misc -->
+        <title>Rezihub</title>
+    </head>
+    <body>
+        <div class="auth">
+            <div class="auth__left">
+                <div class="auth__content">
+                    <h1 class="auth__title-stepper">Buna, <br>
+                        Hai sa ne cunoastem! 🤝</h1>
+                    <form id="step-1"class="auth-form">
+                        <!-- Nume -->
+                        <div class="auth-form__field">
+                            <label for="email" class="auth-form__label">Nume:</label>
+                            <input id="email" class="auth-form__input"
+                                placeholder="Enter your name">
+                        </div>
+                         <!-- Localitate -->
+                        <div class="auth-form__field">
+                            <label for="email" class="auth-form__label">Localitate:</label>
+                            <input id="location" class="auth-form__input"
+                                placeholder="Enter your city">
+                        </div>
+                        <!-- Judet -->
+                        <div class="auth-form__field">
+                            <label for="email" class="auth-form__label">Judet:</label>
+                            <input id="county" class="auth-form__input"
+                                placeholder="Enter your county">
+                        </div>
+                        <!-- Strada -->
+                        <div class="auth-form__field">
+                            <label for="email" class="auth-form__label">Strada:</label>
+                            <input id="address" class="auth-form__input"
+                                placeholder="Enter your address">
+                        </div>
+                        <!-- Telefon -->
+                        <div class="auth-form__field">
+                            <label for="email" class="auth-form__label">Telefon:</label>
+                            <input id="phone" class="auth-form__input"
+                                placeholder="Enter your phone">
+                        </div>
+           
+                    </form>
+
+                    <div class="auth-form__actions">
+                        <button
+                            id="button-stepper-1"
+                            class="auth-form__button auth-form__button--primary" data-url="/step2.html">
+                            <span style="display: block;">Continua</span>
+                        </button>
+                    </div>
+
+                    <div class="stepper__info">
+                        Datele dumneavoastră de contact sunt necesare în vederea emiterii facturii în cazul achiziționării unui cont premium. 
+                        Vă asigurăm că informațiile personale furnizate vor fi păstrate în siguranță și vor fi utilizate doar în scopul facturării și comunicării cu dumneavoastră. 
+                        Ne angajăm să protejăm confidențialitatea datelor clienților noștri și să respectăm cele mai înalte standarde de securitate și transparență. 
+                        Vă mulțumim pentru înțelegere.
+                    </div>
+                </div>
+            </div>
+            <div class="auth__right">
+                <div class="auth__right-wrapper">
+                    <div class="auth__right-heading">Lorem ipsum dolor sit amet</div>
+                    <div class="auth__right-text">Lorem ipsum dolor sit amet consectetur. Tortor dui vitae proin viverra. Cursus mi vel risus dolor nisi ac in euismod vel gravida mi aliquet sit sit.</div>
+                </div>
+                <div class="auth__right-image">
+                    <img src="/static/assets/images/dashboard-present-min.png" alt="rezihub dashboard">
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
