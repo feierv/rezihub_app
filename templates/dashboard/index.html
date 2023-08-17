@@ -1,0 +1,58 @@
+{% extends '_base.html' %}
+{% load static %}
+{% block content %}
+
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+          <button id='close-todo-modal' type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form method="post" action="{% url 'todo' %}" class="auth-form">
+              {% csrf_token %}
+              <div class="form__field">
+                  <label for="first-name" class="form__label">Task:</label>
+                  <input id="first-name" type='text' name='description' class="form__input" required placeholder="Enter an urgent task!">
+                  <div class='description-error'></div>
+                  </div>
+                  <div class="form__field">
+                    <label for="todo-date" class="form__label">Data termen finalizare:</label>
+                    <input id="todo-date" type='date' name='deadline' class="form__input" required placeholder="Select a deadline date!">
+                    <div class='deadline-error'></div>
+              </div>
+              <button id="submitFormButton" type='submit' class="btn btn-primary">Save changes</button>
+          </form>
+      </div>
+      </div>
+    </div>
+  </div>
+<div>
+    <p>{{user.total_grids_solved}}</p>
+    <p>{{user.total_kumar_grids_solved}}</p>
+    <p>{{user.total_chirurgie_grids_solved}}</p>
+    <p>{{user.total_sinopsis_grids_solved}}</p>
+    <p>{{user.global_points}}</p>
+    {% if user.last_unfinished_challenge_progress %}
+        <p>{{user.last_unfinished_challenge_progress}}</p>
+    {% endif %}
+    <p>{{user.kumar_solved_precentage}}</p>
+    <p>{{user.chirurgie_solved_precentage}}</p>
+    <p>{{user.sinopsis_solved_precentage}}</p>
+    {% for task in user.todo_tasks  %}
+        <p>{{task}}</p>
+    {% endfor %}
+</div>
+
+<div class='todo-container'>
+   <!-- Button trigger modal -->
+  <button id='launchModalButton' type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+    Launch demo modal
+  </button>
+  
+</div>
+{% endblock %}

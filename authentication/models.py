@@ -19,6 +19,46 @@ class User(AbstractUser):
     oras = models.ForeignKey('City', on_delete=models.SET_NULL, null=True, blank=True)
     
     @property
+    def total_grids_solved(self):
+        return 0
+    
+    @property
+    def total_kumar_grids_solved(self):
+        return 0
+    
+    @property
+    def total_chirurgie_grids_solved(self):
+        return 0
+    
+    @property
+    def total_sinopsis_grids_solved(self):
+        return 0
+    
+    @property
+    def global_points(self):
+        return 0
+    
+    @property
+    def last_unfinished_challenge_progress(self):
+        return None
+    
+    @property
+    def kumar_solved_precentage(self):
+        return 0
+    
+    @property
+    def chirurgie_solved_precentage(self):
+        return 0
+    
+    @property
+    def sinopsis_solved_precentage(self):
+        return 0
+    
+    @property
+    def todo_tasks(self):
+        return self.todotask_set.all()
+
+    @property
     def personal_data(self):
         if hasattr(self, 'userdata'):
             user_data = getattr(self, 'userdata')
@@ -53,6 +93,13 @@ class User(AbstractUser):
         if not self.username:
             self.username = self.email
         super().save(*args, **kwargs)
+
+
+class TodoTask(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    description = models.CharField(max_length=200)
+    is_completed = models.BooleanField(default=False)
+    deadline = models.DateField(null=True, blank=True)
 
 
 class UserData(models.Model):
