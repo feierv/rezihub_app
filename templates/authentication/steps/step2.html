@@ -10,10 +10,9 @@
                             {% for university in universities %}
                                 <li class="faculty-list__item" data-select="{{ university }}">
                                     <div class="faculty-list__content">
-                                        <img class="faculty-list__img" src="https://ui-avatars.com/api/?name=John+Doe" alt="Faculty icon" width="auto" height="auto"/>
+                                        <img class="faculty-list__img" src="https://ui-avatars.com/api/?name=John+Doe" alt="{{ university }}" width="auto" height="auto"/>
                                          <span class="faculty-list__name">{{ university }}</span>
                                     </div>
-                                    {{ university }}
                                     <input class="faculty-list__radio" type="radio" name="university" value="{{university}}">
                                 </li>
                             {% endfor %}
@@ -25,7 +24,7 @@
                                   class="button button--primary" type='submit'>
                                   <span>Continua</span>
                               </button>
-                              <button id="button-submit" class="button button--back" data-url="/step1.html">
+                              <button id="button-submit" class="button button--outline" data-url="/step1.html">
                                   <span>
                                       <i class="fa-solid fa-arrow-left"></i>
                                       Inapoi
@@ -45,4 +44,22 @@
                 </div>
             </div>
         </div>
+
+        <script>
+            const listItems = document.querySelectorAll('.faculty-list__item');
+            listItems.forEach(item => {
+                const radio = item.querySelector('.faculty-list__radio');
+            
+                item.addEventListener('click', () => {
+                    radio.checked = true; // Select the associated radio button
+                    listItems.forEach(otherItem => {
+                    if (otherItem !== item) {
+                        otherItem.classList.remove('is__checked'); // Uncheck other items
+                    }
+                    });
+                    item.classList.add('is__checked'); // Check the clicked item
+                });
+            });
+
+        </script>
     {% endblock %}

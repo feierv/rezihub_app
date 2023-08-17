@@ -4,7 +4,7 @@
             <div class="auth__left">
                 <div class="auth__content">
                     <h1 class="auth__title-stepper">Ce specialitate iti doresti?  💼 </h1>
-                    <div id="targetElement"></div>
+                    
                     <div id="step-3" class="speciality-select-list">
                         {% for speciality in specialities %}
                             <div class="speciality-card" data-select="{{speciality.name}}">
@@ -13,7 +13,17 @@
                             <div class="speciality-card__text">{{speciality.name}}</div>
                             </div>
                         {% endfor %}
+                        <div class="form__actions">
+                            <button id="back-button" class="button button--outline" data-url="/step4.html">
+                                <span>
+                                    <i class="fa-solid fa-arrow-left"></i>
+                                    Inapoi
+                                </span>
+                            </button>
+                        </div>
                     </div>
+
+                    <div id="subspecialities"></div>
                 </div>
             </div>
             <div class="auth__right">
@@ -55,7 +65,7 @@
                                     var responseData = xhr.responseText;
 
                                     // Get the target element
-                                    var targetElement = document.querySelector("#targetElement");
+                                    var targetElement = document.querySelector("#subspecialities");
 
                                     // Set the received HTML as the content of the target element
                                     targetElement.innerHTML = responseData;

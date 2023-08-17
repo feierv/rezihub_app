@@ -6,8 +6,7 @@
       <h1 class="auth__title-stepper">Buna, <br>
         Hai sa ne cunoastem! 🤝
       </h1>
-      <form hx-post="{% url 'continue-register' %}" 
-      hx-target="#step-1" class="auth-form" id="step-1">
+      <form action="{% url 'continue-register' %}" method="post" class="auth-form" id="step-1">
         {% csrf_token %}
         <!-- Pre Nume -->
         <div class="form__field">
