@@ -7,5 +7,6 @@ urlpatterns = [
     path('continue-register/', views.ContinueRegisterView.as_view(),
          name='continue-register'),
     path('login/', views.CustomLogInView.as_view(), name='login'),
+    path('get-specialities/', views.GetSpecialitiesView.as_view(), name='specialities'),
 
 ]

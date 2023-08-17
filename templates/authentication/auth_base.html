@@ -16,7 +16,6 @@
             <form method="post" action="{% url 'continue-register' %}">
                 {% csrf_token %}
                 {% for field in form %}
-
                 <div class="form__field">
                     {% text_input label=field.label custom_id=field.id_for_label input_type=field.widget.input_type placeholder=field.widget.attrs.placeholder required=field.required max_length=field.max_length error_message=field.errors %}
                 </div>

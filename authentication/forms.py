@@ -62,20 +62,59 @@ class StepOneForm(forms.ModelForm):
         return super(StepOneForm, self).save(commit=commit)
 
 class StepTwoForm(forms.ModelForm):
+    university = forms.CharField()  
     class Meta:
         model = User  # Import your User model
         fields = ['university']
-    university = forms.ModelChoiceField(queryset=University.objects.all())
+
+    def clean(self):
+        cleaned_data = super().clean()
+        university = cleaned_data.get('university')
+        # Retrieve the University object based on the provided name
+        try:
+            university = University.objects.get(nume=university)
+        except University.DoesNotExist:
+            raise forms.ValidationError("Invalid university selected.")
+        
+        cleaned_data['university'] = university
+        return cleaned_data
+
 
 class StepThreeForm(forms.ModelForm):
+    specialitate = forms.CharField()  
     class Meta:
         model = User  # Import your User model
         fields = ['specialitate']
-    specialitate = forms.ModelChoiceField(queryset=Speciality.objects.all())
+
+    def clean(self):
+        cleaned_data = super().clean()
+        specialitate = cleaned_data.get('specialitate')
+        # Retrieve the University object based on the provided name
+        try:
+            speciality = Speciality.objects.get(nume=specialitate)
+        except Speciality.DoesNotExist:
+            raise forms.ValidationError("Invalid speciality selected.")
+        
+        cleaned_data['specialitate'] = speciality
+        return cleaned_data
+
 
 class StepFourForm(forms.ModelForm):
+    oras = forms.CharField()  
     class Meta:
         model = User  # Import your User model
         fields = ['oras']
-    oras = forms.ModelChoiceField(queryset=City.objects.all())
 
+    def clean(self):
+        cleaned_data = super().clean()
+        city = cleaned_data.get('oras')
+        
+        # Retrieve the University object based on the provided name
+        try:
+            city = City.objects.get(nume=city)
+        except City.DoesNotExist:
+            raise forms.ValidationError("Invalid city selected.")
+        
+        cleaned_data['oras'] = city
+        return cleaned_data
+    

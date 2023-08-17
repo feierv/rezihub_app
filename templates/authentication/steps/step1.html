@@ -1,64 +1,67 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <!-- Metadata -->
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <!-- Classes import -->
-        <link rel="stylesheet" type="text/css" href="static/css/_main.css">
-        <link rel="stylesheet" type="text/css" href="static/css/auth/auth.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        <script src="static/js/stepper.js"></script>
-        <!-- Misc -->
-        <title>Rezihub</title>
-    </head>
-    <body>
+{% extends '_base.html' %}
+{% block content %}
         <div class="auth">
             <div class="auth__left">
                 <div class="auth__content">
                     <h1 class="auth__title-stepper">Buna, <br>
                         Hai sa ne cunoastem! 🤝</h1>
-                    <form id="step-1"class="auth-form">
-                        <!-- Nume -->
+                    <form method="post" action="{% url 'continue-register' %}" class="auth-form">
+                        {% csrf_token %}
+                        <!-- Pre Nume -->
                         <div class="auth-form__field">
-                            <label for="email" class="auth-form__label">Nume:</label>
-                            <input id="email" class="auth-form__input"
-                                placeholder="Enter your name">
+                            <label for="first-name" class="auth-form__label">Pre nume:</label>
+                            <input id="first-name" name='nume' class="auth-form__input" required required
+                                placeholder="Enter your first name">
                         </div>
-                         <!-- Localitate -->
+                         <!-- Nume -->
+                         <div class="auth-form__field">
+                            <label for="last-name" class="auth-form__label">Nume:</label>
+                            <input id="prenume" name='prenume' class="auth-form__input" required
+                                placeholder="Enter your last name">
+                        </div>
+                        <!-- Telefon -->
                         <div class="auth-form__field">
-                            <label for="email" class="auth-form__label">Localitate:</label>
-                            <input id="location" class="auth-form__input"
+                            <label for="phone" class="auth-form__label">Telefon:</label>
+                            <input id="phone" name='phone' class="auth-form__input {% if error %} errror_clas {% endif %} " 
+                            placeholder="Enter your phone">
+                            {% if errors.phone %}
+                                <div class="form__error">{{ errors.phone }}</div>
+                            {% endif %}
+                        </div>
+                        <!-- Localitate -->
+                        <div class="auth-form__field">
+                            <label for="city" class="auth-form__label">Localitate:</label>
+                            <input id="city" name='localitate' class="auth-form__input" required
                                 placeholder="Enter your city">
                         </div>
                         <!-- Judet -->
                         <div class="auth-form__field">
-                            <label for="email" class="auth-form__label">Judet:</label>
-                            <input id="county" class="auth-form__input"
-                                placeholder="Enter your county">
-                        </div>
+                            <label for="county" class="auth-form__label">Judet:</label>
+                            <input id="county" name='judet' class="auth-form__input" required
+                            placeholder="Enter your county">
+                        </div> 
                         <!-- Strada -->
+                         <div class="auth-form__field">
+                            <label for="street" class="auth-form__label">Strada:</label>
+                            <input id="street" name='strada' class="auth-form__input" required
+                            placeholder="Enter your street name">
+                        </div> 
+                        <!-- Numar -->
                         <div class="auth-form__field">
-                            <label for="email" class="auth-form__label">Strada:</label>
-                            <input id="address" class="auth-form__input"
-                                placeholder="Enter your address">
+                            <label for="number" class="auth-form__label">Strada:</label>
+                            <input id="number" name='numar' class="auth-form__input" required
+                            placeholder="Enter your street number">
+                        </div> 
+                        <div class="auth-form__actions">
+                            <button
+                                id="button-stepper-1"
+                                type="submit"
+                                class="auth-form__button auth-form__button--primary">
+                                <span style="display: block;">Continua</span>
+                            </button>
                         </div>
-                        <!-- Telefon -->
-                        <div class="auth-form__field">
-                            <label for="email" class="auth-form__label">Telefon:</label>
-                            <input id="phone" class="auth-form__input"
-                                placeholder="Enter your phone">
-                        </div>
-           
                     </form>
 
-                    <div class="auth-form__actions">
-                        <button
-                            id="button-stepper-1"
-                            class="auth-form__button auth-form__button--primary" data-url="/step2.html">
-                            <span style="display: block;">Continua</span>
-                        </button>
-                    </div>
 
                     <div class="stepper__info">
                         Datele dumneavoastră de contact sunt necesare în vederea emiterii facturii în cazul achiziționării unui cont premium. 
@@ -78,5 +81,4 @@
                 </div>
             </div>
         </div>
-    </body>
-</html>
+    {% endblock %}

@@ -5,6 +5,7 @@ from datetime import datetime, timedelta, timezone
 from django.template.loader import render_to_string
 
 from authentication.forms import StepFourForm, StepOneForm, StepThreeForm, StepTwoForm
+from authentication.models import Speciality
 
 def send_email(token):
         message = f"Acceseaza linku http://127.0.0.1:8000/authentication/continue-register/{token} pt inregistrare"
@@ -52,3 +53,42 @@ def get_step_form(step):
         '4': StepFourForm,
     }
     return forms[step]
+
+def get_step_template(step):
+    forms = {
+        '1': 'authentication/steps/step1.html',
+        '2': 'authentication/steps/step2.html',
+        '3': 'authentication/steps/step3.html',
+        '4': 'authentication/steps/step5.html',
+    }
+    return forms[step]
+
+
+def get_specialities_cateogry():
+    assets = [
+        dict(
+         name='Specialităţi clinice - Adulţi',
+         static_url='/static/assets/images/clinice-adulti.png',
+         ),
+         dict(
+         name='Specialităţi clinice - Copii',
+         static_url='/static/assets/images/clinice-pediatrice.png',
+         ),
+         dict(
+         name='Specialităţi chirurgicale - Adulţi',
+         static_url='/static/assets/images/chirurgicale-adulti.png',
+         ),
+         dict(
+         name='Specialităţi chirurgicale pediatrice',
+         static_url='/static/assets/images/chirurgicale-pediatrice.png',
+         ),
+         dict(
+         name='Specialitati paraclinice',
+         static_url='/static/assets/images/paraclinice.png',
+         ),
+    ]
+    for category in assets:
+        cateogry_name = list(category.values())[0]
+        length = Speciality.objects.filter(category=cateogry_name).count()
+        category['length'] = length
+    return assets

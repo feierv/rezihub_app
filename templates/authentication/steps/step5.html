@@ -1,52 +1,38 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <!-- Metadata -->
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <!-- Classes import -->
-        <link rel="stylesheet" type="text/css" href="static/css/_main.css">
-        <link rel="stylesheet" type="text/css" href="static/css/auth/auth.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-        <script src="static/js/stepper.js"></script>
-        <!-- Misc -->
-        <title>Rezihub</title>
-    </head>
-    <body>
+{% extends '_base.html' %}
+{% block content %}
         <div class="auth">
             <div class="auth__left">
                 <div class="auth__content">
                     <h1 class="auth__title-stepper">În ce oras vrei sa mergi?  🏡</h1>
-                    <form id="step-4"class="auth-form">
+                    <form method="post" class="auth-form" action="{% url 'continue-register' %}">
+                        {% csrf_token %}
                         <div class="select">
-                            <select class="select__input">
+                            <select class="select__input" required name='oras'>
                               <option value="">Alege Oras</option>
-                              <option value="1">Option 1</option>
-                              <option value="2">Option 2</option> 
-                              <option value="3">Option 3</option>
-                              <option value="4">Option 4</option>
-                              <option value="5">Option 5</option>
+                              {% for city in  cities%}
+                                <option value="{{city.nume}}">{{city.nume}}</option>
+                              {% endfor %}
                             </select>
                             <i class="fa-solid fa-chevron-down select__icon"></i>
                           </div>
            
+                          <div class="auth-form__actions">
+                              <button
+                                  id="button-stepper-4"
+                                  class="auth-form__button auth-form__button--primary" type='submit'>
+                                  <span style="display: block;">Continua</span>
+                              </button>
+                              <button
+                                  id="button-stepper-back-4"
+                                  class="auth-form__button auth-form__button--back"data-url="/step4.html">
+                                  <span>
+                                      <i class="fa-solid fa-arrow-left"></i>
+                                      Inapoi
+                                  </span>
+                              </button>
+                          </div>
                     </form>
 
-                    <div class="auth-form__actions">
-                        <button
-                            id="button-stepper-4"
-                            class="auth-form__button auth-form__button--primary" data-url="/dashboard.html">
-                            <span style="display: block;">Continua</span>
-                        </button>
-                        <button
-                            id="button-stepper-back-4"
-                            class="auth-form__button auth-form__button--back"data-url="/step4.html">
-                            <span>
-                                <i class="fa-solid fa-arrow-left"></i>
-                                Inapoi
-                            </span>
-                        </button>
-                    </div>
 
                     <div class="stepper__info">
                         Datele dumneavoastră de contact sunt necesare în vederea emiterii facturii în cazul achiziționării unui cont premium. 
@@ -66,5 +52,4 @@
                 </div>
             </div>
         </div>
-    </body>
-</html>
+        {% endblock %}

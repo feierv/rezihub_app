@@ -1,11 +1,14 @@
+import json
 from typing import Any
-from django.http import HttpRequest, HttpResponse
+from django.http import HttpRequest, HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
+from django.urls import reverse
 from django.views import View
 from authentication.decorators import login_required_decorator,  already_logged_in_decorator
 from django.contrib.auth import login
 from authentication.forms import CustomLoginForm, RegisterForm
-from authentication.utils import get_step_form, send_email
+from authentication.models import City, Speciality, University
+from authentication.utils import get_specialities_cateogry, get_step_form, get_step_template, send_email
 from django.utils.decorators import method_decorator
 from django.contrib.auth.views import LoginView
 from django.contrib.auth import login
@@ -20,10 +23,6 @@ class SendRegisterEmailView(View):
 
     @method_decorator(already_logged_in_decorator)
     def post(self, request):
-        # Check if the user is already logged in
-        # if request.user.is_authenticated:
-        #     return redirect('/dashboard')  # Redirect to the dashboard view
-
         form = RegisterForm(request.POST)
         context = {}
         if form.is_valid():
@@ -41,11 +40,25 @@ class ContinueRegisterView(View):
     # Apply the decorator to the view
     @method_decorator(login_required_decorator)
     def get(self, request):
-        form = get_step_form(request.user.last_uncompleted_step)
+        step = request.user.last_uncompleted_step
+        form = get_step_form(step)
+        template = get_step_template(step)
         context = {
             'form': form,
         }
-        return render(request, self.template_name, context)
+        if step == '2':
+            universities = University.objects.all().values_list('nume', flat=True)
+            context['universities'] = universities
+        if step == '3':
+            host = request.scheme + "://" + request.get_host()
+            speciality_url = host + reverse('specialities')
+            specialities = get_specialities_cateogry()
+            context['speciality_url'] = speciality_url
+            context['specialities'] = specialities
+        if step == '4':
+            cities = City.objects.all()
+            context['cities'] = cities
+        return render(request, template , context)
 
     # Apply the decorator to the view
     @method_decorator(login_required_decorator)
@@ -70,11 +83,32 @@ class ContinueRegisterView(View):
                 context = {
                     'form': form,
                 }
+            if step == '2':
+                universities = University.objects.all().values_list('nume', flat=True)
+                context['universities'] = universities
+            if step == '3':
+                host = request.scheme + "://" + request.get_host()
+                speciality_url = host + reverse('specialities')
+                specialities = get_specialities_cateogry()
+                context['speciality_url'] = speciality_url
+                context['specialities'] = specialities
+            if step == '4':
+                cities = City.objects.all()
+                context['cities'] = cities
             else:
                 context['errors'] = form.errors
-            return render(request, self.template_name, context)
+            template = get_step_template(step)
+            return render(request, template, context)
         else:
             return redirect('/dashboard')
+
+class GetSpecialitiesView(View):
+    def get(self, request):
+        STEP_4_TEMPLATE = 'authentication/steps/step4.html'
+        specialities_category = request.GET['data']
+        specialities = Speciality.objects.filter(category=specialities_category).values_list('nume', flat=True)
+        context = {'specialities': specialities}
+        return render(request,STEP_4_TEMPLATE , context)
 
 
 class CustomLogInView(LoginView):
@@ -90,8 +124,6 @@ class CustomLogInView(LoginView):
             login(request, user)
             return redirect('/dashboard')
         else:
-            print("Form errors:", form.non_field_errors())
-            print("Form errors:", form.errors)
             non_field_errors = form.non_field_errors()
             if non_field_errors:
                 context['non_field_errors'] = non_field_errors

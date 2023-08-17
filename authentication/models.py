@@ -67,16 +67,17 @@ class UserData(models.Model):
 
 
 class Speciality(models.Model):
-    nume = models.CharField(max_length=100, default=None, null=True, blank=True)
+    category = models.CharField(max_length=100)
+    nume = models.CharField(max_length=100, unique=True)
     def __str__(self):
         return self.nume
 
 class City(models.Model):
-    nume = models.CharField(max_length=100, default=None, null=True, blank=True)
+    nume = models.CharField(max_length=100, unique=True)
     def __str__(self):
         return self.nume
 
 class University(models.Model):
-    nume = models.CharField(max_length=100, default=None, null=True, blank=True)
+    nume = models.CharField(max_length=100, unique=True)
     def __str__(self):
         return self.nume
