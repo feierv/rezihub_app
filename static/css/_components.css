@@ -5,10 +5,21 @@
    3.Cards
 */
 
-.error-message {
-    color    : firebrick;
-    font-size: 1rem;
+.form__error {
+    outline       : 3px solid rgb(184, 0, 0);
+    outline-offset: -3px;
+    border        : 1px solid transparent;
 }
+
+.form__error--text {
+    font-size  : .75rem;
+    font-weight: 300;
+    color      : rgb(184, 0, 0);
+    position   : absolute;
+    bottom     : -1.5rem;
+    left       : 0;
+}
+
 
 
 /* ====================
@@ -18,12 +29,13 @@
 .form__field {
     display       : flex;
     flex-direction: column;
-    gap           : .5rem;
+    gap           : .25rem;
     width         : 100%;
     font-size     : 1rem;
     font-style    : normal;
     font-weight   : 500;
     line-height   : 1.875rem;
+    position      : relative;
 }
 
 .form__label {

@@ -4,16 +4,30 @@
 <html lang="ro">
     <head>
         <!-- Metadata -->
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- Primary Meta Tags -->
+        <title>Rezihub</title>
+        <meta name="title" content="Page Title">
+        <meta name="description" content="Page description goes here">
+
+        <!-- Open Graph / Facebook -->
+        <meta property="og:type" content="website">
+        <meta property="og:url" content="https://www.example.com/">
+        <meta property="og:title" content="Page Title">
+        <meta property="og:description" content="Page description goes here">
+        <meta property="og:image" content="https://example.com/image.jpg">
+
+        <!-- Twitter -->
+        <meta property="twitter:card" content="summary_large_image">
+        <meta property="twitter:url" content="https://www.example.com/">
+        <meta property="twitter:title" content="Page Title">
+        <meta property="twitter:description" content="Page description goes here">
+        <meta property="twitter:image" content="https://example.com/image.jpg">
+
         <!-- Classes & script import -->
         <link href="{% static '/css/_main.css' %}" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
         <script src="https://unpkg.com/htmx.org@1.9.4" integrity="sha384-zUfuhFKKZCbHTY6aRR46gxiqszMk5tcHjsVFxnUo8VMus4kHGVdIYVbOYYNlKmHV" crossorigin="anonymous"></script>
-
-
         <!-- <script src="{% static '/js/script.js' %}"></script> -->
-        <!-- Misc -->
-        <title>Rezihub</title>
     </head>
     <body>
         {% csrf_token %}

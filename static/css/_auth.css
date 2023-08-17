@@ -10,6 +10,16 @@
     overflow: auto;
 }
 
+#step-1 {
+    flex-direction : row !important;
+    flex-wrap      : wrap !important;
+    justify-content: flex-start;
+    gap            : 1rem;
+}
+
+#step-1 .form__field {
+    width: calc(50% - .5rem);
+}
 
 .auth__left {
     width          : 50%;

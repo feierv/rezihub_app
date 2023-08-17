@@ -1,84 +1,83 @@
 {% extends '_base.html' %}
 {% block content %}
-        <div class="auth">
-            <div class="auth__left">
-                <div class="auth__content">
-                    <h1 class="auth__title-stepper">Buna, <br>
-                        Hai sa ne cunoastem! 🤝</h1>
-                    <form method="post" action="{% url 'continue-register' %}" class="auth-form">
-                        {% csrf_token %}
-                        <!-- Pre Nume -->
-                        <div class="auth-form__field">
-                            <label for="first-name" class="auth-form__label">Pre nume:</label>
-                            <input id="first-name" name='nume' class="auth-form__input" required required
-                                placeholder="Enter your first name">
-                        </div>
-                         <!-- Nume -->
-                         <div class="auth-form__field">
-                            <label for="last-name" class="auth-form__label">Nume:</label>
-                            <input id="prenume" name='prenume' class="auth-form__input" required
-                                placeholder="Enter your last name">
-                        </div>
-                        <!-- Telefon -->
-                        <div class="auth-form__field">
-                            <label for="phone" class="auth-form__label">Telefon:</label>
-                            <input id="phone" name='phone' class="auth-form__input {% if error %} errror_clas {% endif %} " 
-                            placeholder="Enter your phone">
-                            {% if errors.phone %}
-                                <div class="form__error">{{ errors.phone }}</div>
-                            {% endif %}
-                        </div>
-                        <!-- Localitate -->
-                        <div class="auth-form__field">
-                            <label for="city" class="auth-form__label">Localitate:</label>
-                            <input id="city" name='localitate' class="auth-form__input" required
-                                placeholder="Enter your city">
-                        </div>
-                        <!-- Judet -->
-                        <div class="auth-form__field">
-                            <label for="county" class="auth-form__label">Judet:</label>
-                            <input id="county" name='judet' class="auth-form__input" required
-                            placeholder="Enter your county">
-                        </div> 
-                        <!-- Strada -->
-                         <div class="auth-form__field">
-                            <label for="street" class="auth-form__label">Strada:</label>
-                            <input id="street" name='strada' class="auth-form__input" required
-                            placeholder="Enter your street name">
-                        </div> 
-                        <!-- Numar -->
-                        <div class="auth-form__field">
-                            <label for="number" class="auth-form__label">Strada:</label>
-                            <input id="number" name='numar' class="auth-form__input" required
-                            placeholder="Enter your street number">
-                        </div> 
-                        <div class="auth-form__actions">
-                            <button
-                                id="button-stepper-1"
-                                type="submit"
-                                class="auth-form__button auth-form__button--primary">
-                                <span style="display: block;">Continua</span>
-                            </button>
-                        </div>
-                    </form>
-
-
-                    <div class="stepper__info">
-                        Datele dumneavoastră de contact sunt necesare în vederea emiterii facturii în cazul achiziționării unui cont premium. 
-                        Vă asigurăm că informațiile personale furnizate vor fi păstrate în siguranță și vor fi utilizate doar în scopul facturării și comunicării cu dumneavoastră. 
-                        Ne angajăm să protejăm confidențialitatea datelor clienților noștri și să respectăm cele mai înalte standarde de securitate și transparență. 
-                        Vă mulțumim pentru înțelegere.
-                    </div>
-                </div>
-            </div>
-            <div class="auth__right">
-                <div class="auth__right-wrapper">
-                    <div class="auth__right-heading">Lorem ipsum dolor sit amet</div>
-                    <div class="auth__right-text">Lorem ipsum dolor sit amet consectetur. Tortor dui vitae proin viverra. Cursus mi vel risus dolor nisi ac in euismod vel gravida mi aliquet sit sit.</div>
-                </div>
-                <div class="auth__right-image">
-                    <img src="/static/assets/images/dashboard-present-min.png" alt="rezihub dashboard">
-                </div>
-            </div>
+<div class="auth">
+  <div class="auth__left">
+    <div class="auth__content">
+      <h1 class="auth__title-stepper">Buna, <br>
+        Hai sa ne cunoastem! 🤝
+      </h1>
+      <form hx-post="{% url 'continue-register' %}" 
+      hx-target="#step-1" class="auth-form" id="step-1">
+        {% csrf_token %}
+        <!-- Pre Nume -->
+        <div class="form__field">
+          <label for="first-name" class="form__label">Nume:</label>
+          <input id="first-name" type="text" name='nume' class="form__input {% if errors.nume %} form__error {% endif %}" required placeholder="Numele dvs.">
         </div>
-    {% endblock %}
+        <!-- Nume -->
+        <div class="form__field">
+          <label for="last-name" class="form__label">Prenume:</label>
+          <input id="last-name" type="text" name='prenume' class="form__input {% if errors.prenume %} form__error {% endif %}" required placeholder="Prenumele dvs.">
+        </div>
+        <!-- Telefon -->
+        <div class="form__field">
+          <label for="phone" class="form__label">Telefon:</label>
+          <input id="phone" type="tel" maxlength=10 name='phone' class="form__input {% if errors.phone %} form__error {% endif %}" placeholder="0742-900-300">
+          {% if errors.phone %}
+          <div class="form__error--text">{{ errors.phone }}</div>
+          {% endif %}
+        </div>
+        <!-- Localitate -->
+        <div class="form__field">
+          <label for="city" class="form__label">Localitate:</label>
+          <input id="city" type="text" name='localitate' class="form__input {% if errors.localitate %} form__error {% endif %}" required placeholder="Introduce-ți numele Orașului">
+        </div>
+        <!-- Judet -->
+        <div class="form__field">
+          <label for="county" class="form__label">Judet:</label>
+          <input id="county"  type="text" name='judet' class="form__input {% if errors.judet %} form__error {% endif %}" required placeholder="Introduce-ți Județul">
+        </div>
+        <!-- Strada -->
+        <div class="form__field">
+          <label for="street" class="form__label">Strada:</label>
+          <input id="street" type="text" name='strada' class="form__input {% if errors.strada %} form__error {% endif %}" required placeholder="Introduce-ți Strada">
+        </div>
+        <!-- Numar -->
+        <div class="form__field">
+          <label for="number" class="form__label">Numar:</label>
+          <input id="number" type="tel" maxlength="5" name='numar' class="form__input {% if errors.numar %} form__error {% endif %}" required placeholder="Introduce-ți Numarul">
+        </div>
+        <div class="auth-form__actions">
+          <button id="button-stepper-1" type="submit" class="button button--primary">
+            <span>Continua</span>
+          </button>
+        </div>
+      </form>
+      <div class="stepper__info">
+        Datele dumneavoastră de contact sunt necesare în vederea emiterii facturii în cazul achiziționării unui cont premium. 
+        Vă asigurăm că informațiile personale furnizate vor fi păstrate în siguranță și vor fi utilizate doar în scopul facturării și comunicării cu dumneavoastră. 
+        Ne angajăm să protejăm confidențialitatea datelor clienților noștri și să respectăm cele mai înalte standarde de securitate și transparență. 
+        Vă mulțumim pentru înțelegere.
+      </div>
+    </div>
+  </div>
+  <div class="auth__right">
+    <div class="auth__right-wrapper">
+      <div class="display-1">Lorem ipsum dolor sit amet</div>
+      <div class="text-body-16">Lorem ipsum dolor sit amet consectetur. Tortor dui vitae proin viverra. Cursus mi vel risus dolor nisi ac in euismod vel gravida mi aliquet sit sit.</div>
+    </div>
+    <div class="auth__right-image">
+      <img src="/static/assets/images/dashboard-present-min.png" alt="rezihub dashboard" width="auto" height="auto"/>
+    </div>
+  </div>
+</div>
+<script>
+    const phoneInput = document.querySelector('#phone');
+
+    phoneInput.addEventListener('keyup', function(e) {
+        const value = e.target.value.replace(/[^\d]/g, '');
+        e.target.value = value.replace(/^(\d{4})(\d{3})(\d{3})/, "$1-$2-$3"); 
+    });
+</script>
+
+{% endblock %}

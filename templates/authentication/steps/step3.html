@@ -9,7 +9,7 @@
                         {% for speciality in specialities %}
                             <div class="speciality-card" data-select="{{speciality.name}}">
                             <div class="speciality-card__chip">{{speciality.length}}</div>
-                            <img class="speciality-card__image" src="{{speciality.static_url}}" alt="specialitate">
+                            <img class="speciality-card__image" src="{{speciality.static_url}}" alt="{{speciality.name}}" width="auto" height="auto">
                             <div class="speciality-card__text">{{speciality.name}}</div>
                             </div>
                         {% endfor %}
@@ -18,11 +18,11 @@
             </div>
             <div class="auth__right">
                 <div class="auth__right-wrapper">
-                    <div class="auth__right-heading">Lorem ipsum dolor sit amet</div>
-                    <div class="auth__right-text">Lorem ipsum dolor sit amet consectetur. Tortor dui vitae proin viverra. Cursus mi vel risus dolor nisi ac in euismod vel gravida mi aliquet sit sit.</div>
+                    <div class="display-1">Lorem ipsum dolor sit amet</div>
+                    <div class="text-body-16">Lorem ipsum dolor sit amet consectetur. Tortor dui vitae proin viverra. Cursus mi vel risus dolor nisi ac in euismod vel gravida mi aliquet sit sit.</div>
                 </div>
                 <div class="auth__right-image">
-                    <img src="/static/assets/images/dashboard-present-min.png" alt="rezihub dashboard">
+                    <img src="/static/assets/images/dashboard-present-min.png" alt="rezihub dashboard" width="auto" height="auto">
                 </div>
             </div>
         </div>
