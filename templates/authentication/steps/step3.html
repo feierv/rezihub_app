@@ -5,6 +5,10 @@
                 <div class="auth__content">
                     <h1 class="auth__title-stepper">Ce specialitate iti doresti?  💼 </h1>
                     
+                    {% if instance %}
+                        <h4>Specialitate selectata: <span id='selected-speciality' data-select='{{instance.nume}}'>{{instance.nume}}<span> </h4>
+                    {% endif %}
+                        
                     <div id="step-3" class="speciality-select-list">
                         {% for speciality in specialities %}
                             <div class="speciality-card" data-select="{{speciality.name}}">
@@ -14,12 +18,17 @@
                             </div>
                         {% endfor %}
                         <div class="form__actions">
-                            <button id="back-button" class="button button--outline" data-url="/step4.html">
+                            {% if instance %}
+                                <div id="submit-button-specialty" class="button button--primary" data-url='{% url "continue-register"%}'>
+                                    <span>Continua</span>
+                                </div>
+                                {% endif %}
+                            <div id="back-button" class="button button--outline" data-url='{% url "back-register" True %}'>
                                 <span>
                                     <i class="fa-solid fa-arrow-left"></i>
                                     Inapoi
                                 </span>
-                            </button>
+                            </div>
                         </div>
                     </div>
 
@@ -98,9 +107,7 @@
                                             xhr.onload = function () {
                                                 if (xhr.status >= 200 && xhr.status < 400) {
                                                     // Handle success
-                                                    console.log("POST request successful");
-                                                    var responseData = xhr.responseText; // Get the response data
-                                                    document.body.innerHTML = responseData;
+                                                    window.location.href = url;
                                                 } else {
                                                     // Handle error
                                                     console.error("Error:", xhr.statusText);
@@ -130,6 +137,44 @@
                             xhr.send();
                         });
                     });
+                    const continueButton = document.getElementById('submit-button-specialty');
+                    if (continueButton) {
+                        continueButton.addEventListener('click', function () {
+                            var xhr = new XMLHttpRequest();
+                            
+                            // Define the POST request URL
+                            const url = continueButton.getAttribute('data-url');
+                            
+                            // Set up the request
+                            xhr.open("POST", url);
+                            xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest"); // Set the requested header
+                            xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
+                            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                            
+                            var dataSelect = document.getElementById('selected-speciality').getAttribute("data-select");
+                            alreadySelectedComponent = encodeURIComponent(dataSelect)
+                            var formData = "specialitate=" + encodeURIComponent(dataSelect);
+                            
+                            // Set up the event handler for when the request completes
+                            xhr.onload = function () {
+                                if (xhr.status >= 200 && xhr.status < 400) {
+                                    // Handle success
+                                    window.location.href = url;
+                                } else {
+                                    // Handle error
+                                    console.error("Error:", xhr.statusText);
+                                }
+                            };
+                            xhr.onerror = function () {
+                                console.error("Request failed");
+                            };
+            
+                            // Send the request
+                            xhr.send(formData);
+                            
+                        });
+                    }
                 });
+
             </script>
 {% endblock %}

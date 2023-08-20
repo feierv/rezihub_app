@@ -11,17 +11,25 @@
         <!-- Pre Nume -->
         <div class="form__field">
           <label for="first-name" class="form__label">Nume:</label>
-          <input id="first-name" type="text" name='nume' class="form__input {% if errors.nume %} form__error {% endif %}" required placeholder="Numele dvs.">
+          <input id="first-name" type="text" name='nume' class="form__input 
+                          {% if errors.nume %} form__error {% endif %}" required placeholder="Numele dvs."
+                           value="{% if instance %}{{ instance.nume }}{% elif entered_data%}{{entered_data.nume}}{% endif %}">
+
+                           
         </div>
         <!-- Nume -->
         <div class="form__field">
           <label for="last-name" class="form__label">Prenume:</label>
-          <input id="last-name" type="text" name='prenume' class="form__input {% if errors.prenume %} form__error {% endif %}" required placeholder="Prenumele dvs.">
+          <input id="last-name" type="text" name='prenume' class="form__input
+                {% if errors.prenume %} form__error {% endif %}" required placeholder="Prenumele dvs."
+                value="{% if instance %}{{ instance.prenume }}{% elif entered_data%}{{entered_data.prenume}}{% endif %}">
         </div>
         <!-- Telefon -->
         <div class="form__field">
           <label for="phone" class="form__label">Telefon:</label>
-          <input id="phone" type="tel" maxlength=10 name='phone' class="form__input {% if errors.phone %} form__error {% endif %}" placeholder="0742-900-300">
+          <input id="phone" type="tel" maxlength=10 name='phone' class="form__input required
+                {% if errors.phone %} form__error {% endif %}" placeholder="0742-900-300" required
+                value="{% if instance %}{{ instance.phone }}{% elif entered_data%}{{entered_data.phone}}{% endif %}">
           {% if errors.phone %}
           <div class="form__error--text">{{ errors.phone }}</div>
           {% endif %}
@@ -29,22 +37,34 @@
         <!-- Localitate -->
         <div class="form__field">
           <label for="city" class="form__label">Localitate:</label>
-          <input id="city" type="text" name='localitate' class="form__input {% if errors.localitate %} form__error {% endif %}" required placeholder="Introduce-ți numele Orașului">
+          <input id="city" type="text" name='localitate' class="form__input
+                 {% if errors.localitate %} form__error {% endif %}" required placeholder="Introduce-ți numele Orașului"
+                  value="{% if instance %}{{ instance.localitate}}{% elif entered_data%}{{entered_data.localitate}}{% endif %}">
+
         </div>
         <!-- Judet -->
         <div class="form__field">
           <label for="county" class="form__label">Judet:</label>
-          <input id="county"  type="text" name='judet' class="form__input {% if errors.judet %} form__error {% endif %}" required placeholder="Introduce-ți Județul">
+          <input id="county"  type="text" name='judet' class="form__input
+                   {% if errors.judet %} form__error {% endif %}" required placeholder="Introduce-ți Județul" 
+                    value="{% if instance %}{{ instance.judet }}{% elif entered_data%}{{entered_data.judet}}{% endif %}">
+
         </div>
         <!-- Strada -->
         <div class="form__field">
           <label for="street" class="form__label">Strada:</label>
-          <input id="street" type="text" name='strada' class="form__input {% if errors.strada %} form__error {% endif %}" required placeholder="Introduce-ți Strada">
+          <input id="street" type="text" name='strada' class="form__input
+                     {% if errors.strada %} form__error {% endif %}" required placeholder="Introduce-ți Strada"
+                      value="{% if instance %}{{ instance.strada }}{% elif entered_data%}{{entered_data.strada}}{% endif %}">
+
         </div>
         <!-- Numar -->
         <div class="form__field">
           <label for="number" class="form__label">Numar:</label>
-          <input id="number" type="tel" maxlength="5" name='numar' class="form__input {% if errors.numar %} form__error {% endif %}" required placeholder="Introduce-ți Numarul">
+          <input id="number" type="tel" maxlength="5" name='numar' class="form__input
+                         {% if errors.numar %} form__error {% endif %}" required placeholder="Introduce-ți Numarul"
+                      value="{% if instance %}{{ instance.numar }}{% elif entered_data%}{{entered_data.numar}}{% endif %}">
+
         </div>
         <div class="form__actions">
           <button id="button-stepper-1" type="submit" class="button button--primary">
@@ -72,7 +92,6 @@
 </div>
 <script>
     const phoneInput = document.querySelector('#phone');
-
     phoneInput.addEventListener('keyup', function(e) {
         const value = e.target.value.replace(/[^\d]/g, '');
         e.target.value = value.replace(/^(\d{4})(\d{3})(\d{3})/, "$1-$2-$3"); 

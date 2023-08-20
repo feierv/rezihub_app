@@ -27,6 +27,7 @@
         <link href="{% static '/css/_main.css' %}" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
         <script src="https://unpkg.com/htmx.org@1.9.4" integrity="sha384-zUfuhFKKZCbHTY6aRR46gxiqszMk5tcHjsVFxnUo8VMus4kHGVdIYVbOYYNlKmHV" crossorigin="anonymous"></script>
+
         <!-- <script src="{% static '/js/script.js' %}"></script> -->
     </head>
     <body>
@@ -37,4 +38,39 @@
             {% endblock %}
         </main>
     </body>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var currentUrl = window.location.href;
+
+    // Remove the '/True/' portion from the URL
+    var updatedUrl = currentUrl.replace(/\/True\/$/, '/');
+
+    // Use history.replaceState() to update the URL without '/True/'
+    history.replaceState(null, '', updatedUrl);
+
+            const backButton = document.getElementById('back-button');
+            if (backButton) {
+                backButton.addEventListener('click', function () {
+                    const url = backButton.getAttribute('data-url');
+                    
+                    // Get the current URL
+                    var currentUrl = window.location.href;
+        
+                    // Remove the 'back' parameter from the query string
+                    var updatedUrl = currentUrl.replace(/(\?|&)back=[^&]*(&?)/, '$1');
+        
+                    // Use history.replaceState() to update the URL without 'back' parameter
+                    history.replaceState(null, '', updatedUrl);
+        
+                    redirectToUrl(url);
+                });
+            }
+        });
+        
+        
+        function redirectToUrl(url) {
+            window.location.href = url;
+        }
+        
+    </script>
 </html>

@@ -8,12 +8,13 @@
                         {% csrf_token %}
                         <ul class="faculty-list">
                             {% for university in universities %}
-                                <li class="faculty-list__item" data-select="{{ university }}">
+                                <li class="faculty-list__item  {% if university == instance.nume %} is__checked {% endif %} " data-select="{{ university }}">
                                     <div class="faculty-list__content">
                                         <img class="faculty-list__img" src="https://ui-avatars.com/api/?name=John+Doe" alt="{{ university }}" width="auto" height="auto"/>
                                          <span class="faculty-list__name">{{ university }}</span>
                                     </div>
-                                    <input class="faculty-list__radio" type="radio" name="university" value="{{university}}">
+                                    <input class="faculty-list__radio"
+                                     type="radio" name="university" value="{{university}}"{% if university == instance.nume %} checked {% endif %}  >
                                 </li>
                             {% endfor %}
                        
@@ -24,14 +25,14 @@
                                   class="button button--primary" type='submit'>
                                   <span>Continua</span>
                               </button>
-                              <button id="button-submit" class="button button--outline" data-url="/step1.html">
-                                  <span>
-                                      <i class="fa-solid fa-arrow-left"></i>
-                                      Inapoi
-                                  </span>
-                              </button>
-                          </div>
-                    </form>
+                            </div>
+                            <div id="back-button" class="button button--outline" data-url='{% url "back-register" True %}'>
+                                <span>
+                                    <i class="fa-solid fa-arrow-left"></i>
+                                    Inapoi
+                                </span>
+                            </div>
+                        </form>
                 </div>
             </div>
             <div class="auth__right">

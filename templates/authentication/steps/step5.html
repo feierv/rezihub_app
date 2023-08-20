@@ -19,12 +19,12 @@
           <button id="submit-button" class="button button--primary" type='submit'>
             <span>Continua</span>
           </button>
-          <button id="back-button" class="button button--outline"data-url="/step4.html">
-            <span>
-              <i class="fa-solid fa-arrow-left"></i>
-              Inapoi
-            </span>
-          </button>
+            <div id="back-button" class="button button--outline" data-url='{% url "back-register" True %}'>
+                <span>
+                    <i class="fa-solid fa-arrow-left"></i>
+                    Inapoi
+                </span>
+          </div>
         </div>
       </form>
     </div>
@@ -39,4 +39,20 @@
     </div>
   </div>
 </div>
+<script>
+  const backButton = document.getElementById('back-button');
+
+  if (backButton) {
+      backButton.addEventListener('click', function () {
+          const url = backButton.getAttribute('data-url');
+          console.log(url)
+          redirectToUrl(url);
+      });
+  }
+
+function redirectToUrl(url) {
+  window.location.href = url;
+}
+
+</script>
 {% endblock %}
