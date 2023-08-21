@@ -8,7 +8,8 @@
                     {% if instance %}
                         <h4>Specialitate selectata: <span id='selected-speciality' data-select='{{instance.nume}}'>{{instance.nume}}<span> </h4>
                     {% endif %}
-                        
+                    <div id="step-4" class="sub-speciality-select-list">
+                    </div>
                     <div id="step-3" class="speciality-select-list">
                         {% for speciality in specialities %}
                             <div class="speciality-card" data-select="{{speciality.name}}">
@@ -49,7 +50,8 @@
                 document.addEventListener("DOMContentLoaded", function () {
                     // Find all elements with the class 'speciality-card'
                     var specialityCards = document.querySelectorAll(".speciality-card");
-            
+                    const subSpecialitySelectList = document.getElementById("step-4");
+
                     // Add a click event listener to each speciality card
                     specialityCards.forEach(function (card) {
                         card.addEventListener("click", function () {
@@ -75,15 +77,19 @@
 
                                     // Get the target element
                                     var targetElement = document.querySelector("#subspecialities");
-
-                                    // Set the received HTML as the content of the target element
-                                    targetElement.innerHTML = responseData;
-
-                                    // Hide the .speciality-select-list element
-                                    var specialitySelectList = document.querySelector(".speciality-select-list");
-                                    specialitySelectList.style.display = "none";
+                                    
+                                    console.log(responseData)
+                                    const specialityCards = document.querySelectorAll(".speciality-card");
+                                    specialityCards.forEach(card => card.remove());
+                                    var tempContainer = document.createElement('div');
+                                    tempContainer.innerHTML = responseData;
+                            
+                                    // Iterate over the child nodes of the temporary container and append to the target div
+                                    var childNodes = tempContainer.childNodes;
+                                    for (var i = 0; i < childNodes.length; i++) {
+                                      subSpecialitySelectList.appendChild(childNodes[i].cloneNode(true));
+                                    }
                                     var subSpecialityCards = document.querySelectorAll(".sub-speciality-card");
-                  
                                     subSpecialityCards.forEach(function (card) {
                                         card.addEventListener("click", function () {
                                             var dataSelect = card.getAttribute("data-select");

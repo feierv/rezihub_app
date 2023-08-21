@@ -27,8 +27,8 @@
         <!-- Telefon -->
         <div class="form__field">
           <label for="phone" class="form__label">Telefon:</label>
-          <input id="phone" type="tel" maxlength=10 name='phone' class="form__input required
-                {% if errors.phone %} form__error {% endif %}" placeholder="0742-900-300" required
+          <input id="phone" type="tel" maxlength=10 name='phone' class="form__input required 
+                {% if errors.phone %} form__error {% endif %}" placeholder="0742-900-300" required  pattern=".{10,}"
                 value="{% if instance %}{{ instance.phone }}{% elif entered_data%}{{entered_data.phone}}{% endif %}">
           {% if errors.phone %}
           <div class="form__error--text">{{ errors.phone }}</div>
