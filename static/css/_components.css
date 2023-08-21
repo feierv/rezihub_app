@@ -2,7 +2,6 @@
    COMPONENTS
    1.Inputs
    2.Buttons
-   3.Cards
 */
 
 .error-message {
@@ -10,6 +9,9 @@
     font-size: 1rem;
 }
 
+#main {
+    padding-top: 5rem;
+}
 
 /* ====================
 1. Inputs
@@ -177,4 +179,123 @@
     display       : flex;
     flex-direction: row;
     gap           : .5rem;
+}
+
+/* ====================
+3. Navbar
+==================== */
+
+.navbar__rezi {
+    display         : flex;
+    align-items     : center;
+    justify-content : center;
+    padding         : 1rem;
+    position        : absolute;
+    background-color: var(--white);
+    top             : 0;
+    left            : 0;
+    right           : 0;
+    z-index         : 99999;
+    border-bottom   : 3px solid var(--gray-950);
+    height          : 3.75rem;
+}
+
+.navbar__wrapper {
+    width          : 100%;
+    max-width      : 76rem;
+    padding        : .5rem;
+    display        : flex;
+    justify-content: space-between;
+    align-items    : center;
+}
+
+
+.navbar__brand {
+    position: relative;
+    width   : auto;
+}
+
+.navbar__logo {
+    width : 10rem;
+    height: auto;
+}
+
+.navbar__links {
+    display        : flex;
+    justify-content: center;
+    align-items    : center;
+}
+
+.navbar__links a {
+    text-decoration: none;
+}
+
+.navbar__link {
+    margin: 0 1rem;
+}
+
+.navbar__user {
+    position: relative;
+}
+
+.navbar__avatar {
+    width        : 2rem;
+    height       : 2rem;
+    border-radius: 1.5rem;
+    border       : 1px solid var(--gray-950);
+    transition   : scale 0.1s ease-in-out;
+}
+
+.navbar__avatar:hover {
+    cursor   : pointer;
+    transform: scale(.96);
+}
+
+
+.navbar__menu {
+    position        : absolute;
+    top             : 3rem;
+    right           : 0rem;
+    background-color: var(--white);
+    border-radius   : .75rem;
+    display         : flex;
+    flex-direction  : column;
+    gap             : .5rem;
+    max-width       : 15rem;
+    padding         : 1rem;
+    border          : 2px solid var(--gray-950);
+    box-shadow      : rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+.navbar__menu a {
+    text-decoration: none;
+}
+
+.navbar__menu--hidden {
+    display   : none;
+    visibility: hidden;
+}
+
+.navbar__menu--link {
+    font-size      : 1rem;
+    padding        : .5rem 1rem;
+    color          : var(--gray-800);
+    display        : flex;
+    flex-direction : row;
+    gap            : .5rem;
+    justify-content: flex-start;
+    border-radius  : .75rem;
+    align-items    : center;
+    transition     : all .2s ease-in-out;
+}
+
+.navbar__menu--link:hover {
+    background-color: var(--gray-200);
+    border-radius   : .75rem;
+}
+
+.navbar_menu--link i {
+    width : 1rem;
+    height: 1rem;
+    color : var(--gray-800);
 }

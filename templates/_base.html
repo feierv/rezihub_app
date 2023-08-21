@@ -2,28 +2,35 @@
 
 <!DOCTYPE html>
 <html lang="ro">
-<head>
-    <!-- Metadata -->
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Classes & script import -->
-    <link href="{% static '/css/_main.css' %}" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <head>
+        <!-- Metadata -->
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- Classes & script import -->
+        <link href="{% static '/css/_main.css' %}" rel="stylesheet">
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+            rel="stylesheet">
+        <link
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+            rel="stylesheet">
 
-    <!-- Misc -->
-    <title>Rezihub</title>
-</head>
-<body>
-    {% csrf_token %}
-    <main id="main">
-        {% block content %}
-        <!-- page content -->
-        {% endblock %}
-    </main>
-    <!-- Inline Bootstrap scripts -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-   <script>
+        <!-- Misc -->
+        <title>Rezihub</title>
+    </head>
+    <body>
+        {% csrf_token %}
+        <main id="main">
+            {% include '_navbar.html' %}
+            {% block content %}
+            <!-- page content -->
+            {% endblock %}
+        </main>
+        <!-- Inline Bootstrap scripts -->
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script>
         // This script will trigger focus on the input element when the modal is shown
         $('#myModal').on('shown.bs.modal', function () {
             $('#myInput').trigger('focus');
@@ -68,5 +75,5 @@
                 }); {% endcomment %}
             {% comment %} }); {% endcomment %}
     </script>
-</body>
+    </body>
 </html>
