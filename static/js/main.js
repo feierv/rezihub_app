@@ -3,7 +3,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
     const updateViewportHeight = () => {
         const viewportHeight = window.innerHeight;
-        main.style.height = `${viewportHeight}px`;
+        main.style.minHeight = `${viewportHeight}px`;
     };
 
     updateViewportHeight();

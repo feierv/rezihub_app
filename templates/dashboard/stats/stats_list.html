@@ -1,5 +1,52 @@
+{% load static %}
 <div class="stats__list">
-    {% for i in "12345"|make_list %}
-    {%include 'dashboard/stats/stat_card.html' %}
-    {% endfor %}
+    <!-- Total Grile  -->
+    <div class="stat__card bg--pale-pink">
+        <div class="stat__card--icon">
+            <img src="{% static 'assets/images/dashboard/total-grile.png' %}"
+                alt="222" width="auto" height="auto" />
+        </div>
+        <div class="stat__card--title">Total Grile</div>
+        <div class="stat__card--stats">{{user.total_grids_solved}}</div>
+    </div>
+
+    <!-- Kumar  -->
+    <div class="stat__card bg--pastel-blue">
+        <div class="stat__card--icon">
+            <img src="{% static 'assets/images/dashboard/kumar.png' %}"
+                alt="222" width="auto" height="auto" />
+        </div>
+        <div class="stat__card--title">Kumar</div>
+        <div class="stat__card--stats">{{user.total_kumar_grids_solved}}</div>
+    </div>
+
+    <!-- Chirurgie  -->
+    <div class="stat__card bg--pale-liliac">
+        <div class="stat__card--icon">
+            <img src="{% static 'assets/images/dashboard/chirurgie.png' %}"
+                alt="222" width="auto" height="auto" />
+        </div>
+        <div class="stat__card--title">Chirurgie</div>
+        <div class="stat__card--stats">{{user.total_chirurgie_grids_solved}}</div>
+    </div>
+
+    <!-- Sinopsis  -->
+    <div class="stat__card bg--pale-gold">
+        <div class="stat__card--icon">
+            <img src="{% static 'assets/images/chirurgicale-adulti.png' %}"
+                alt="222" width="auto" height="auto" />
+        </div>
+        <div class="stat__card--title">Sinopsis</div>
+        <div class="stat__card--stats">{{user.total_sinopsis_grids_solved}}</div>
+    </div>
+
+    <!-- Punctaj Global  -->
+    <div class="stat__card bg--blue-hosta">
+        <div class="stat__card--icon">
+            <img src="{% static 'assets/images/dashboard/total-grile.png' %}"
+                alt="222" width="auto" height="auto" />
+        </div>
+        <div class="stat__card--title">Punctaj Global</div>
+        <div class="stat__card--stats">{{user.global_points}}</div>
+    </div>
 </div>

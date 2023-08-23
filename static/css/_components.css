@@ -185,6 +185,16 @@
     gap           : .5rem;
 }
 
+.button--small {
+    display        : flex;
+    flex-direction : row;
+    gap            : .5rem;
+    justify-content: center;
+    align-items    : center;
+    height         : 40px;
+    width          : 144px;
+}
+
 #close-todo-modal {
     display         : flex;
     justify-content : center;
@@ -201,6 +211,8 @@
 #close-todo-modal:hover {
     background-color: var(--gray-200);
 }
+
+
 
 /* ====================
 3. Navbar
@@ -342,4 +354,31 @@
     .navbar__rezi {
         display: none;
     }
+}
+
+/* ====================
+4. Chip
+==================== */
+
+.chip {
+    display       : flex;
+    flex-direction: row;
+    gap           : .5rem;
+    border-radius : 2rem;
+    border        : 1px solid var(--black);
+    padding       : .25rem .5rem;
+    font-size     : .75rem;
+    color         : var(--black);
+}
+
+.chip-good {
+    background-color: #A2E9AD;
+}
+
+.chip-medium {
+    background-color: #FADE7E;
+}
+
+.chip-low {
+    background-color: #FF86A0;
 }

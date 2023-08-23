@@ -3,9 +3,25 @@
 {% block content %}
 
 <div class="dashboard">
-  <div class="stats">
-    <div class="heading-5">📈 Statistici</div>
+  <div class="section-column gap-2">
+    {% include 'dashboard/stats/stats_heading.html' %}
     {% include 'dashboard/stats/stats_list.html' %}
+  </div>
+  <div class="section-row gap-4">
+    <div class="progress__data">
+      {% include 'dashboard/progress/progress_heading.html' %}
+      {% include 'dashboard/progress/progress_card.html' %}
+      {% include 'dashboard/progress/progress_bar_list.html' %}
+    </div>
+    <div class="medium__points">
+      {% include 'dashboard/points/points_heading.html' %}
+      {% include 'dashboard/points/points_list.html' %}
+
+    </div>
+  </div>
+  <div class="section-row gap-4">
+    <div class="todo"></div>
+    <div class="tutorial"></div>
   </div>
 </div>
 

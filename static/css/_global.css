@@ -1,3 +1,16 @@
 .pointer {
     cursor: pointer;
 }
+
+.section-column {
+    display       : flex;
+    flex-direction: column;
+    padding       : .5rem;
+
+}
+
+.section-row {
+    display       : flex;
+    flex-direction: row;
+    padding       : 1rem;
+}

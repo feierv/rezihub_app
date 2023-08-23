@@ -1,3 +1,7 @@
+/* ====================
+1. Dashboard Stats
+==================== */
+
 .dashboard {
     max-width       : 1200px;
     position        : relative;
@@ -6,6 +10,16 @@
     border-radius   : 1rem;
     padding         : 1.5rem;
     background-color: var(--white);
+    display         : flex;
+    flex-direction  : column;
+    gap             : 2rem;
+}
+
+.stats-heading {
+    display       : flex;
+    flex-direction: row;
+    gap           : .5rem;
+    align-items   : center;
 }
 
 .stats__list {
@@ -22,15 +36,159 @@
     width        : calc(20% - 1rem);
     position     : relative;
     border       : 3px solid var(--black);
-    border-radius: .5rem;
+    border-radius: 1rem;
     padding      : 1.5rem;
 }
 
 .stat__card--icon {
-    margin-bottom: .5rem;
+    margin-bottom: 1rem;
 }
 
 .stat__card--icon img {
     width : 2rem;
     height: 2rem;
+}
+
+.stat__card--title {
+    font-size     : .875rem;
+    font-weight   : 400;
+    line-height   : normal;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom : .25rem;
+}
+
+.stat__card--stats {
+    font-size  : 1.5rem;
+    font-style : normal;
+    font-weight: 700;
+    line-height: 32px;
+}
+
+/* ====================
+2. Dashboard Progress
+==================== */
+.progress__data {
+    display       : flex;
+    flex-direction: column;
+    gap           : 1rem;
+    width         : calc(50% - .5rem);
+}
+
+.progress__card {
+    width         : 100%;
+    display       : flex;
+    flex-direction: row;
+    align-items   : center;
+    gap           : 1rem;
+    border-radius : .75rem;
+    border        : 3px solid var(--black);
+    padding       : 1rem;
+}
+
+.progress__card--image {
+    min-width       : 4rem;
+    height          : 4rem;
+    background-color: #E3F5FF;
+    border-radius   : .5rem;
+    border          : 1px solid var(--black);
+    display         : flex;
+    justify-content : center;
+    align-items     : center;
+}
+
+.progress__card--image img {
+    width : 2.75rem;
+    height: 2.75rem;
+}
+
+.progress__card--info {
+    width         : 100%;
+    display       : flex;
+    flex-direction: column;
+    gap           : 1rem;
+}
+
+.progress__card--info-bottom {
+    display        : flex;
+    flex-direction : row;
+    gap            : .5rem;
+    justify-content: space-between;
+    align-items    : center;
+}
+
+.progress__card--info-bottom>.body-1 {
+    color: var(--gray-600);
+}
+
+.progress__bar__card {
+    width         : 100%;
+    display       : flex;
+    flex-direction: row;
+    gap           : 1rem;
+    padding       : 1rem;
+}
+
+.progress__bar__card--image {
+    min-width       : 3rem;
+    height          : 3rem;
+    background-color: #E3F5FF;
+    border-radius   : .5rem;
+    border          : 1px solid var(--black);
+    display         : flex;
+    justify-content : center;
+    align-items     : center;
+}
+
+.progress__bar__card--image img {
+    width : 2rem;
+    height: 2rem;
+}
+
+.progress__bar__card--info {
+    width          : 100%;
+    display        : flex;
+    flex-direction : column;
+    justify-content: space-between;
+}
+
+
+.progress__bar__card--progress {
+    width           : 100%;
+    height          : 10px;
+    background-color: #ffff;
+    border-radius   : 10px;
+    overflow        : hidden;
+    border          : 1.5px solid var(--black);
+    margin-top      : .5rem;
+}
+
+.progress__bar__card--progress-inner {
+    height    : 100%;
+    transition: width 0.3s ease-in-out;
+}
+
+
+.medium__points {
+    width: calc(50% - .5rem);
+}
+
+.points__list {
+    background-color: transparent;
+    border          : 3px solid var(--black);
+    border-radius   : .5rem;
+    padding         : 1.5rem;
+    max-height      : 400px;
+    display         : flex;
+    flex-direction  : column;
+    gap             : .5rem;
+}
+
+.points__card {
+    background-color: var(--gray-100);
+    border-radius   : .5rem;
+    height          : 48px;
+    display         : flex;
+    flex-direction  : row;
+    border          : 1px solid var(--black);
 }
