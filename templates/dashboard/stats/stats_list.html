@@ -1,3 +1,5 @@
 <div class="stats__list">
-
+    {% for i in "12345"|make_list %}
+    {%include 'dashboard/stats/stat_card.html' %}
+    {% endfor %}
 </div>

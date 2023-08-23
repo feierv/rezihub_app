@@ -19,4 +19,3 @@ def user_profile_component(form):
 @register.inclusion_tag('authentication/base_auth_component.html')
 def user_profile_card(form):
     return {'form': form}
-
