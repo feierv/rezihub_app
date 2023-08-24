@@ -173,6 +173,10 @@
     width: calc(50% - .5rem);
 }
 
+.points__heading--title {
+    margin-bottom: .5rem;
+}
+
 .points__list {
     background-color: transparent;
     border          : 3px solid var(--black);
@@ -182,6 +186,8 @@
     display         : flex;
     flex-direction  : column;
     gap             : .5rem;
+    overflow        : auto;
+    margin-top      : 1rem;
 }
 
 .points__card {
@@ -190,5 +196,16 @@
     height          : 48px;
     display         : flex;
     flex-direction  : row;
+    align-items     : center;
     border          : 1px solid var(--black);
+    padding         : .5rem 1rem;
+}
+
+.points__card--title {
+    margin-right: auto;
+    margin-left : .5rem;
+}
+
+.points__card--score {
+    font-weight: bold;
 }

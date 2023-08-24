@@ -4,17 +4,6 @@
    2.Buttons
 */
 
-.error-message {
-    color    : firebrick;
-    font-size: 1rem;
-}
-
-#main {
-    padding-top     : 4.5rem;
-    background-color: #F0F0F0;
-    width           : 100%;
-    direction       : ltr;
-}
 
 /* ====================
 1. Inputs
