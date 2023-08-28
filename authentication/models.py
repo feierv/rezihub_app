@@ -21,7 +21,9 @@ class User(AbstractUser):
     @property
     def medium_points(self):
         # punctaj mediu
-        # expected querySet of 
+        # expected a medium of points per solved grids of a chapter
+        # ex: Boliile Hepatice: 3.0,
+        #     Cardiologie:      1.0,
         return None
     
     @property
