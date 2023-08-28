@@ -19,43 +19,68 @@ class User(AbstractUser):
     oras = models.ForeignKey('City', on_delete=models.SET_NULL, null=True, blank=True)
     
     @property
-    def total_grids_solved(self):
-        return 0
+    def medium_points(self):
+        # punctaj mediu
+        # expected querySet of 
+        return None
     
     @property
-    def total_kumar_grids_solved(self):
-        return 0
-    
-    @property
-    def total_chirurgie_grids_solved(self):
-        return 0
-    
-    @property
-    def total_sinopsis_grids_solved(self):
-        return 0
-    
-    @property
-    def global_points(self):
-        return 0
-    
-    @property
-    def last_unfinished_challenge_progress(self):
+    def progress(self):
+        # only from learning
+        # last uncompleted learning session
+        # return chapter_name, 'nr_solved_questions/total_nr_questions' (as string)
         return None
     
     @property
     def kumar_solved_precentage(self):
+        # only from test
         return 0
     
     @property
     def chirurgie_solved_precentage(self):
+        # only from test
         return 0
     
     @property
     def sinopsis_solved_precentage(self):
+        # only from test
         return 0
     
     @property
+    def total_grids_solved(self):
+        # both from learn and test categories
+        return 0
+    
+    @property
+    def total_kumar_grids_solved(self):
+        # both from learn and test categories
+        return 0
+    
+    @property
+    def total_chirurgie_grids_solved(self):
+        # both from learn and test categories
+        return 0
+    
+    @property
+    def total_sinopsis_grids_solved(self):
+        # both from learn and test categories
+        return 0
+    
+    @property
+    def global_points(self):
+        # both from learn and test categories
+        return 0
+    
+    @property
+    def last_unfinished_challenge_progress(self):
+        # only from test
+        return None
+    
+    
+    @property
     def todo_tasks(self):
+        # order by last completed 
+        # (the last completed should be the first showed in the list)
         return self.todotask_set.all()
 
     @property
