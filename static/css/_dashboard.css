@@ -367,3 +367,25 @@
     font-size: 1rem;
     color    : rgb(211, 10, 10);
 }
+
+/* ====================
+4. Dashboard Video
+==================== */
+.tutorial {
+    width: calc(50% - .5rem);
+}
+
+.tutorial__video {
+    position  : relative;
+    margin-top: 1rem;
+}
+
+.tutorial__video video,
+iframe {
+    width        : 100%;
+    height       : 100%;
+    aspect-ratio : 16/9;
+    border       : 3px solid var(--black) !important;
+    border-radius: 12px;
+    outline      : 0;
+}
