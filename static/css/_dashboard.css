@@ -188,6 +188,7 @@
     gap             : .5rem;
     overflow        : auto;
     margin-top      : 1rem;
+    height          : calc(100% - 70px);
 }
 
 .points__card {
@@ -208,4 +209,161 @@
 
 .points__card--score {
     font-weight: bold;
+}
+
+/* ====================
+3. Dashboard Todo
+==================== */
+.todo {
+    width: calc(50% - .5rem);
+}
+
+.todo__wrapper {
+    display       : flex;
+    flex-direction: column;
+    gap           : 1rem;
+}
+
+.todo__heading {
+    display        : flex;
+    position       : relative;
+    flex-direction : row;
+    flex-wrap      : nowrap;
+    justify-content: space-between;
+    align-items    : center;
+    width          : 100%;
+}
+
+.todo__heading button {
+    width : 180px;
+    height: 3rem;
+}
+
+.todo__list {
+    display       : flex;
+    flex-direction: column;
+}
+
+.todo__card {
+    width          : 100%;
+    display        : flex;
+    flex-direction : row;
+    justify-content: space-between;
+    align-items    : center;
+    padding        : .75rem 1rem;
+}
+
+.todo__card:hover {
+    background-color: var(--gray-50);
+}
+
+.todo__card:not(:last-child) {
+    border-bottom: 1px solid var(--gray-200);
+}
+
+.todo__card--content {
+    display        : flex;
+    flex-direction : row;
+    gap            : 1.25rem;
+    justify-content: center;
+    align-items    : center;
+}
+
+
+.todo__card--checkbox {
+    display: none;
+}
+
+.todo__card--checkbox+label {
+    display      : inline-block;
+    width        : 1.5rem;
+    height       : 1.5rem;
+    border       : 2px solid var(--black);
+    border-radius: 4px;
+    cursor       : pointer;
+    position     : relative;
+}
+
+.todo__card--checkbox:checked+label {
+    background-color: var(--black);
+    border-color    : var(--black);
+}
+
+.todo__card--checkbox+label::before {
+    content   : "\2713";
+    font-size : 1rem;
+    color     : white;
+    display   : none;
+    position  : absolute;
+    top       : 50%;
+    left      : 50%;
+    transform : translate(-50%, -50%);
+    transition: opacity 0.3s;
+}
+
+.todo__card--checkbox:checked+label::before {
+    display: block;
+    opacity: 1;
+}
+
+.todo__card--checkbox+label::before {
+    opacity: 0;
+}
+
+.todo__card--content input[type="checkbox"]:hover {
+    cursor: pointer;
+}
+
+.todo__card--content-info {
+    display       : flex;
+    flex-direction: column;
+    gap           : .25rem;
+}
+
+.todo__card--title {
+    font-size  : 1rem;
+    font-weight: bold;
+    color      : var(--black);
+}
+
+.todo__card--date {
+    font-size  : .75rem;
+    font-weight: 300;
+    color      : var(--gray-600);
+}
+
+.todo__card--actions {
+    display       : flex;
+    flex-direction: row;
+    flex-wrap     : nowrap;
+    gap           : .25rem;
+}
+
+.button__actions {
+    width           : 2rem;
+    height          : 2rem;
+    border          : 0;
+    outline         : 0;
+    border-radius   : 4px;
+    padding         : .25rem;
+    background-color: transparent;
+    transition      : all .2s ease;
+}
+
+.button__actions:hover {
+    background-color: var(--gray-200);
+}
+
+.button__actions:active {
+    transform: scale(.95);
+}
+
+.button__actions--edit {
+    font-size: 1rem;
+    color    : var(--black);
+}
+
+.button__actions--delete {
+    font-size: 1rem;
+    color    : rgb(211, 10, 10);
 }
