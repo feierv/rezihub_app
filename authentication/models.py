@@ -142,7 +142,8 @@ class TodoTask(models.Model):
 
         today = timezone.now().date()
         days_until_deadline = (self.deadline - today).days
-
+        if self.is_completed:
+            return None
         if days_until_deadline < 0:
             return -1
         elif days_until_deadline == 0:

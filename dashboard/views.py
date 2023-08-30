@@ -17,6 +17,7 @@ def custom_serialized_response(queryset):
     for entry in serialized_data:
         obj = queryset.get(pk=entry['pk'])  # Assuming you can retrieve the object using the primary key
         entry['fields']['deadline'] = obj.formatted_deadline  # Replace with your property name
+        entry['fields']['deadline_status'] = obj.deadline_status  # Replace with your property name
         data.append(entry)
     return JsonResponse({'tasks': data})
 

@@ -40,6 +40,7 @@ function apiRequestGetAllTodo(url, type, data = null) {
         for (const task of newTasks) {
           const taskElement = document.createElement('div');
           taskElement.setAttribute('data-task-id', task.pk);
+          console.log(task.fields.deadline_status)
           taskElement.innerHTML = `
             <div class="todo__card" data-task-id='${task.pk}'>
             <div class="todo__card--content">
@@ -49,7 +50,12 @@ function apiRequestGetAllTodo(url, type, data = null) {
                 <label for="task_${task.pk}"></label>
                 <div class="todo__card--content-info">
                     <div class="todo__card--title">${task.fields.description}</div>
-                    <div class="todo__card--date">${task.fields.deadline}</div>
+                    <div class="todo__card--date ${
+                      task.fields.deadline_status === 1 ? 'more-days' :
+                      (task.fields.deadline_status === 0 ? 'today-delay' :
+                      (task.fields.deadline_status === -1 ? 'passed-delay' : ''))}">
+                      ${task.fields.deadline}
+                    </div>
                 </div>
             </div>
             <div class="todo__card--actions" data-task-id='${task.pk}'>
