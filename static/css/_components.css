@@ -81,7 +81,7 @@
     align-items       : center;
     border-radius     : .875rem;
     border            : 1px solid var(--gray-200);
-    padding           : 1.125rem 1.5rem;
+    padding           : 1rem 1.5rem;
     transition        : border .1s ease;
     height            : 56px;
     -webkit-appearance: none;
