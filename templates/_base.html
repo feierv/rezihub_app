@@ -41,7 +41,8 @@
     <body>
         {% csrf_token %}
         <main id="main">
-            {% if request.user.is_authenticated %}
+            <h1>{{request.user.last_step}}</h1>
+            {% if request.user.is_authenticated and not request.user.actual_step %}
                 {% include '_navbar.html' %}
             {% endif %}
             {% block content %}
