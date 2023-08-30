@@ -29,13 +29,11 @@ SECRET_KEY = 'django-insecure--yns^9h04#mx_cj)nq+v(rf-@25qcayeo@90w00cd__g&hxylr
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['app.rezihub.ro']
-CORS_ALLOWED_ORIGINS = [
-    "app.rezihub.ro",
-]
-
+ALLOWED_HOSTS = ['app.rezihub.ro', '127.0.0.1']
 CSRF_TRUSTED_ORIGINS = [
     'https://app.rezihub.ro',
+    'http://127.0.0.1:8000'
+
 ]
 
 CORS_ALLOW_ALL_ORIGINS = True

@@ -134,6 +134,22 @@ class TodoTask(models.Model):
     deadline = models.DateField(null=True, blank=True)
     is_completed_date = models.DateTimeField(null=True, blank=True)
 
+
+    @property
+    def deadline_status(self):
+        if self.deadline is None:
+            return None  # You can define the behavior for tasks without a deadline
+
+        today = timezone.now().date()
+        days_until_deadline = (self.deadline - today).days
+
+        if days_until_deadline < 0:
+            return -1
+        elif days_until_deadline == 0:
+            return 0
+        elif days_until_deadline == 1:
+            return 1
+
     @property
     def formatted_deadline(self):
         if self.deadline:

@@ -332,7 +332,6 @@
 .todo__card--date {
     font-size  : .75rem;
     font-weight: 300;
-    color      : var(--gray-600);
 }
 
 .todo__card--actions {

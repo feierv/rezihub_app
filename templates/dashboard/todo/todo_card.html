@@ -4,7 +4,15 @@
         <label for="task_{{task.id}}"></label>
         <div class="todo__card--content-info">
             <div class="todo__card--title">{{task.description}}</div>
-            <div class="todo__card--date">{{task.deadline}}</div>
+
+            <div class="todo__card--date
+             {% if task.deadline_status == 1 %}
+                more-days
+            {% elif task.deadline_status == 0 %}
+                today-delay
+            {% elif task.deadline_status == -1 %}
+                passed-delay
+            {% endif %}">{{task.deadline}}</div>
         </div>
     </div>
     <div class="todo__card--actions" data-task-id='{{task.id}}'>

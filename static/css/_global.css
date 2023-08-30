@@ -33,3 +33,16 @@
     flex-direction: row;
     padding       : 1rem;
 }
+
+
+.more-days {
+    color: green;
+}
+
+.today-delay {
+    color: orange;
+}
+
+.passed-delay {
+    color: red;
+}
