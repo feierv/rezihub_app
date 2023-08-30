@@ -29,11 +29,16 @@ SECRET_KEY = 'django-insecure--yns^9h04#mx_cj)nq+v(rf-@25qcayeo@90w00cd__g&hxylr
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ['app.rezihub.ro']
 CORS_ALLOWED_ORIGINS = [
-    "https://app.rezihub.ro",
-] 
+    "app.rezihub.ro",
+]
 
+CSRF_TRUSTED_ORIGINS = [
+    'https://app.rezihub.ro',
+]
+
+CORS_ALLOW_ALL_ORIGINS = True
 
 # Application definition
 
@@ -57,6 +62,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'app.urls'
@@ -155,3 +161,4 @@ EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'verificare@rezihub.ro'
 EMAIL_HOST_PASSWORD = 'TR7$XL!ELfgYQTnH5D5@?TPE74Qy'
+

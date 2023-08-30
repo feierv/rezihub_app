@@ -3,12 +3,18 @@
     font-size: 1rem;
 }
 
-#main {
-    padding-top     : 4.5rem;
-    background-color: #F0F0F0;
-    width           : 100%;
-    direction       : ltr;
-    padding-bottom  : 2rem;
+#main[data-attribute="not-logged"] {
+    background-color: white;
+    width: 100%;
+    direction: ltr;
+}
+
+#main[data-attribute="logged-in"] {
+    padding-top: 4.5rem;
+    background-color: #F0F0F0; /* Light gray color */
+    width: 100%;
+    direction: ltr;
+    padding-bottom: 2rem
 }
 
 .pointer {
