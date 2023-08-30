@@ -1,10 +1,6 @@
 <div class="todo__card" data-task-id='{{task.id}}'>
     <div class="todo__card--content">
-        <!-- Vlad aici trebuie sa fie id unic -->
-        
-        
         <input type="checkbox" class="todo__card--checkbox" id='task_{{task.id}}' {% if task.is_completed %} checked {% endif %}>
-        <!-- si aici sa se potriveasca cu idul de sus  -->
         <label for="task_{{task.id}}"></label>
         <div class="todo__card--content-info">
             <div class="todo__card--title">{{task.description}}</div>

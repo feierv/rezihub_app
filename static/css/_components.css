@@ -203,7 +203,7 @@
     width          : 144px;
 }
 
-#close-todo-modal {
+#close-todo-modal, #close-todo-modal-update {
     display         : flex;
     justify-content : center;
     align-items     : center;
@@ -216,7 +216,7 @@
     height          : 2rem;
 }
 
-#close-todo-modal:hover {
+#close-todo-modal:hover, #close-todo-modal-update:hover {
     background-color: var(--gray-200);
 }
 

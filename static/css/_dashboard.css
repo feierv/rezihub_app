@@ -242,6 +242,10 @@
 .todo__list {
     display       : flex;
     flex-direction: column;
+    transition: .3s ease-in-out;
+    overflow: auto;
+    max-height: 310px;
+
 }
 
 .todo__card {
@@ -251,15 +255,14 @@
     justify-content: space-between;
     align-items    : center;
     padding        : .75rem 1rem;
+    transition: .3s ease-in-out;
+    border-bottom: 1px solid var(--gray-200);
 }
 
 .todo__card:hover {
     background-color: var(--gray-50);
 }
 
-.todo__card:not(:last-child) {
-    border-bottom: 1px solid var(--gray-200);
-}
 
 .todo__card--content {
     display        : flex;
@@ -389,3 +392,5 @@ iframe {
     border-radius: 12px;
     outline      : 0;
 }
+
+
