@@ -3,13 +3,13 @@
     font-size: 1rem;
 }
 
-#main[data-attribute="not-logged"] {
+#main[data-logged="false"] {
     background-color: white;
     width: 100%;
     direction: ltr;
 }
 
-#main[data-attribute="logged-in"] {
+#main[data-logged="true"] {
     padding-top: 4.5rem;
     background-color: #F0F0F0; /* Light gray color */
     width: 100%;
