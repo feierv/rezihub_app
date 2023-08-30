@@ -17,6 +17,7 @@ class User(AbstractUser):
     university = models.ForeignKey('University', on_delete=models.SET_NULL, null=True, blank=True)
     specialitate = models.ForeignKey('Speciality', on_delete=models.SET_NULL, null=True, blank=True)
     oras = models.ForeignKey('City', on_delete=models.SET_NULL, null=True, blank=True)
+    actual_step = models.CharField(default=STEP_ONE, null=True, max_length=1)
     
     @property
     def medium_points(self):
@@ -114,10 +115,15 @@ class User(AbstractUser):
             return None
         return get_last_uncompleted_step()
             
+    def change_step(self, step):
+        self.actual_step = step
+        self.save()
 
     def save(self, *args, **kwargs):
         if not self.username:
             self.username = self.email
+        if self.actual_step == '5':
+            self.actual_step = None
         super().save(*args, **kwargs)
 
 

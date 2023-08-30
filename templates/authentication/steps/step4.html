@@ -1,11 +1,11 @@
-  <div id="step-3" class="sub-speciality-select-list">
-          {% for speciality in  specialities%}
+  <div id="step-4" class="sub-speciality-select-list">
+          {% for speciality in  specialities %}
             <div class="sub-speciality-card" data-select="{{speciality}}">
-              <img class="sub-speciality-card__image" src="/static/assets/images/clinice-adulti.png" alt="specialitate">
+              <img class="sub-speciality-card__image" src="/static/assets/images/clinice-adulti.png" alt="{{speciality}}" width="auto" height="auto">
               <div class="sub-speciality-card__text">{{speciality}}</div>
             </div>
           {% endfor %}
-    </div>
+  </div>
                   
                   
                   

@@ -1,55 +1,58 @@
 {% extends '_base.html' %}
 {% block content %}
-        <div class="auth">
-            <div class="auth__left">
-                <div class="auth__content">
-                    <h1 class="auth__title-stepper">În ce oras vrei sa mergi?  🏡</h1>
-                    <form method="post" class="auth-form" action="{% url 'continue-register' %}">
-                        {% csrf_token %}
-                        <div class="select">
-                            <select class="select__input" required name='oras'>
-                              <option value="">Alege Oras</option>
-                              {% for city in  cities%}
-                                <option value="{{city.nume}}">{{city.nume}}</option>
-                              {% endfor %}
-                            </select>
-                            <i class="fa-solid fa-chevron-down select__icon"></i>
-                          </div>
-           
-                          <div class="auth-form__actions">
-                              <button
-                                  id="button-stepper-4"
-                                  class="auth-form__button auth-form__button--primary" type='submit'>
-                                  <span style="display: block;">Continua</span>
-                              </button>
-                              <button
-                                  id="button-stepper-back-4"
-                                  class="auth-form__button auth-form__button--back"data-url="/step4.html">
-                                  <span>
-                                      <i class="fa-solid fa-arrow-left"></i>
-                                      Inapoi
-                                  </span>
-                              </button>
-                          </div>
-                    </form>
-
-
-                    <div class="stepper__info">
-                        Datele dumneavoastră de contact sunt necesare în vederea emiterii facturii în cazul achiziționării unui cont premium. 
-                        Vă asigurăm că informațiile personale furnizate vor fi păstrate în siguranță și vor fi utilizate doar în scopul facturării și comunicării cu dumneavoastră. 
-                        Ne angajăm să protejăm confidențialitatea datelor clienților noștri și să respectăm cele mai înalte standarde de securitate și transparență. 
-                        Vă mulțumim pentru înțelegere.
-                    </div>
-                </div>
-            </div>
-            <div class="auth__right">
-                <div class="auth__right-wrapper">
-                    <div class="auth__right-heading">Lorem ipsum dolor sit amet</div>
-                    <div class="auth__right-text">Lorem ipsum dolor sit amet consectetur. Tortor dui vitae proin viverra. Cursus mi vel risus dolor nisi ac in euismod vel gravida mi aliquet sit sit.</div>
-                </div>
-                <div class="auth__right-image">
-                    <img src="/static/assets/images/dashboard-present-min.png" alt="rezihub dashboard">
-                </div>
-            </div>
+<div class="auth">
+  <div class="auth__left">
+    <div class="auth__content">
+      <h1 class="auth__title-stepper">În ce oras vrei sa mergi?  🏡</h1>
+      <form id="step-5" method="post" class="auth-form" action="{% url 'continue-register' %}">
+        {% csrf_token %}
+        <div class="form__select">
+          <select class="form__select--input" required name='oras'>
+            <option value="">Alege Oras</option>
+            {% for city in cities %}
+            <option value="{{city.nume}}">{{city.nume}}</option>
+            {% endfor %}
+          </select>
+          <i class="fa-solid fa-chevron-down form__select--icon"></i>
         </div>
-        {% endblock %}
+        <div class="form__actions">
+          <button id="submit-button" class="button button--primary" type='submit'>
+            <span>Continua</span>
+          </button>
+            <div id="back-button" class="button button--outline" data-url='{% url "back-register" True %}'>
+                <span>
+                    <i class="fa-solid fa-arrow-left"></i>
+                    Inapoi
+                </span>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="auth__right">
+    <div class="auth__right-wrapper">
+      <div class="display-1">Lorem ipsum dolor sit amet</div>
+      <div class="text-body-16">Lorem ipsum dolor sit amet consectetur. Tortor dui vitae proin viverra. Cursus mi vel risus dolor nisi ac in euismod vel gravida mi aliquet sit sit.</div>
+    </div>
+    <div class="auth__right-image">
+      <img src="/static/assets/images/dashboard-present-min.png" alt="rezihub dashboard" width="auto" height="auto">
+    </div>
+  </div>
+</div>
+<script>
+  const backButton = document.getElementById('back-button');
+
+  if (backButton) {
+      backButton.addEventListener('click', function () {
+          const url = backButton.getAttribute('data-url');
+          console.log(url)
+          redirectToUrl(url);
+      });
+  }
+
+function redirectToUrl(url) {
+  window.location.href = url;
+}
+
+</script>
+{% endblock %}

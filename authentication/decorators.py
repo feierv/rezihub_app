@@ -9,11 +9,14 @@ def login_required_decorator(view_func):
         user = request.user
         if user.is_authenticated:
             if user.last_uncompleted_step:
-                return view_func(request, *args, **kwargs)
-            elif request.path == reverse('dashboard'):
+                if request.path == reverse('dashboard'):
+                    return redirect('continue-register')
                 return view_func(request, *args, **kwargs)
             else:
-                return redirect('dashboard')
+                if request.path == reverse('dashboard'):
+                    return view_func(request, *args, **kwargs)
+                else:
+                    return redirect('dashboard')
         return redirect('login')
     return _wrapped_view
 

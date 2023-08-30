@@ -4,8 +4,25 @@
 <html lang="ro">
     <head>
         <!-- Metadata -->
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- Primary Meta Tags -->
+        <title>Rezihub</title>
+        <meta name="title" content="Page Title">
+        <meta name="description" content="Page description goes here">
+
+        <!-- Open Graph / Facebook -->
+        <meta property="og:type" content="website">
+        <meta property="og:url" content="https://www.example.com/">
+        <meta property="og:title" content="Page Title">
+        <meta property="og:description" content="Page description goes here">
+        <meta property="og:image" content="https://example.com/image.jpg">
+
+        <!-- Twitter -->
+        <meta property="twitter:card" content="summary_large_image">
+        <meta property="twitter:url" content="https://www.example.com/">
+        <meta property="twitter:title" content="Page Title">
+        <meta property="twitter:description" content="Page description goes here">
+        <meta property="twitter:image" content="https://example.com/image.jpg">
+
         <!-- Classes & script import -->
         <link href="{% static '/css/_main.css' %}" rel="stylesheet">
         <script src="{% static '/js/main.js' %}"></script>
@@ -68,5 +85,40 @@
         });
       </script>
       
-    </body>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var currentUrl = window.location.href;
+
+    // Remove the '/True/' portion from the URL
+    var updatedUrl = currentUrl.replace(/\/True\/$/, '/');
+
+    // Use history.replaceState() to update the URL without '/True/'
+    history.replaceState(null, '', updatedUrl);
+
+            const backButton = document.getElementById('back-button');
+            if (backButton) {
+                backButton.addEventListener('click', function () {
+                    const url = backButton.getAttribute('data-url');
+                    
+                    // Get the current URL
+                    var currentUrl = window.location.href;
+        
+                    // Remove the 'back' parameter from the query string
+                    var updatedUrl = currentUrl.replace(/(\?|&)back=[^&]*(&?)/, '$1');
+        
+                    // Use history.replaceState() to update the URL without 'back' parameter
+                    history.replaceState(null, '', updatedUrl);
+        
+                    redirectToUrl(url);
+                });
+            }
+        });
+        
+        
+        function redirectToUrl(url) {
+            window.location.href = url;
+        }
+        
+    </script>
+</body>
 </html>

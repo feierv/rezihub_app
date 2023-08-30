@@ -4,48 +4,63 @@
             <div class="auth__left">
                 <div class="auth__content">
                     <h1 class="auth__title-stepper">In ce facultate ai fost/esti?  🎓</h1>
-                    <form method="post" action="{% url 'continue-register' %}" class="auth-form">
+                    <form id="step-2" method="post" action="{% url 'continue-register' %}" class="auth-form">
                         {% csrf_token %}
                         <ul class="faculty-list">
                             {% for university in universities %}
-                                <li class="faculty-list__item" data-select=var_123>
+                                <li class="faculty-list__item  {% if university == instance.nume %} is__checked {% endif %} " data-select="{{ university }}">
                                     <div class="faculty-list__content">
-                                        <img class="faculty-list__img" src="https://ui-avatars.com/api/?name=John+Doe" alt="Faculty icon">
-                                        {% comment %} <span class="faculty-list__name">{{university}}</span> {% endcomment %}
+                                        <img class="faculty-list__img" src="https://ui-avatars.com/api/?name=John+Doe" alt="{{ university }}" width="auto" height="auto"/>
+                                         <span class="faculty-list__name">{{ university }}</span>
                                     </div>
-                                    {{ university }}
-                                    <input class="faculty-list__radio" type="radio" name="university" value="{{university}}">
+                                    <input class="faculty-list__radio"
+                                     type="radio" name="university" value="{{university}}"{% if university == instance.nume %} checked {% endif %}  >
                                 </li>
                             {% endfor %}
                        
                           </ul>
-                          <div class="auth-form__actions">
+                          <div class="form__actions">
                               <button
                                   id="button-stepper-2"
-                                  class="auth-form__button auth-form__button--primary" type='submit'>
-                                  <span style="display: block;">Continua</span>
+                                  class="button button--primary" type='submit'>
+                                  <span>Continua</span>
                               </button>
-                              <button
-                                  id="button-stepper-back-2"
-                                  class="auth-form__button auth-form__button--back" data-url="/step1.html">
-                                  <span>
-                                      <i class="fa-solid fa-arrow-left"></i>
-                                      Inapoi
-                                  </span>
-                              </button>
-                          </div>
-                    </form>
-
+                            </div>
+                            <div id="back-button" class="button button--outline" data-url='{% url "back-register" True %}'>
+                                <span>
+                                    <i class="fa-solid fa-arrow-left"></i>
+                                    Inapoi
+                                </span>
+                            </div>
+                        </form>
                 </div>
             </div>
             <div class="auth__right">
                 <div class="auth__right-wrapper">
-                    <div class="auth__right-heading">Lorem ipsum dolor sit amet</div>
-                    <div class="auth__right-text">Lorem ipsum dolor sit amet consectetur. Tortor dui vitae proin viverra. Cursus mi vel risus dolor nisi ac in euismod vel gravida mi aliquet sit sit.</div>
+                    <div class="display-1">Lorem ipsum dolor sit amet</div>
+                    <div class="text-body-16">Lorem ipsum dolor sit amet consectetur. Tortor dui vitae proin viverra. Cursus mi vel risus dolor nisi ac in euismod vel gravida mi aliquet sit sit.</div>
                 </div>
                 <div class="auth__right-image">
-                    <img src="/static/assets/images/dashboard-present-min.png" alt="rezihub dashboard">
+                    <img src="/static/assets/images/dashboard-present-min.png" alt="rezihub dashboard" width="auto" height="auto">
                 </div>
             </div>
         </div>
+
+        <script>
+            const listItems = document.querySelectorAll('.faculty-list__item');
+            listItems.forEach(item => {
+                const radio = item.querySelector('.faculty-list__radio');
+            
+                item.addEventListener('click', () => {
+                    radio.checked = true; // Select the associated radio button
+                    listItems.forEach(otherItem => {
+                    if (otherItem !== item) {
+                        otherItem.classList.remove('is__checked'); // Uncheck other items
+                    }
+                    });
+                    item.classList.add('is__checked'); // Check the clicked item
+                });
+            });
+
+        </script>
     {% endblock %}

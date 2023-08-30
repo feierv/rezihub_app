@@ -1,6 +1,6 @@
 import json
 from typing import Any
-from django.http import HttpRequest, HttpResponse, JsonResponse
+from django.http import HttpRequest, HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views import View
@@ -39,38 +39,94 @@ class ContinueRegisterView(View):
 
     # Apply the decorator to the view
     @method_decorator(login_required_decorator)
-    def get(self, request):
-        step = request.user.last_uncompleted_step
+    def get(self, request, back=False):
+        def get_previous_step(current_step):
+            crt_step = int(current_step)
+            if crt_step - 1 == 0:
+                return current_step
+            else:
+                return str(crt_step - 1)
+        
+        user = request.user
+        if back:
+            step = get_previous_step(user.actual_step)
+            user.change_step(step)
+            form = get_step_form(step)
+            template = get_step_template(step)
+            context = {
+                'form': form,
+            }
+            print()
+            print(user.actual_step)
+            print(type(user.actual_step))
+            print()
+            if user.actual_step == '1':
+                userdata = getattr(user, 'userdata')
+                context['instance'] = userdata
+            elif step == '2':
+                universities = University.objects.all().values_list('nume', flat=True)
+                context['universities'] = universities
+                if user.university:
+                    context['instance'] = user.university
+            elif step == '3':
+                host = request.scheme + "://" + request.get_host()
+                speciality_url = host + reverse('specialities')
+                specialities = get_specialities_cateogry()
+                context['speciality_url'] = speciality_url
+                context['specialities'] = specialities
+                context['instance'] = user.specialitate
+            return render(request, template, context)
+        else:
+            step = user.actual_step
+        
         form = get_step_form(step)
         template = get_step_template(step)
+
         context = {
             'form': form,
         }
+        if step == '1':
+            user = request.user
+            user_data = getattr(user, 'userdata', None)
+            context['instance'] = user_data
         if step == '2':
             universities = University.objects.all().values_list('nume', flat=True)
             context['universities'] = universities
+            context['instance'] = user.university
+
         if step == '3':
             host = request.scheme + "://" + request.get_host()
             speciality_url = host + reverse('specialities')
             specialities = get_specialities_cateogry()
             context['speciality_url'] = speciality_url
             context['specialities'] = specialities
+            context['instance'] = user.specialitate
+
         if step == '4':
             cities = City.objects.all()
             context['cities'] = cities
         return render(request, template , context)
 
+
     # Apply the decorator to the view
     @method_decorator(login_required_decorator)
     def post(self, request):
-        step = request.user.last_uncompleted_step
+        user = request.user
+        step = user.actual_step
         if step:
             context = {}
             form = get_step_form(step)
             data = request.POST.copy()
             data['user'] = request.user.id
             if step == '1':
-                form = form(data, request_user=request.user)
+                user = request.user
+                user_data = getattr(user, 'userdata', None)
+                if not user_data:
+                    # if userdata instance doesnt exist create a new one
+                    form = form(data, request_user=request.user)
+                else:
+                    # else update the existing one
+                    form = form(data, instance=user_data, request_user=request.user)
             elif step in ['2', '3', '4']:
                 form = form(data, instance=request.user)
             context = {
@@ -78,7 +134,10 @@ class ContinueRegisterView(View):
             }
             if form.is_valid():
                 form.save()
-                step = request.user.last_uncompleted_step
+                user.change_step(str(int(user.actual_step) + 1))
+                step = user.actual_step
+                if not step:
+                    return redirect('dashboard')
                 form = get_step_form(step)
                 context = {
                     'form': form,
@@ -86,21 +145,25 @@ class ContinueRegisterView(View):
             if step == '2':
                 universities = University.objects.all().values_list('nume', flat=True)
                 context['universities'] = universities
+                context['instance'] = user.university
             if step == '3':
                 host = request.scheme + "://" + request.get_host()
                 speciality_url = host + reverse('specialities')
                 specialities = get_specialities_cateogry()
                 context['speciality_url'] = speciality_url
                 context['specialities'] = specialities
+                context['instance'] = user.specialitate
             if step == '4':
                 cities = City.objects.all()
                 context['cities'] = cities
             else:
                 context['errors'] = form.errors
+                context['entered_data'] = data
             template = get_step_template(step)
             return render(request, template, context)
         else:
             return redirect('/dashboard')
+
 
 class GetSpecialitiesView(View):
     def get(self, request):
@@ -126,7 +189,7 @@ class CustomLogInView(LoginView):
         else:
             non_field_errors = form.non_field_errors()
             if non_field_errors:
-                context['non_field_errors'] = non_field_errors
+                context['errors'] = non_field_errors
             else:
                 context['errors'] = form.errors
         return render(request, self.template_name, context)

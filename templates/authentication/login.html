@@ -14,24 +14,16 @@
                 {% csrf_token %}
                 <div class="form__field">
                     <label for="email" class="form__label">Email:</label>
-                    <input id="email" class="form__input" name='email'
-                        required
-                        placeholder="Enter your email">
-                    {% if non_field_errors %}
-                    <div class="form__error">{{ non_field_errors }}</div>
-                    {% endif %}
-                    {% if errors.email %}
-                    <div class="form__error">{{ errors.password }}</div>
+                    <input id="email" class="form__input" name='email' required placeholder="Enter your email">
+                    {% if errors %}
+                    <div class="form__error--text">{{ errors }}</div>
                     {% endif %}
                 </div>
                 <div class="form__field">
                     <label for="password" class="form__label">Password:</label>
-                    <input id="password" type='password'
-                        class="form__input" name='password'
-                        required
-                        placeholder="Enter your password">
+                    <input id="password" type='password' class="form__input" name='password' required placeholder="Enter your password">
                     {% if errors.password %}
-                    <div class="form__error">{{ errors.password }}</div>
+                        <div class="form__error--text">{{ errors.password }}</div>
                     {% endif %}
                 </div>
                 <div class="form__actions">
