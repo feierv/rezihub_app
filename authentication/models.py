@@ -2,8 +2,8 @@ from typing import Iterable, Optional
 from django.db import models
 
 from django.contrib.auth.models import AbstractUser
-from datetime import datetime, timedelta
-
+from django.utils import timezone  # Import timezone from django.utils
+from django.core.serializers.base import Serializer
 
 class User(AbstractUser):
     '''This is the custom User class, here we add new user fields'''
@@ -78,12 +78,11 @@ class User(AbstractUser):
         # only from test
         return None
     
-    
     @property
     def todo_tasks(self):
         # order by last completed 
         # (the last completed should be the first showed in the list)
-        return self.todotask_set.all()
+        return self.todotask_set.order_by('-is_completed', '-is_completed_date', 'deadline')
 
     @property
     def personal_data(self):
@@ -127,6 +126,21 @@ class TodoTask(models.Model):
     description = models.CharField(max_length=200)
     is_completed = models.BooleanField(default=False)
     deadline = models.DateField(null=True, blank=True)
+    is_completed_date = models.DateTimeField(null=True, blank=True)
+
+    @property
+    def formatted_deadline(self):
+        if self.deadline:
+            return self.deadline.strftime('%b. %d, %Y')
+        return ""
+    
+    def save(self, *args, **kwargs):
+        # Check if the object is already in the database (has a primary key)
+        if self.pk:
+            original_task = TodoTask.objects.get(pk=self.pk)
+            if not original_task.is_completed and self.is_completed:
+                self.is_completed_date = timezone.now()
+        super(TodoTask, self).save(*args, **kwargs)
 
 
 class UserData(models.Model):

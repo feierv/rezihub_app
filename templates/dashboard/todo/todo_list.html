@@ -1,5 +1,6 @@
 <div class="todo__list">
     <!-- TODO:If empty display and icon/illustration and a text that is empty  -->
-    {% include 'dashboard/todo/todo_card.html' %}
-    {% include 'dashboard/todo/todo_card.html' %}
+    {% for task in user.todo_tasks %}
+        {% include 'dashboard/todo/todo_card.html' with user=user %}
+    {% endfor %}
 </div>

@@ -9,6 +9,7 @@
         <!-- Classes & script import -->
         <link href="{% static '/css/_main.css' %}" rel="stylesheet">
         <script src="{% static '/js/main.js' %}"></script>
+        <script src="{% static '/js/utils.js' %}"></script>
 
         <link
             href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
@@ -23,7 +24,9 @@
     <body>
         {% csrf_token %}
         <main id="main">
-            {% include '_navbar.html' %}
+            {% if request.user.is_authenticated %}
+                {% include '_navbar.html' %}
+            {% endif %}
             {% block content %}
             <!-- page content -->
             {% endblock %}
@@ -47,36 +50,23 @@
         $('#close-todo-modal').click(function () {
             $('#exampleModal').modal('hide')
         });
-            {% comment %} $('#submitFormButton').click(function() {
-                var form = $('#exampleModal form');
-                var descriptionField = form.find('[name="description"]');
-                var deadlineField = form.find('[name="deadline"]');
-                var descriptionError = form.find('.description-error');
-                var deadlineError = form.find('.deadline-error');
-                
-                // Clear previous error messages
-                descriptionError.text('');
-                deadlineError.text('');
-                
-                if (descriptionField.val().trim() === '') {
-                    descriptionError.text('This field is required.');
-                    return false;  // Prevent form submission
-                }
-    
-                if (deadlineField.val().trim() === '') {
-                    deadlineError.text('This field is required.');
-                    return false;  // Prevent form submission
-                }
-    
-                $.ajax({
-                    url: form.attr('action'),
-                    type: 'POST',
-                    data: form.serialize(),
-                    success: function(response) {
-                        document.body.innerHTML = response;  // Replace the entire page with the response
-                    }
-                }); {% endcomment %}
-            {% comment %} }); {% endcomment %}
-    </script>
+        $('#close-todo-modal-update').click(function () {
+          $('#updateModal').modal('hide')
+      });
+
+
+      const detailUrl = `{% url 'todo-detail' todo_id=0 %}`
+      const updateUrl = `{% url 'update-todo' todo_id=0 %}`
+      const deleteUrl = `{% url 'todo-delete' todo_id=0 %}`
+      const retrieveUrl = `{% url 'get-todo' todo_id=0 %}`
+
+        addRemoveEventTodo(deleteUrl)
+        addRetrieveEventTodo(retrieveUrl, updateUrl)
+        const todoItemsDiv = document.querySelector('.todo__list');
+        todoItemsDiv.addEventListener('change', event => {
+            UpdateTasksPositions(event, detailUrl, deleteUrl)
+        });
+      </script>
+      
     </body>
 </html>
