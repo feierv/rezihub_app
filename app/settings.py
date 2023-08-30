@@ -30,6 +30,9 @@ SECRET_KEY = 'django-insecure--yns^9h04#mx_cj)nq+v(rf-@25qcayeo@90w00cd__g&hxylr
 DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
+CORS_ALLOWED_ORIGINS = [
+    "https://app.rezihub.ro",
+] 
 
 
 # Application definition
