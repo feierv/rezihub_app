@@ -1,0 +1,71 @@
+{% extends '_base.html' %}
+{% load static %}
+{% block content %}
+<style>
+    <style>
+        .container {
+            text-align: center;
+            position: relative;
+            width: 70%;
+            margin: 0 auto;
+            border: 2px solid #333;
+            padding: 20px;
+        }
+
+        .navigation {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            right: 10px;
+        }
+
+        .back-button, .next-button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #333;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .next-button {
+            float: right;
+        }
+
+        /* Styling for select elements and options */
+        .select-option {
+            border: 1px solid #ccc;
+            padding: 5px;
+            margin: 5px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .checkbox {
+            margin-left: 10px;
+        }
+    </style>
+</style>
+    <div class="container">
+        <!-- Your content goes here -->
+        <div class="select-option">
+            <label for="option1">Option 1</label>
+            <input type="checkbox" id="option1" class="checkbox">
+        </div>
+        <div class="select-option">
+            <label for="option2">Option 2</label>
+            <input type="checkbox" id="option2" class="checkbox">
+        </div>
+        <div class="select-option">
+            <label for="option3">Option 3</label>
+            <input type="checkbox" id="option3" class="checkbox">
+        </div>
+
+        
+    </div>
+    <div class="navigation">
+        <button class="back-button">Back</button>
+        <button class="next-button">Next</button>
+    </div>
+{% endblock %}

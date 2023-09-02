@@ -32,7 +32,8 @@ class User(AbstractUser):
         # only from learning
         # last uncompleted learning session
         # return chapter_name, 'nr_solved_questions/total_nr_questions' (as string)
-        return None
+        session = self.learningsession_set.filter(is_completed=False).last()
+        return session
     
     @property
     def kumar_solved_precentage(self):

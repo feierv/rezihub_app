@@ -13,7 +13,7 @@ def login_required_decorator(view_func):
                     return redirect('continue-register')
                 return view_func(request, *args, **kwargs)
             else:
-                if request.path == reverse('dashboard'):
+                if request.path == reverse('dashboard') or request.path != reverse('continue-register'):
                     return view_func(request, *args, **kwargs)
                 else:
                     return redirect('dashboard')
@@ -29,5 +29,20 @@ def already_logged_in_decorator(view_func):
                 return redirect('continue-register')
             else:
                 return redirect('dashboard')
+        return view_func(request, *args, **kwargs)
+    return _wrapped_view
+
+
+def learning_session_started_decorator(view_func):
+    @wraps(view_func)
+    def _wrapped_view(request, *args, **kwargs):
+        user = request.user
+        print()
+        print(" * * * ")
+        print(user.progress)
+        print(" * * * ")
+        print()
+        if user.progress:
+            return redirect('learning-session')
         return view_func(request, *args, **kwargs)
     return _wrapped_view

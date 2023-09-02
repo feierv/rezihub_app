@@ -1,0 +1,247 @@
+{% extends '_base.html' %}
+{% load static %}
+{% block content %}
+<style>
+.navbar {
+    background-color: #f2f2f2;
+    padding: 10px;
+    list-style: none;
+    display: flex;
+    justify-content: flex-start; /* Align items to the left */
+    padding-left: 0; /* Remove default padding */
+  }
+  
+  .navitem {
+    margin-right: 20px;
+  }
+  
+  .navitem a {
+    text-decoration: none;
+    color: #333;
+  }
+  .selected {
+    background-color: blue;
+    color: white; /* Optional: Change text color for better visibility */
+  }
+
+  .sub-category {
+    border: 1px solid black;
+    width: 50%;
+  }
+  .sub-cateogries-container{
+    width: 50%;
+  }
+
+  .learning-option{
+    border:1px solid black;
+    margin-bottom: 10px;
+  }
+
+  .selected-learning-option{
+    border:3px solid green;
+  }
+
+  .hidden{
+    display:none;
+  }
+  {% comment %} Multiselect css {% endcomment %}
+  .multiselect {
+    width: 200px;
+    display: inline-block;
+  }
+
+  .selectBox {
+    position: relative;
+  }
+
+  .selectBox select {
+    width: 100%;
+    font-weight: bold;
+  }
+
+  .overSelect {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+  }
+
+  #checkboxes {
+    display: none;
+    border: 1px #dadada solid;
+    overflow-y: auto;
+    max-height: 150px;
+  }
+
+  #checkboxes label {
+    display: block;
+  }
+
+  #checkboxes label:hover {
+    background-color: #1e90ff;
+  }
+  .delete-chip {
+    cursor: pointer;
+    margin-left: 90%;
+  }
+
+  .no-learning-option-selected{
+    color: red;
+  }
+  {% comment %} Multiselect css {% endcomment %}
+</style>
+</style>
+<nav>
+    <ul id="learning-general-cateogries-navbar" class='navbar'>
+      {% for category in general_categories %}
+        <li class="navitem {% if category.name == 'Kumar' %} selected {% endif %} ">
+          <div data-item-id='{{ category.id }}'>{{ category.name }}</div>
+        </li>
+      {% endfor %}
+    </ul>
+</nav>
+
+{% include 'learning/components/sub-categories.html' with categories=categories %}
+{% include 'learning/modals/learning-type-modal.html' %}
+
+<script>
+    $(document).ready(function() {
+    var selectedList = [];
+
+    $('#learning-type-modal').on('hidden.bs.modal', function (e) {
+        //remove events here!
+        $("#start-learning-session-button").off("click");
+      });
+
+      function updateSubCategories(itemId) {
+        var url = "{% url 'chapter-select-specific' category_id=0 %}";
+        url = url.replace('0', itemId);
+        
+        $.get(url, function(data) {
+          $('#sub-categories-container').html(data);
+          attachSubCategoryClickHandlers();  // Attach click event handlers to .sub-category
+        });
+      }
+      
+      function attachSubCategoryClickHandlers() {
+        $('.sub-category').on('click', function() {
+            var categoryId = $(this).data('category-id');
+            const modal = $('#learning-type-modal')
+            const closeModalButton = modal.find('#close-learning-modal')
+            modal.modal('show');
+            closeModalButton.click(function () {
+                $('#learning-type-modal').modal('hide')
+                $('.learning-option').removeClass('selected-learning-option');
+                $('#page-number-container').addClass('hidden')
+                $('.no-learning-option-selected').addClass('hidden')
+            });
+
+            $('#start-learning-session-button').on('click', function() {
+                const selectedOption = $('.selected-learning-option').attr('id');
+
+                if (selectedOption == 'page-number-order'){
+                    if (selectedList.length > 0){
+                        console.log(selectedList)
+                        var postData = {
+                            learning_type: 'page-number-order',
+                            category_id: categoryId,
+                            pages: selectedList,
+                            csrfmiddlewaretoken: '{{csrf_token}}' // Include the CSRF token in your data
+                          };
+                          $.post("{% url 'start-learning-session' %}", postData, function(response) {
+                            console.log('Post successful:', response);
+                            $('body').html(response);
+                          })
+                          .fail(function(error) {
+                            console.error('Error:', error);
+                          });
+                    } else {
+                        $('.no-learning-option-selected').html('Nu ati selectat nici o pagina!')
+                        $('.no-learning-option-selected').removeClass('hidden')
+                    }
+                } else if(selectedOption == 'random-order' || selectedOption == 'ordered-order'){
+                    var postData = {
+                        learning_type: selectedOption,
+                        category_id: categoryId,
+                        csrfmiddlewaretoken: '{{csrf_token}}' // Include the CSRF token in your data
+                      };
+                      $.post("{% url 'start-learning-session' %}", postData, function(response) {
+                        console.log('Post successful:', response);
+                        $('body').html(response);
+                      })
+                      .fail(function(error) {
+                        console.error('Error:', error);
+                      });
+
+                } else {
+                    $('.no-learning-option-selected').html('Nu ati selectat nici o optiune!')
+                    $('.no-learning-option-selected').removeClass('hidden')
+                }
+               })
+        });
+      }
+  
+      // Attach click event handlers to .navitem
+      $('.navitem').on('click', function() {
+        $('.navitem').removeClass('selected');
+        $(this).addClass('selected');
+        var itemId = $(this).find('div').data('item-id');
+        updateSubCategories(itemId);
+      });
+      // Attach initial click event handlers to .sub-category
+      attachSubCategoryClickHandlers();
+      
+         $('.learning-option').on('click', function() {
+           var clickedId = $(this).attr('id');
+           $('.learning-option').removeClass('selected-learning-option');
+           $(this).addClass('selected-learning-option');
+           $('#page-number-container').removeClass('hidden')
+           $('.no-learning-option-selected').addClass('hidden')
+           if (clickedId == 'page-number-order'){
+                $(".search-input").on("input", function() {
+                 const predefinedList = [1,2,3,4,5,6,77,67,1001];
+                 const searchText = $(this).val();
+                 const filteredResults = predefinedList.filter(item => item.toString().includes(searchText));
+                 const searchResultsContainer = $(".search-results");
+                 searchResultsContainer.empty();
+                
+                if (filteredResults.length > 0 && searchText.length > 0) {
+                    filteredResults.forEach(result => {
+                      const resultItem = $("<div class='search-result-item'>" + result + "</div>");
+                      resultItem.on("click", function() {
+                        $(".search-input").val(result);
+                        searchResultsContainer.hide();
+                        $('.no-learning-option-selected').addClass('hidden')
+                        if (selectedList.indexOf(result) === -1) {
+                            var html = '<div class="chip" data-value=' + result + '>' + result + '<span class="delete-chip">X</span></div>';
+                                $('.selected-chips').append(html);
+                                $('.delete-chip').on("click", function() {
+                                    var parentDataValue = $(this).parent().data('value');
+                                    console.log(parentDataValue);
+                                    console.log(selectedList);
+                                    var index = selectedList.indexOf(parentDataValue);
+                                    if (index !== -1) {
+                                        selectedList.splice(index, 1);
+                                    }
+                                    $(this).parent().remove()
+                            });
+                            selectedList.push(result)
+                        }
+                      });
+                      searchResultsContainer.append(resultItem);
+                    });
+                    searchResultsContainer.show();
+                  } else {
+                    searchResultsContainer.hide();
+                  }
+                })
+           } else{
+                $('#page-number-container').addClass('hidden')
+           }
+           
+        });
+    });
+    // Trigger the modal and focus on input when button is clicked
+  </script>
+  {% endblock %}
