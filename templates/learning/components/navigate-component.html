@@ -1,0 +1,39 @@
+<!-- Your content goes here -->
+    <h4>{{category_name}}</h4>
+    <h4>Q:{{question_content}}</h4>
+    <h4>{{is_first}}</h4>
+    <h4>{{is_multiple}}</h4>
+    <h4>{{completion_percentage}}</h4>
+    <h4>{{correct_answers}}</h4>
+    <h4>{{user_answers}}</h4>
+    <h4>{{statistics}}</h4>
+{% for answer in answers  %}
+<div class="answer-select-option 
+    {% if answer.id in correct_answers  %}
+            correct-answer
+        {% else %}
+            wrong-answer
+    {% endif %}
+    ">
+    <label for="{{answer.id}}">{{answer.content}}</label>
+    <input type="checkbox" class=" {% if is_multiple == False %}
+        checkbox-round
+            {% if answer.id in user_answers %}
+                checked    
+            {% endif %}
+        {% endif %}
+        "
+        {% if answer.id in user_answers %}
+            checked    
+        {% endif %}
+    id="{{answer.id}}">
+</div>
+{% endfor %}
+<div class="points-message">
+    La aceasta intrebare ai facut {{points}} puncte
+</div>
+<div class="navigation">
+<button class="back-button">Back</button>
+<button class="see-answer disabled-button">See answer</button>
+<button class="next-answered-button">Next</button>
+</div>

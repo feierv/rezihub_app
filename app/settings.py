@@ -49,7 +49,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # apps
     'authentication',
-    'dashboard'
+    'dashboard',
+    'learning',
 ]
 
 MIDDLEWARE = [
@@ -160,3 +161,8 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = 'verificare@rezihub.ro'
 EMAIL_HOST_PASSWORD = 'TR7$XL!ELfgYQTnH5D5@?TPE74Qy'
 
+
+# learning
+PAGE_NUMBER_ORDER = 'page-number-order'
+RANDOM_ORDER = 'random-order'
+ORDERED_ORDER = 'ordered-order'

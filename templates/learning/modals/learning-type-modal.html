@@ -1,0 +1,37 @@
+<!-- Modal -->
+{% block content %}
+<div class="modal fade" id="learning-type-modal" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Alege tip de grila</h5>
+                <button id="close-learning-modal" type="button" class="close"
+                    data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">
+                        <i class="fa-solid fa-xmark"></i>
+                    </span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class='learning-option' id='random-order'>Parcurge grilele in ordine aleatoare</div>
+                <div class='learning-option {% if not request.user.has_wrong_questions %}
+                disabled-option
+                {% endif %} ' id='wrong-questions'>Parcurge grilele gresite </div>
+               <div class='learning-option' id='page-number-order'>Parcurge grilele in functie de numarul paginii</div>
+               <div class='learning-option' id='ordered-order'>Parcurge grilele in ordinea din carte</div>
+               <div id='page-number-container' class='hidden'>
+                   <input type="number" class="search-input" placeholder="Search">
+                   <div class="search-results"></div>
+                   <div class="selected-chips"></div>
+               </div>
+               <button id="start-learning-session-button" 
+                        class="button button--primary">
+                        Incepe
+                </button>
+                <div class='no-learning-option-selected hidden'>
+                </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,5 +1,6 @@
 from typing import Iterable, Optional
 from django.db import models
+from django.db.models import Sum
 
 from django.contrib.auth.models import AbstractUser
 from django.utils import timezone  # Import timezone from django.utils
@@ -20,6 +21,10 @@ class User(AbstractUser):
     actual_step = models.CharField(default=STEP_ONE, null=True, max_length=1)
     
     @property
+    def has_wrong_questions(self):
+        return self.learningsession_set.filter(questions__is_correct=False).count() > 0
+
+    @property
     def medium_points(self):
         # punctaj mediu
         # expected a medium of points per solved grids of a chapter
@@ -32,7 +37,8 @@ class User(AbstractUser):
         # only from learning
         # last uncompleted learning session
         # return chapter_name, 'nr_solved_questions/total_nr_questions' (as string)
-        return None
+        session = self.learningsession_set.filter(is_completed=False).last()
+        return session
     
     @property
     def kumar_solved_precentage(self):
@@ -72,7 +78,9 @@ class User(AbstractUser):
     @property
     def global_points(self):
         # both from learn and test categories
-        return 0
+        points = self.learningsession_set.aggregate(
+            total_points=Sum('questions__points'))['total_points']
+        return points or 0
     
     @property
     def last_unfinished_challenge_progress(self):
