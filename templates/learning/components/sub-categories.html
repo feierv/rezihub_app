@@ -1,5 +1,5 @@
-<div id='sub-categories-container'>
+<div id="sub-categories-container">
 {% for category in categories %}
-            <div data-category-id='{{category.id}}' class='sub-category'>{{category.name}}</div>
-    {% endfor %}
+  {% include 'learning/components/learning-category.html' %}
+{% endfor %}
 </div>

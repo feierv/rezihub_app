@@ -1,23 +1,6 @@
 <nav class="navbar__rezi">
     <div class="navbar__wrapper">
-        {% include 'navbar/logo.html' %}
         {% include 'navbar/links.html' %}
         {% include 'navbar/avatar.html' %}
     </div>
 </nav>
-
-<script>
-    const avatar = document.getElementById("avatar");
-    const userMenu = document.getElementById("userMenu");
-
-    avatar.addEventListener("click", (event) => {
-        userMenu.classList.toggle("navbar__menu--hidden");
-        event.stopPropagation(); 
-    });
-
-    document.addEventListener("click", (event) => {
-        if (!userMenu.contains(event.target) && event.target !== avatar) {
-            userMenu.classList.add("navbar__menu--hidden");
-        }
-    });
-</script>

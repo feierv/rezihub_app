@@ -2,99 +2,64 @@
 
 <!DOCTYPE html>
 <html lang="ro">
-    <head>
-        <!-- Metadata -->
-        <!-- Primary Meta Tags -->
-        <title>Rezihub</title>
-        <meta name="title" content="Page Title">
-        <meta name="description" content="Page description goes here">
+	<head>
+		<!-- Metadata -->
+		<!-- Primary Meta Tags -->
+		<title>Rezihub</title>
+		<meta name="title" content="Page Title">
+		<meta name="description" content="Page description goes here">
+		<meta name="keywords" content="Rezihub, etc..">
 
-        <!-- Open Graph / Facebook -->
-        <meta property="og:type" content="website">
-        <meta property="og:url" content="https://www.example.com/">
-        <meta property="og:title" content="Page Title">
-        <meta property="og:description" content="Page description goes here">
-        <meta property="og:image" content="https://example.com/image.jpg">
+		<!-- Open Graph / Facebook -->
+		<meta property="og:type" content="website">
+		<meta property="og:url" content="https://www.example.com/">
+		<meta property="og:title" content="Page Title">
+		<meta property="og:description" content="Page description goes here">
+		<meta property="og:image" content="https://example.com/image.jpg">
 
-        <!-- Twitter -->
-        <meta property="twitter:card" content="summary_large_image">
-        <meta property="twitter:url" content="https://www.example.com/">
-        <meta property="twitter:title" content="Page Title">
-        <meta property="twitter:description" content="Page description goes here">
-        <meta property="twitter:image" content="https://example.com/image.jpg">
+		<!-- Twitter -->
+		<meta property="twitter:card" content="summary_large_image">
+		<meta property="twitter:url" content="https://www.example.com/">
+		<meta property="twitter:title" content="Page Title">
+		<meta property="twitter:description"
+			content="Page description goes here">
+		<meta property="twitter:image" content="https://example.com/image.jpg">
 
-        <!-- Classes & script import -->
-        <link href="{% static '/css/_main.css' %}" rel="stylesheet">
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script src="{% static '/js/main.js' %}"></script>
-        {% if request.user.is_authenticated and request.path == '/dashboard/' %}
-        <script src="{% static '/js/utils.js' %}"></script>
-        {% endif %}
+		<!-- Classes & script import -->
+		<link href="{% static '/css/_main.css' %}" rel="stylesheet">
+		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+		<script src="{% static '/js/main.js' %}"></script>
+		{% if request.user.is_authenticated and request.path == '/dashboard/' %}
+		<script src="{% static '/js/utils.js' %}"></script>
+		{% endif %}
 
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+	</head>
+	<body>
+		{% csrf_token %}
+		<main id="main" data-logged="{% if request.user.is_authenticated and not request.user.actual_step %}true{% else %}false{% endif %}">
+			{% if request.user.is_authenticated and not request.user.actual_step %}
+				{% include '_navbar.html' %}
+			{% endif %}
+			
+			<div class="desktop-layout">
+				{% block content %}
+				<!-- page content -->
+				{% endblock %}
+			</div>
+		</main>
+		<!-- Inline Bootstrap scripts -->
+		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-        <link
-            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-            rel="stylesheet">
-        <link
-            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
-            rel="stylesheet">
+		<script
+			src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
+		{% if request.user.is_authenticated and request.path == '/dashboard/' %}
+		<script src="{% static 'static/js/todo.js' %}"></script>
+		{% endif %}
 
-
-        <!-- Misc -->
-        <title>Rezihub</title>
-    </head>
-    <body>
-        {% csrf_token %}
-       <main id="main" data-logged="{% if request.user.is_authenticated and not request.user.actual_step %}true{% else %}false{% endif %}">
-            {% if request.user.is_authenticated and not request.user.actual_step %}
-                {% include '_navbar.html' %}
-            {% endif %}
-            {% block content %}
-            <!-- page content -->
-            {% endblock %}
-        </main>
-        <!-- Inline Bootstrap scripts -->
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        
-        <script
-            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
-        {% if request.user.is_authenticated and request.path == '/dashboard/' %}    
-        <script>
-        // This script will trigger focus on the input element when the modal is shown
-        $('#myModal').on('shown.bs.modal', function () {
-            $('#myInput').trigger('focus');
-        });
-
-        // Trigger the modal and focus on input when button is clicked
-        $('#launchModalButton').click(function () {
-            $('#exampleModal').modal('show');
-            $('#modalInput').trigger('focus');
-        });
-        $('#close-todo-modal').click(function () {
-            $('#exampleModal').modal('hide')
-        });
-        $('#close-todo-modal-update').click(function () {
-          $('#updateModal').modal('hide')
-      });
-
-
-      const detailUrl = `{% url 'todo-detail' todo_id=0 %}`
-      const updateUrl = `{% url 'update-todo' todo_id=0 %}`
-      const deleteUrl = `{% url 'todo-delete' todo_id=0 %}`
-      const retrieveUrl = `{% url 'get-todo' todo_id=0 %}`
-
-        addRemoveEventTodo(deleteUrl)
-        addRetrieveEventTodo(retrieveUrl, updateUrl)
-        const todoItemsDiv = document.querySelector('.todo__list');
-        todoItemsDiv.addEventListener('change', event => {
-            UpdateTasksPositions(event, detailUrl, deleteUrl)
-        });
-      </script>
-        {% endif %}
-      
-    <script>
+		<script>
         document.addEventListener('DOMContentLoaded', function () {
             var currentUrl = window.location.href;
 
@@ -129,6 +94,5 @@
         }
         
     </script>
-</body>
+	</body>
 </html>
-

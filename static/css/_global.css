@@ -5,16 +5,22 @@
 
 #main[data-logged="false"] {
     background-color: white;
-    width: 100%;
-    direction: ltr;
+    width           : 100%;
+    direction       : ltr;
 }
 
 #main[data-logged="true"] {
-    padding-top: 4.5rem;
-    background-color: #F0F0F0; /* Light gray color */
-    width: 100%;
-    direction: ltr;
-    padding-bottom: 2rem
+    background-color: #F0F0F0;
+    /* Light gray color */
+    width           : 100%;
+    direction       : ltr;
+    padding-bottom  : 2rem
+}
+
+.desktop-layout {
+    width       : 100%;
+    padding-left: 300px;
+    padding-top : 2rem;
 }
 
 .pointer {
@@ -45,4 +51,31 @@
 
 .passed-delay {
     color: red;
+}
+
+
+.rezi-container {
+    max-width       : 1200px;
+    position        : relative;
+    margin          : 0rem auto;
+    border          : 3px solid var(--black);
+    border-radius   : 1rem;
+    padding         : 1.5rem;
+    background-color: var(--white);
+    display         : flex;
+    flex-direction  : column;
+    gap             : 2rem;
+    min-height      : calc(100vh - 5rem);
+}
+
+.disabled--option {
+    .disabled-option {
+        pointer-events: none;
+        opacity       : 0.6;
+        cursor        : not-allowed;
+    }
+}
+
+.hidden {
+    display: none;
 }

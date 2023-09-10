@@ -2,8 +2,7 @@
 {% load static %}
 {% block content %}
 <style>
-    <style>
-        .container {
+        .learning-container {
             text-align: center;
             position: relative;
             width: 70%;
@@ -14,12 +13,12 @@
 
         .navigation {
             position: absolute;
-            bottom: 10px;
+            bottom: -100px;
             left: 10px;
             right: 10px;
         }
 
-        .back-button, .next-button {
+        .back-button, .see-answer, .next-button, .next-answered-button {
             display: inline-block;
             padding: 10px 20px;
             background-color: #333;
@@ -28,12 +27,16 @@
             cursor: pointer;
         }
 
-        .next-button {
+        .next-button, .next-answered-button {
             float: right;
         }
 
+        .see-answer {
+            float: center;
+        }
+
         /* Styling for select elements and options */
-        .select-option {
+        .answer-select-option {
             border: 1px solid #ccc;
             padding: 5px;
             margin: 5px 0;
@@ -42,30 +45,236 @@
             align-items: center;
         }
 
-        .checkbox {
-            margin-left: 10px;
+        .checkbox-round {
+            width: 1.3em;
+            height: 1.3em;
+            background-color: white;
+            border-radius: 50%;
+            vertical-align: middle;
+            border: 1px solid #ddd;
+            appearance: none;
+            -webkit-appearance: none;
+            outline: none;
+            cursor: pointer;
+        }
+        
+        .checkbox-round.checked {
+            background-color: gray;
+        }
+        .disabled-button {
+            /* Aesthetic styles for the disabled button */
+            background-color: #ccc; /* Change the background color to a grayish tone */
+            color: #666; /* Change the text color to a darker gray */
+            cursor: not-allowed; /* Change the cursor to indicate it's not clickable */
+            opacity: 0.6; /* Reduce opacity to indicate it's disabled */
+            pointer-events: none; /* Disable pointer events to prevent clicks */
+          
+            /* Functional style to disable the button */
+            /* Note: This alone won't make the button look disabled */
+            /* You still need to add the "disabled" attribute to fully disable it */
+          }
+        
+        .correct-answer{
+            border: 2px solid green;
+        }
+        .wrong-answer{
+            border: 2px solid red;
+        }
+
+        .hidden {
+            display:none;
         }
     </style>
-</style>
-    <div class="container">
-        <!-- Your content goes here -->
-        <div class="select-option">
-            <label for="option1">Option 1</label>
-            <input type="checkbox" id="option1" class="checkbox">
-        </div>
-        <div class="select-option">
-            <label for="option2">Option 2</label>
-            <input type="checkbox" id="option2" class="checkbox">
-        </div>
-        <div class="select-option">
-            <label for="option3">Option 3</label>
-            <input type="checkbox" id="option3" class="checkbox">
-        </div>
+{% comment %} <h4>{{progress_obj.last_unanswered_question.pages}}</h4>
+<h4>{{progress_obj.last_unanswered_question.multiple}}</h4>
+<h4>{{progress_obj.last_unanswered_question.answers}}</h4>
+<h4>{{request.user.total_points}}</h4>
+{% endcomment %}
 
-        
+<div class="learning-container">
+    <!-- Your content goes here -->
+    <h4>{{progress_obj}}</h4>
+    <h4>Q:{{progress_obj.category.name}}</h4>
+    <h4>{{progress_obj.is_first}}</h4>
+    <h4>{{progress_obj.completion_percentage}}</h4>
+    <h4>{{progress_obj.last_unanswered_question.correct_answers}}</h4>
+    <h4>{{progress_obj.statistics}}</h4>
+    {% for answer in progress_obj.last_unanswered_question.answers %}
+    <div class="answer-select-option">
+        <label for="{{answer.id}}">{{answer.content}}</label>
+        <input type="checkbox"
+            class=" {% if progress_obj.last_unanswered_question.multiple != True %}
+                    checkbox-round
+                {% endif %} " id="{{answer.id}}">
+    </div>
+    {% endfor %}
+    <div class="points-message">
     </div>
     <div class="navigation">
         <button class="back-button">Back</button>
-        <button class="next-button">Next</button>
+        <button class="see-answer disabled-button">See answer</button>
+        <button class="next-button disabled-button">Next</button>
     </div>
+</div>
+
+<script>
+        $(document).ready(function() {
+            localStorage.clear();
+            // Helper function to disable all checkboxes
+            function disableCheckboxes() {
+                $("input").prop("disabled", true);
+            }
+
+            function nextAnsweredButtonFunction(){
+                    if (localStorage.getItem('IndexesToDeduct')) {
+                        var IndexesToDeduct = localStorage.getItem('IndexesToDeduct');
+                            IndexesToDeduct = parseInt(IndexesToDeduct) - 1
+                        localStorage.setItem('IndexesToDeduct', IndexesToDeduct);
+                    } 
+                    var dataToSend = {
+                        indexes_to_deduct: IndexesToDeduct,
+                    };
+                    $.get("{% url 'navigate' direction='previous' %}", dataToSend, function(response) {
+                        $('.learning-container').html(response.html_content);
+                        if (response.is_first == true){
+                        } else if (response.is_last == true){
+                            localStorage.clear();
+                            if (!response.is_all_completed){
+                                $('input:checkbox').click(handleCheckboxClick);
+                                $('.next-button').click(nextButtonClick)
+                                $('.see-answer').click(seeAnswerClick)
+                                $('.back-button').click(previousButtonClick)
+                            } else{
+                                $('.next-answered-button').click(nextButtonClick)
+                                disableCheckboxes()
+                            }
+                        } else {
+                            disableCheckboxes()
+                            $('.next-button').click(nextButtonClick)
+                            $('.next-answered-button').click(nextAnsweredButtonFunction)
+                            $('.back-button').click(previousButtonClick)
+                        }
+                    })
+                    disableCheckboxes()
+            }
+
+            function previousButtonClick() {
+                if (localStorage.getItem('IndexesToDeduct')) {
+                    var IndexesToDeduct = localStorage.getItem('IndexesToDeduct');
+                        IndexesToDeduct = parseInt(IndexesToDeduct) + 1
+                    localStorage.setItem('IndexesToDeduct', IndexesToDeduct);
+                } else {
+                    IndexesToDeduct = 1
+                    localStorage.setItem('IndexesToDeduct', IndexesToDeduct);
+                }
+                var dataToSend = {
+                    indexes_to_deduct: IndexesToDeduct,
+                };
+                $.get("{% url 'navigate' direction='previous' %}", dataToSend, function(response) {
+                    $('.learning-container').html(response.html_content);
+                    if (response.is_first == true){
+                        $('.back-button').addClass('disabled-button')
+                    } else{
+                        $('.back-button').click(previousButtonClick)
+                    }
+                    $('.next-answered-button').click(nextAnsweredButtonFunction)
+                    disableCheckboxes()
+                })
+            }
+
+            function nextButtonClick() {
+                $.get("{% url 'learning-session' flag=1 %}", function(response) {
+                    $('.learning-container').html(response);
+                    $('input:checkbox').click(handleCheckboxClick);
+                    $('.see-answer').click(seeAnswerClick)
+                    $('.next-button').click(nextButtonClick)
+                    $('.back-button').click(previousButtonClick)
+                    if (total_points){
+                        $('#total-points-div').html(`La aceasta sesiune ai facut ${total_points} puncte` )
+                    }
+                });
+            }
+            function seeAnswerClick(){
+                $('.answer-select-option').each(function(index, element) {
+                    var id = $(element).find('input').attr('id');
+                    if (correctAnswersIds.includes(id)) {
+                        $(element).addClass('correct-answer');
+                    } else {
+                        $(element).addClass('wrong-answer');
+                    }
+                });
+    
+                $(this).addClass('disabled-button');
+                disableCheckboxes();
+                $('.next-button').removeClass('disabled-button');
+    
+                var userAnswers = processUserAnswers();
+    
+                var postData = {
+                    answers: userAnswers,
+                    csrfmiddlewaretoken: '{{csrf_token}}'
+                };
+    
+                $.post("{% url 'learning-session' %}", postData, function(response) {
+                    correctAnswersIds = response.new_answers
+                    points = response.points
+                    total_points = response.total_points
+                    $('.points-message').removeClass('hidden')
+                    $('.points-message').html(`La aceasta intrebare ai facut ${points} puncte` );
+                }).fail(function(error) {
+                    console.error('Error:', error);
+                });
+
+            }
+            function handleCheckboxClick() {
+                var $checkbox = $(this);
+            
+                if ($checkbox.hasClass('checkbox-round')) {
+                    $checkbox.toggleClass('checked');
+                    $('.checkbox-round').not($checkbox).removeClass('checked');
+                } else {
+                    $checkbox.toggleClass('checked');
+                }
+            
+                if ($('.checked').length > 0) {
+                    $('.see-answer').removeClass('disabled-button');
+                } else {
+                    $('.see-answer').addClass('disabled-button');
+                }
+            }
+            
+    
+            // Helper function to process user answers
+            function processUserAnswers() {
+                var userAnswers = [];
+                $('.answer-select-option:has(input.checked)').each(function(index, element) {
+                    var id = $(element).find('input:checked').attr('id');
+                    userAnswers.push(id);
+                });
+                return userAnswers;
+            }
+    
+            const is_first_question = '{{progress_obj.is_first}}';
+            let total_points = 0
+            let correctAnswersIds = [{% for answer in  progress_obj.last_unanswered_question.correct_answers %}
+                '{{answer}}',
+            {% endfor %}];
+    
+            if (is_first_question === 'True') {
+                $('.back-button').addClass('disabled-button');
+            }
+    
+            // Event handler for the "See Answer" button
+            $('.see-answer').click(seeAnswerClick)
+    
+            // Event handler for checkboxes
+            $('input:checkbox').click(handleCheckboxClick);
+    
+            // Event handler for the "Next" button
+            $('.next-button').click(nextButtonClick)
+            $('.back-button').click(previousButtonClick)
+    
+        });
+    </script>
+
 {% endblock %}

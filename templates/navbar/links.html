@@ -1,6 +1,22 @@
+{% load static %}
 <div class="navbar__links">
-    <a href="#" class="navbar__link navbar__link--active">Acasă</a>
-    <a href="{% url 'chapter-select' %}" class="navbar__link">Invață</a>
-    <a href="#" class="navbar__link">Teste</a>
-    <a href="#" class="navbar__link">Leaderboard</a>
+    {% include 'navbar/logo.html' %}
+    <a href="{% url 'dashboard' %}" class="navbar__link navbar__link--active">
+        <i class="fa-solid fa-house"></i>
+        <span>Acasă</span>
+    </a>
+    <a href="{% url 'chapter-select' %}" class="navbar__link">
+        <i class="fa-solid fa-book"></i>
+        <span>Invață</span>
+    </a>
+    <a href="#" class="navbar__link">
+        <i class="fa-solid fa-vial"></i>
+        <span>Teste</span>
+    </a>
+    <a href="#" class="navbar__link">
+        <i class="fa-solid fa-trophy"></i>
+        <span>Leaderboard</span>
+    </a>
 </div>
+
+<script src="{% static 'static/js/navigation.js' %}"></script>

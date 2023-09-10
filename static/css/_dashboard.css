@@ -2,18 +2,6 @@
 1. Dashboard Stats
 ==================== */
 
-.dashboard {
-    max-width       : 1200px;
-    position        : relative;
-    margin          : 2rem auto;
-    border          : 3px solid var(--black);
-    border-radius   : 1rem;
-    padding         : 1.5rem;
-    background-color: var(--white);
-    display         : flex;
-    flex-direction  : column;
-    gap             : 2rem;
-}
 
 .stats-heading {
     display       : flex;
@@ -242,9 +230,9 @@
 .todo__list {
     display       : flex;
     flex-direction: column;
-    transition: .3s ease-in-out;
-    overflow: auto;
-    max-height: 310px;
+    transition    : .3s ease-in-out;
+    overflow      : auto;
+    max-height    : 310px;
 
 }
 
@@ -255,8 +243,8 @@
     justify-content: space-between;
     align-items    : center;
     padding        : .75rem 1rem;
-    transition: .3s ease-in-out;
-    border-bottom: 1px solid var(--gray-200);
+    transition     : .3s ease-in-out;
+    border-bottom  : 1px solid var(--gray-200);
 }
 
 .todo__card:hover {
@@ -391,5 +379,3 @@ iframe {
     border-radius: 12px;
     outline      : 0;
 }
-
-
