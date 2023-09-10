@@ -1,7 +1,13 @@
+html,
+body {
+    background-color: #F0F0F0;
+}
+
 .error-message {
     color    : firebrick;
     font-size: 1rem;
 }
+
 
 #main[data-logged="false"] {
     background-color: white;
@@ -14,15 +20,22 @@
     /* Light gray color */
     width           : 100%;
     direction       : ltr;
-    padding-bottom  : 2rem
+    padding-bottom  : 2rem;
+    display         : flex;
+    flex-direction  : row;
+    justify-content : center;
+    align-items     : flex-start
 }
 
-.desktop-layout {
-    width       : 100%;
-    padding-left: 300px;
-    padding-top : 2rem;
+.desktop__layout {
+    width          : 100%;
+    display        : flex;
+    padding-left   : 300px;
+    padding-top    : 2rem;
+    align-items    : center;
+    justify-content: space-between;
+    flex-direction : column;
 }
-
 
 .pointer {
     cursor: pointer;
@@ -55,7 +68,7 @@
 }
 
 
-.rezi-container {
+.rezi__container {
     max-width       : 1200px;
     position        : relative;
     margin          : 0rem auto;
@@ -66,15 +79,14 @@
     display         : flex;
     flex-direction  : column;
     gap             : 2rem;
-    min-height      : calc(100vh - 5rem);
 }
 
 @media screen and (max-width: 1540px) {
-    .rezi-container {
+    .rezi__container {
         max-width: 990px;
     }
 
-    .desktop-layout {
+    .desktop__layout {
         padding-left: 260px;
     }
 
@@ -84,11 +96,11 @@
 }
 
 @media screen and (max-width: 1320px) {
-    .rezi-container {
+    .rezi__container {
         max-width: 900px;
     }
 
-    .desktop-layout {
+    .desktop__layout {
         padding-left: 240px;
     }
 
@@ -102,11 +114,11 @@
 }
 
 @media screen and (max-width: 1200px) {
-    .rezi-container {
+    .rezi__container {
         max-width: 800px;
     }
 
-    .desktop-layout {
+    .desktop__layout {
         padding-left: 220px;
     }
 
@@ -116,11 +128,11 @@
 }
 
 @media screen and (max-width: 1100px) {
-    .rezi-container {
+    .rezi__container {
         max-width: 700px;
     }
 
-    .desktop-layout {
+    .desktop__layout {
         padding-left: 0px;
     }
 }

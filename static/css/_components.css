@@ -256,6 +256,7 @@
     position        : fixed;
     background-color: var(--white);
     left            : 0;
+    top             : 0;
     z-index         : 99;
     border-right    : 1px solid var(--gray-200);
     height          : 100vh;
