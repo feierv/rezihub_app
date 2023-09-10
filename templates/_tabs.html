@@ -1,0 +1,9 @@
+<div class="tabs__wrapper">
+    <div id="learning-general-cateogries-navbar" class="tabs">
+        {% for category in general_categories %}
+        <div class="tabs__item {% if category.name == 'Kumar' %} tabs__item--selected {% endif %}">
+            <div data-item-id="{{ category.id }}" class="tabs__item-category">{{ category.name }}</div>
+        </div>
+        {% endfor %}
+    </div>
+</div>

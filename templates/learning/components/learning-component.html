@@ -1,0 +1,22 @@
+    <!-- Your content goes here -->
+    <h4>{{progress_obj}}</h4>
+        <h4>Q:{{progress_obj.category.name}}</h4>
+        <h4>{{progress_obj.is_first}}</h4>
+        <h4>{{progress_obj.completion_percentage}}</h4>
+        <h4>{{progress_obj.last_unanswered_question.correct_answers}}</h4>
+        <h4>{{progress_obj.statistics}}</h4>
+    {% for answer in progress_obj.last_unanswered_question.answers  %}
+    <div class="answer-select-option">
+        <label for="{{answer.id}}">{{answer.content}}</label>
+        <input type="checkbox" class=" {% if progress_obj.last_unanswered_question.multiple != True %}
+        checkbox-round
+        {% endif %} " id="{{answer.id}}">
+    </div>
+{% endfor %}
+<div class="points-message">
+</div>
+<div class="navigation">
+    <button class="back-button">Back</button>
+    <button class="see-answer disabled-button">See answer</button>
+    <button class="next-button disabled-button">Next</button>
+</div>

@@ -1,0 +1,11 @@
+{% load static %}
+<div class="subcategory__card" data-category-id="{{category.id}}">
+    <div class="subcategory__card--image">
+        <img src="{%static 'assets/images/paraclinice.png'%}" alt="image-{{category.id}}" width="auto" height="auto">
+        <div class="subcategory__card--process"></div>
+    </div>
+    <div class="subcategory__card--data">
+        <div class="subcategory__card--title"> {{category.name}} </div>
+        <div class="subcategory__card--text">Boala venoasă tromboembolică implică formarea cheagurilor de sânge în venele profunde, cu potențial de embolism pulmonar.</div>
+    </div>
+</div>
