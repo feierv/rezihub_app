@@ -4,8 +4,16 @@
 <div class="learning">
     <div class="rezi-container">
         <!-- <h4>{{progress_obj}}</h4> -->
+        <div class="learning__top">
+            <div class="back--button">
+                <i class="fa-solid fa-arrow-left"></i>
+            </div>
+            <div class="progress__wrapper">
+                <div class="progress__bar"></div>
+            </div>
+        </div>
         <h4>Q:{{progress_obj.category.name}}</h4>
-        <h4>{{progress_obj.completion_percentage}}</h4>
+        <!-- <h4>{{progress_obj.completion_percentage}}</h4> -->
         <!-- <h4>{{progress_obj.last_unanswered_question.correct_answers}}</h4> -->
         <h4>{{progress_obj.statistics}}</h4>
         <div class="options__list">
@@ -32,6 +40,18 @@ $(document).ready(function() {
     function disableCheckboxes() {
         $("input").prop("disabled--option", true);
     }
+
+    function handleProgressBar() {
+        let progress = "{{progress_obj.completion_percentage}}"
+        progress = progress.replace("%", "");
+        progress = Number(progress);
+        
+        $('.progress__wrapper .progress__bar').animate({
+            width: progress + '%'
+        }, 500);
+    }
+
+    handleProgressBar()
 
     function nextAnsweredButtonFunction(){
             if (localStorage.getItem('IndexesToDeduct')) {

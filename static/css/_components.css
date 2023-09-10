@@ -203,6 +203,25 @@
     width          : 144px;
 }
 
+.back--button {
+    display         : flex;
+    justify-content : center;
+    align-items     : center;
+    border-radius   : .5rem;
+    outline         : none;
+    background-color: transparent;
+    border          : none;
+    padding         : 1rem;
+    width           : 2rem;
+    height          : 2rem;
+    transition      : all .2s ease;
+}
+
+.back--button:hover {
+    background-color: var(--gray-100);
+    cursor          : pointer;
+}
+
 #close-todo-modal,
 #close-todo-modal-update,
 #close-learning-modal {
