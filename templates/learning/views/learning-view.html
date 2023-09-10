@@ -16,173 +16,171 @@
             </div>
             {% endfor %}
         </div>
-        <div class="points-message"></div>
+        <div class="points__message hidden"></div>
         <div class="quiz__navigation">
-            <button class="button button--outline"><i class="fa-solid fa-arrow-left"></i> Back</button>
-            <button class="button button--secondary">See answer <i class="fa-solid fa-eye"></i></button>
-            <button class="button button--primary">Next <i class="fa-solid fa-arrow-right"></i></button>
+            <button id="back" class="button button--outline"><i class="fa-solid fa-arrow-left"></i> Back</button>
+            <button id="show" class="button button--secondary">See answer <i class="fa-solid fa-eye"></i></button>
+            <button id="next" class="button button--primary">Next <i class="fa-solid fa-arrow-right"></i></button>
         </div>
     </div>
 </div>
 
 <script>
-        $(document).ready(function() {
-            localStorage.clear();
-            // Helper function to disable all checkboxes
-            function disableCheckboxes() {
-                $("input").prop("disabled", true);
-            }
+$(document).ready(function() {
+    localStorage.clear();
+    // Helper function to disable all checkboxes
+    function disableCheckboxes() {
+        $("input").prop("disabled--option", true);
+    }
 
-            function nextAnsweredButtonFunction(){
-                    if (localStorage.getItem('IndexesToDeduct')) {
-                        var IndexesToDeduct = localStorage.getItem('IndexesToDeduct');
-                            IndexesToDeduct = parseInt(IndexesToDeduct) - 1
-                        localStorage.setItem('IndexesToDeduct', IndexesToDeduct);
-                    } 
-                    var dataToSend = {
-                        indexes_to_deduct: IndexesToDeduct,
-                    };
-                    $.get("{% url 'navigate' direction='previous' %}", dataToSend, function(response) {
-                        $('.learning-container').html(response.html_content);
-                        if (response.is_first == true){
-                        } else if (response.is_last == true){
-                            localStorage.clear();
-                            if (!response.is_all_completed){
-                                $('input:checkbox').click(handleCheckboxClick);
-                                $('.next-button').click(nextButtonClick)
-                                $('.see-answer').click(seeAnswerClick)
-                                $('.back-button').click(previousButtonClick)
-                            } else{
-                                $('.next-answered-button').click(nextButtonClick)
-                                disableCheckboxes()
-                            }
-                        } else {
-                            disableCheckboxes()
-                            $('.next-button').click(nextButtonClick)
-                            $('.next-answered-button').click(nextAnsweredButtonFunction)
-                            $('.back-button').click(previousButtonClick)
-                        }
-                    })
-                    disableCheckboxes()
-            }
-
-            function previousButtonClick() {
-                if (localStorage.getItem('IndexesToDeduct')) {
-                    var IndexesToDeduct = localStorage.getItem('IndexesToDeduct');
-                        IndexesToDeduct = parseInt(IndexesToDeduct) + 1
-                    localStorage.setItem('IndexesToDeduct', IndexesToDeduct);
-                } else {
-                    IndexesToDeduct = 1
-                    localStorage.setItem('IndexesToDeduct', IndexesToDeduct);
-                }
-                var dataToSend = {
-                    indexes_to_deduct: IndexesToDeduct,
-                };
-                $.get("{% url 'navigate' direction='previous' %}", dataToSend, function(response) {
-                    $('.learning-container').html(response.html_content);
-                    if (response.is_first == true){
-                        $('.back-button').addClass('disabled-button')
+    function nextAnsweredButtonFunction(){
+            if (localStorage.getItem('IndexesToDeduct')) {
+                var IndexesToDeduct = localStorage.getItem('IndexesToDeduct');
+                    IndexesToDeduct = parseInt(IndexesToDeduct) - 1
+                localStorage.setItem('IndexesToDeduct', IndexesToDeduct);
+            } 
+            var dataToSend = {
+                indexes_to_deduct: IndexesToDeduct,
+            };
+            $.get("{% url 'navigate' direction='previous' %}", dataToSend, function(response) {
+                $('.learning-container').html(response.html_content);
+                if (response.is_first == true){
+                } else if (response.is_last == true){
+                    localStorage.clear();
+                    if (!response.is_all_completed){
+                        $('input:checkbox').click(handleCheckboxClick);
+                        $('#next').click(nextButtonClick)
+                        $('#show').click(seeAnswerClick)
+                        $('#back').click(previousButtonClick)
                     } else{
-                        $('.back-button').click(previousButtonClick)
+                        $('.next-answered-button').click(nextButtonClick)
+                        disableCheckboxes()
                     }
-                    $('.next-answered-button').click(nextAnsweredButtonFunction)
+                } else {
                     disableCheckboxes()
-                })
-            }
-
-            function nextButtonClick() {
-                $.get("{% url 'learning-session' flag=1 %}", function(response) {
-                    $('.learning-container').html(response);
-                    $('input:checkbox').click(handleCheckboxClick);
-                    $('.see-answer').click(seeAnswerClick)
-                    $('.next-button').click(nextButtonClick)
-                    $('.back-button').click(previousButtonClick)
-                    if (total_points){
-                        $('#total-points-div').html(`La aceasta sesiune ai facut ${total_points} puncte` )
-                    }
-                });
-            }
-            function seeAnswerClick(){
-                $('.answer-select-option').each(function(index, element) {
-                    var id = $(element).find('input').attr('id');
-                    if (correctAnswersIds.includes(id)) {
-                        $(element).addClass('correct-answer');
-                    } else {
-                        $(element).addClass('wrong-answer');
-                    }
-                });
-    
-                $(this).addClass('disabled-button');
-                disableCheckboxes();
-                $('.next-button').removeClass('disabled-button');
-    
-                var userAnswers = processUserAnswers();
-    
-                var postData = {
-                    answers: userAnswers,
-                    csrfmiddlewaretoken: '{{csrf_token}}'
-                };
-    
-                $.post("{% url 'learning-session' %}", postData, function(response) {
-                    correctAnswersIds = response.new_answers
-                    points = response.points
-                    total_points = response.total_points
-                    $('.points-message').removeClass('hidden')
-                    $('.points-message').html(`La aceasta intrebare ai facut ${points} puncte` );
-                }).fail(function(error) {
-                    console.error('Error:', error);
-                });
-
-            }
-            function handleCheckboxClick() {
-                var $checkbox = $(this);
-            
-                if ($checkbox.hasClass('checkbox-round')) {
-                    $checkbox.toggleClass('checked');
-                    $('.checkbox-round').not($checkbox).removeClass('checked');
-                } else {
-                    $checkbox.toggleClass('checked');
+                    $('#next').click(nextButtonClick)
+                    $('.next-answered-button').click(nextAnsweredButtonFunction)
+                    $('#back').click(previousButtonClick)
                 }
-            
-                if ($('.checked').length > 0) {
-                    $('.see-answer').removeClass('disabled-button');
-                } else {
-                    $('.see-answer').addClass('disabled-button');
-                }
+            })
+            disableCheckboxes()
+    }
+
+    function previousButtonClick() {
+        if (localStorage.getItem('IndexesToDeduct')) {
+            var IndexesToDeduct = localStorage.getItem('IndexesToDeduct');
+                IndexesToDeduct = parseInt(IndexesToDeduct) + 1
+            localStorage.setItem('IndexesToDeduct', IndexesToDeduct);
+        } else {
+            IndexesToDeduct = 1
+            localStorage.setItem('IndexesToDeduct', IndexesToDeduct);
+        }
+        var dataToSend = {
+            indexes_to_deduct: IndexesToDeduct,
+        };
+        $.get("{% url 'navigate' direction='previous' %}", dataToSend, function(response) {
+            $('.learning-container').html(response.html_content);
+            if (response.is_first == true){
+                $('#back').addClass('disabled--option')
+            } else{
+                $('#back').click(previousButtonClick)
             }
-            
-    
-            // Helper function to process user answers
-            function processUserAnswers() {
-                var userAnswers = [];
-                $('.answer-select-option:has(input.checked)').each(function(index, element) {
-                    var id = $(element).find('input:checked').attr('id');
-                    userAnswers.push(id);
-                });
-                return userAnswers;
-            }
-    
-            const is_first_question = '{{progress_obj.is_first}}';
-            let total_points = 0
-            let correctAnswersIds = [{% for answer in  progress_obj.last_unanswered_question.correct_answers %}
-                '{{answer}}',
-            {% endfor %}];
-    
-            if (is_first_question === 'True') {
-                $('.back-button').addClass('disabled-button');
-            }
-    
-            // Event handler for the "See Answer" button
-            $('.see-answer').click(seeAnswerClick)
-    
-            // Event handler for checkboxes
+            $('.next-answered-button').click(nextAnsweredButtonFunction)
+            disableCheckboxes()
+        })
+    }
+
+    function nextButtonClick() {
+        $.get("{% url 'learning-session' flag=1 %}", function(response) {
+            $('.learning-container').html(response);
             $('input:checkbox').click(handleCheckboxClick);
-    
-            // Event handler for the "Next" button
-            $('.next-button').click(nextButtonClick)
-            $('.back-button').click(previousButtonClick)
-    
+            $('#show').click(seeAnswerClick)
+            $('#next').click(nextButtonClick)
+            $('#back').click(previousButtonClick)
+            if (total_points){
+                $('#total-points-div').html(`La aceasta sesiune ai facut ${total_points} puncte` )
+            }
         });
+    }
+    function seeAnswerClick(){
+        $('.options__list--option').each(function(index, element) {
+            const id = $(element).find('input').attr('id');
+            if (correctAnswersIds.includes(id)) {
+                $(element).addClass('correct-answer');
+            } else {
+                $(element).addClass('wrong-answer');
+            }
+        });
+
+        $(this).addClass('disabled--option');
+        disableCheckboxes();
+        $('#next').removeClass('disabled--option');
+
+        let userAnswers = processUserAnswers();
+
+        let postData = {
+            answers: userAnswers,
+            csrfmiddlewaretoken: '{{csrf_token}}'
+        };
+
+        $.post("{% url 'learning-session' %}", postData, function(response) {
+            correctAnswersIds = response.new_answers
+            points = response.points
+            total_points = response.total_points
+            $('.points__message').removeClass('hidden')
+            $('.points__message').html(`La aceasta intrebare ai facut ${points} puncte.` );
+        }).fail(function(error) {
+            console.error('Error:', error);
+        });
+
+    }
+    function handleCheckboxClick() {
+        let $checkbox = $(this);
+    
+        if ($checkbox.hasClass('checkbox-round')) {
+            $checkbox.toggleClass('question__checked ');
+            $('.checkbox-round').not($checkbox).removeClass('question__checked');
+        } else {
+            $checkbox.toggleClass('question__checked');
+        }
+    
+        if ($('.question__checked ').length > 0) {
+            $('#show').removeClass('disabled--option');
+        } else {
+            $('#show').addClass('disabled--option');
+        }
+    }
+    
+
+    // Helper function to process user answers
+    function processUserAnswers() {
+        let userAnswers = [];
+        $('.options__list--option:has(input.question__checked )').each(function(index, element) {
+            var id = $(element).find('input:checked').attr('id');
+            userAnswers.push(id);
+        });
+        return userAnswers;
+    }
+
+    const is_first_question = '{{progress_obj.is_first}}';
+    let total_points = 0
+    let correctAnswersIds = [{% for answer in progress_obj.last_unanswered_question.correct_answers %} '{{answer}}', {% endfor %}];
+
+    if (is_first_question === 'True') {
+        $('#back').addClass('disabled--option');
+    }
+
+    // Event handler for the "See Answer" button
+    $('#show').click(seeAnswerClick)
+
+    // Event handler for checkboxes
+    $('input:checkbox').click(handleCheckboxClick);
+
+    // Event handler for the "Next" button
+    $('#next').click(nextButtonClick)
+    $('#back').click(previousButtonClick)
+
+});
 </script>
 
 {% endblock %}
