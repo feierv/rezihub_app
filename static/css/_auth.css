@@ -133,9 +133,7 @@
 
 .auth__right-image img {
     width        : 50vw;
-    /* 45% of viewport width */
     max-width    : 900px;
-    /* optional */
     border-radius: 1rem;
     outline      : var(--gray-950) solid 12px;
 }

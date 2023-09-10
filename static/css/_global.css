@@ -23,6 +23,7 @@
     padding-top : 2rem;
 }
 
+
 .pointer {
     cursor: pointer;
 }
@@ -68,14 +69,73 @@
     min-height      : calc(100vh - 5rem);
 }
 
-.disabled--option {
-    .disabled-option {
-        pointer-events: none;
-        opacity       : 0.6;
-        cursor        : not-allowed;
+@media screen and (max-width: 1540px) {
+    .rezi-container {
+        max-width: 990px;
     }
+
+    .desktop-layout {
+        padding-left: 260px;
+    }
+
+    .navbar__rezi {
+        max-width: 260px
+    }
+}
+
+@media screen and (max-width: 1320px) {
+    .rezi-container {
+        max-width: 900px;
+    }
+
+    .desktop-layout {
+        padding-left: 240px;
+    }
+
+    .navbar__rezi {
+        max-width: 240px
+    }
+
+    .quiz__navigation {
+        padding-left: 240px;
+    }
+}
+
+@media screen and (max-width: 1200px) {
+    .rezi-container {
+        max-width: 800px;
+    }
+
+    .desktop-layout {
+        padding-left: 220px;
+    }
+
+    .navbar__rezi {
+        max-width: 220px
+    }
+}
+
+@media screen and (max-width: 1100px) {
+    .rezi-container {
+        max-width: 700px;
+    }
+
+    .desktop-layout {
+        padding-left: 0px;
+    }
+}
+
+
+.disabled--option {
+    pointer-events: none;
+    opacity       : 0.6;
+    cursor        : not-allowed;
 }
 
 .hidden {
     display: none;
+}
+
+.full-w {
+    width: 100%;
 }

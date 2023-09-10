@@ -107,17 +107,18 @@
 ==================== */
 
 .button {
-    width          : 100%;
-    max-width      : 500px;
-    height         : 56px;
-    border         : 0;
-    border-radius  : .75rem;
-    display        : flex;
-    flex-direction : row;
-    justify-content: center;
-    align-items    : center;
-    gap            : .5rem;
-    font-size      : 1rem;
+    appearance         : button;
+    backface-visibility: hidden;
+    height             : 56px;
+    border             : 0;
+    border-radius      : .75rem;
+    display            : flex;
+    flex-direction     : row;
+    justify-content    : center;
+    align-items        : center;
+    gap                : .5rem;
+    font-size          : 1rem;
+    padding            : 0rem 2rem;
 }
 
 
