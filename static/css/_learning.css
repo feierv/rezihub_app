@@ -152,8 +152,12 @@
     cursor: pointer;
 }
 
-.delete-page i:active {
-    scale: .96;
+.delete-page i:hover {
+    cursor: pointer;
+}
+
+.hidden {
+    display: none;
 }
 
 .no-learning-option-selected {
@@ -353,4 +357,32 @@
     .quiz__navigation {
         width: 100%;
     }
+}
+
+.disabled-button {
+    /* Aesthetic styles for the disabled button */
+    background-color: #ccc; /* Change the background color to a grayish tone */
+    color: #666; /* Change the text color to a darker gray */
+    cursor: not-allowed; /* Change the cursor to indicate it's not clickable */
+    opacity: 0.6; /* Reduce opacity to indicate it's disabled */
+    pointer-events: none; /* Disable pointer events to prevent clicks */
+  }
+
+.correct-answer{
+    border: 5px solid green;
+}
+
+.wrong-answer{
+    border: 5px solid red;
+}
+
+.input-disabled {
+    background-color: #f2f2f2; /* Set the background color */
+    /* color: #999; Set the text color */
+    cursor: not-allowed; /* Change the cursor to indicate it's not clickable */
+    pointer-events: none; /* Disable pointer events to prevent clicks */
+    opacity: 0.6; /* Reduce opacity to indicate it's disabled */
+    pointer-events: none;
+
+    /* Add any other styles you want for disabled inputs */
 }

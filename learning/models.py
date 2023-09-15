@@ -87,6 +87,10 @@ class LearningSessionQuestion(models.Model):
     @property
     def pages(self):
         return self.question.page_nr.values_list('number', flat=True)
+    
+    @property
+    def user_answers_ids(self):
+        return list(self.user_answers.all().values_list('id', flat=True))
 
     @property
     def multiple(self):
@@ -183,8 +187,8 @@ class LearningSession(models.Model):
 
     @property
     def last_unanswered_question(self):
-        unanswered_questions = self.questions.filter(user_answers=None)
-        return unanswered_questions.first()
+        unanswered_question = self.questions.filter(user_answers=None).first()
+        return unanswered_question if unanswered_question else self.questions.last()
 
     @property
     def total_questions(self):
@@ -196,6 +200,11 @@ class LearningSession(models.Model):
             total_points=Sum('points'))['total_points']
         return points or 0
 
+
+    @property
+    def has_all_questions_answered(self):
+        return self.answered_questions == self.total_questions
+
     @property
     def answered_questions(self):
         # wrong and correct
@@ -204,6 +213,10 @@ class LearningSession(models.Model):
 
     @property
     def statistics(self):
+        has_unanswered_question = self.questions.filter(user_answers=None).count() > 0
+
+        if not has_unanswered_question:
+            return f'{self.answered_questions}/{self.total_questions}'
         return f'{self.answered_questions + 1}/{self.total_questions}'
     
     @property

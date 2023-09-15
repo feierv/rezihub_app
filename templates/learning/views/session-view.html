@@ -1,0 +1,246 @@
+{% extends '_base.html' %}
+{% load static %}
+{% block content %}
+<div class="learning">
+    <div class="rezi__container">
+        {% if is_completed %}
+            {% include 'learning/components/completed-question-component.html' %}
+        {% else %}
+            {% include 'learning/components/session-component.html' %}
+        {% endif %}
+    </div>
+</div>
+<script>
+    let sessionID = '{{progress_obj.id}}'
+    let confirmSessionURL = "{% url 'complete-session' session_id=0 %}" 
+    let redirectURL = "{% url 'learning-session' session_id=0 %}" // redirect link frontend
+</script>
+    <script>
+    $(document).ready(function() {
+        
+        $('.back--button').click(function() {
+            window.location.href = '{% url "chapter-select" %}';
+        });
+
+        function previousButtonClick() {
+            let isNowAnswered = localStorage.getItem('isNowAnswered');
+            let isLast = localStorage.getItem('isLast');
+
+            if (localStorage.getItem('IndexesToDeduct')) {
+                var IndexesToDeduct = localStorage.getItem('IndexesToDeduct');
+                        IndexesToDeduct = parseInt(IndexesToDeduct) + 1
+                    localStorage.setItem('IndexesToDeduct', IndexesToDeduct);
+            } else {
+                if (isNowAnswered && !isLast){
+                    IndexesToDeduct = 2
+                } else {
+                    IndexesToDeduct = 1
+                }
+                localStorage.setItem('IndexesToDeduct', IndexesToDeduct);
+            }
+            
+
+            var dataToSend = {
+                indexes_to_deduct: IndexesToDeduct,
+            };
+            $.get("{% url 'navigate' %}", dataToSend, function(response) {
+                $('.rezi__container').html(response.html_content);
+                $('#back').click(previousButtonClick)
+                if (response.is_first == true){
+                    $('#back').addClass('disabled-button')
+                } else{
+                    $('#back').off('click', previousButtonClick);
+                    $('#back').click(previousButtonClick)
+                }
+                $('#next').click(nextAnsweredButtonClick)
+                handleProgressBar(response.percentage)
+                $('.back--button').click(function() {
+                    window.location.href = '{% url "chapter-select" %}';
+                });
+            })
+            }
+
+
+            function handleProgressBar(progress) {
+                progress = progress.replace("%", "");
+                progress = Number(progress);
+                $('.progress__wrapper .progress__bar').animate({
+                    width: progress + '%'
+                }, 500);
+            }
+        
+
+            function nextAnsweredButtonClick(){
+                if (localStorage.getItem('IndexesToDeduct')) {
+                    var IndexesToDeduct = localStorage.getItem('IndexesToDeduct');
+                        IndexesToDeduct = parseInt(IndexesToDeduct) - 1
+                    localStorage.setItem('IndexesToDeduct', IndexesToDeduct);
+                } 
+                var dataToSend = {
+                    indexes_to_deduct: IndexesToDeduct,
+                };
+
+                $.get("{% url 'navigate' %}", dataToSend, function(response) {
+                $('.rezi__container').html(response.html_content);
+                handleProgressBar(response.percentage)
+
+                    if (response.is_actual){
+                        localStorage.removeItem('IndexesToDeduct')
+                        localStorage.removeItem('isNowAnswered')
+                        $('input:checkbox').click(handleCheckboxClick);
+                        $('#show').click(seeAnswerClick)
+                        $('#back').click(previousButtonClick)
+                        if (response.is_last){
+                            $('#next').click(finishSession)
+                        } else {
+                            $('#next').click(nextButtonClick)
+                        }
+
+                    } else {
+                        $('#next').click(nextAnsweredButtonClick)
+                        $('#back').click(previousButtonClick)
+
+                    }
+                    $('.back--button').click(function() {
+                        window.location.href = '{% url "chapter-select" %}';
+                    });
+                })
+            }
+
+
+        function finishSession(){
+            let postData = {
+                csrfmiddlewaretoken: '{{csrf_token}}'
+            };
+            url =  confirmSessionURL.replace('0', sessionID)
+            $.post(url, postData, function(response) {
+                $('.rezi__container').html(response.html_content);
+                if (response.total_points){
+                    $('#points__message').html(`La aceasta sesiune ai facut ${response.total_points} puncte` )
+                }
+                $('.back--button').click(function() {
+                    window.location.href = '{% url "chapter-select" %}';
+                });
+            })
+            localStorage.removeItem('isLast');
+        }
+
+        function nextButtonClick(isNext=false) {
+            url = redirectURL.replace('0', sessionID)
+            var additionalParams = "get_component=True"; // Replace with your additional parameters
+            var urlWithParams = url + '?' + additionalParams;
+            localStorage.removeItem('IndexesToDeduct')
+            localStorage.removeItem('isNowAnswered')
+
+            $.get(urlWithParams, function(response) {
+                console.log(response.html_content)
+                if(response.is_last){
+                    $('.rezi__container').html(response.html_content);
+                    if (response.is_last){
+                        localStorage.setItem('isLast', true)
+                        $('#next').click(finishSession)
+                    $('#back').click(previousButtonClick)
+
+                    }
+                } else {
+                    $('.rezi__container').html(response.html_content);
+                    $('#next').click(nextButtonClick)
+                    $('#back').off('click', previousButtonClick);
+                    $('#back').click(previousButtonClick)
+                }
+                $('input:checkbox').click(handleCheckboxClick);
+                $('#show').click(seeAnswerClick)
+                //$('#back').click(previousButtonClick)
+                handleProgressBar(response.percentage)
+                $('.back--button').click(function() {
+                    window.location.href = '{% url "chapter-select" %}';
+                });
+            });
+        }
+        function handleCheckboxClick() {
+            let $checkbox = $(this);
+        
+            if ($checkbox.hasClass('checkbox-round')) {
+                $checkbox.toggleClass('question__checked ');
+                $('.checkbox-round').not($checkbox).removeClass('question__checked');
+            } else {
+                $checkbox.toggleClass('question__checked');
+            }
+        
+            if ($('.question__checked ').length > 0) {
+                $('#show').removeClass('disabled-button');
+            } else {
+                $('#show').addClass('disabled-button');
+            }
+        }
+        function processUserAnswers() {
+            let userAnswers = [];
+            
+            $('.options__list--answer:has(input.question__checked )').each(function(index, element) {
+                var id = $(element).find('input.question__checked').attr('id');
+                userAnswers.push(id);
+            });
+            return userAnswers;
+        }
+        function disableCheckboxes() {
+            $("input").closest('.options__list--answer').addClass("input-disabled");
+        }
+
+        function seeAnswerClick(){
+            $('.options__list--answer').each(function(index, element) {
+                const id = $(element).find('input').attr('id');
+                if (correctAnswersIds.includes(id)) {
+                    $(element).addClass('correct-answer');
+                } else {
+                    $(element).addClass('wrong-answer');
+                }
+            });
+    
+            $(this).addClass('disabled--option');
+            disableCheckboxes();
+            $('#next').removeClass('disabled-button');
+    
+            let userAnswers = processUserAnswers();
+            
+            localStorage.setItem('isNowAnswered', true);
+
+            let postData = {
+                answers: userAnswers,
+                csrfmiddlewaretoken: '{{csrf_token}}'
+            };
+            sessionUrl = redirectURL.replace('0', sessionID)
+            $.post(sessionUrl, postData, function(response) {
+                correctAnswersIds = response.new_answers
+                points = response.points
+                total_points = response.total_points
+                $('.points__message').removeClass('hidden')
+                $('.points__message').html(`La aceasta intrebare ai facut ${points} puncte.` );
+            }).fail(function(error) {
+                console.error('Error:', error);
+            });
+    
+        }
+
+        const is_first_question = '{{progress_obj.is_first}}';
+        const isCompleted = '{{is_completed}}' == 'True'
+        const isLast = '{{is_last}}' == 'True'
+        if (is_first_question === 'True') {
+            $('#back').addClass('disabled--option');
+        }
+        let total_points = 0
+        let correctAnswersIds = [{% for answer in progress_obj.last_unanswered_question.correct_answers %} '{{answer}}', {% endfor %}];
+        $('input:checkbox').click(handleCheckboxClick);
+        $('#show').click(seeAnswerClick)
+        if (isCompleted || isLast){
+            $('#next').click(finishSession)
+        } else {
+            $('#next').click(nextButtonClick)
+        }
+        $('#back').click(previousButtonClick)
+        let progress = "{{progress_obj.completion_percentage}}"
+        handleProgressBar(progress)
+    })
+</script>
+
+
+{% endblock %}

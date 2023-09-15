@@ -37,11 +37,6 @@ def learning_session_started_decorator(view_func):
     @wraps(view_func)
     def _wrapped_view(request, *args, **kwargs):
         user = request.user
-        print()
-        print(" * * * ")
-        print(user.progress)
-        print(" * * * ")
-        print()
         if user.progress:
             return redirect('learning-session')
         return view_func(request, *args, **kwargs)

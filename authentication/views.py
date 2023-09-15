@@ -56,10 +56,6 @@ class ContinueRegisterView(View):
             context = {
                 'form': form,
             }
-            print()
-            print(user.actual_step)
-            print(type(user.actual_step))
-            print()
             if user.actual_step == '1':
                 userdata = getattr(user, 'userdata')
                 context['instance'] = userdata

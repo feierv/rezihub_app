@@ -16,12 +16,43 @@ $(document).ready(function () {
         });
     }
 
+    function checkExistingSessionHandler() {
+        return new Promise(function(resolve, reject) {
+            $.get(lastSessionURL, function(response) {
+                if (response.exists == false) {
+                    resolve(false);
+                } else {
+                    var session_id = response.exists.session_id;
+                    resolve(session_id);
+                }
+            });
+        });
+    }
+
     function attachSubCategoryClickHandlers() {
         $('.subcategory__card').on('click', function () {
             var categoryId = $(this).data('category-id');
             const modal = $('#learning-type-modal')
+            let sessionAlreadyExists;
+
+            checkExistingSessionHandler().then(function(result) {
+                if (result != false){
+                    $('#return-to-progress').removeClass('hidden')
+                    sessionAlreadyExists = result;
+                } else {
+                    $('#return-to-progress').addClass('hidden')
+                }
+            })
+            
+            .catch(function(error) {
+                console.error('An error occurred:', error);
+            });
+           
             const closeModalButton = modal.find('#close-learning-modal')
             modal.modal('show');
+
+
+
             closeModalButton.click(function () {
                 $('#learning-type-modal').modal('hide')
                 $('.learning-option').removeClass('selected-learning-option');
@@ -42,14 +73,15 @@ $(document).ready(function () {
                         };
                         $.post(backendURL, postData, function (response) {
                             if (response.status === 200)
-                                window.location.href = redirectLink
+                            urlToRedirect = redirectURL.replace('0', response.session_id)
+                            window.location.href = urlToRedirect
                         })
                             .fail(function (error) {
                                 console.error('Error:', error);
                             });
                     } else {
-                        $('.no-learning-option').html('Nu ati selectat nici o pagina!')
-                        $('.no-learning-option').removeClass('hidden')
+                        $('.no-learning-option-selected').html('Nu ati selectat nici o pagina!')
+                        $('.no-learning-option-selected').removeClass('hidden')
                     }
                 } else if (selectedOption == 'random-order' || selectedOption == 'ordered-order') {
                     var postData = {
@@ -58,12 +90,19 @@ $(document).ready(function () {
                         csrfmiddlewaretoken: token // Include the CSRF token in your data
                     };
                     $.post(backendURL, postData, function (response) {
-                        if (response.status === 200)
-                            window.location.href = redirectLink
+                        console.log(response)
+                        if (response.status === 200){
+                            urlToRedirect = redirectURL.replace('0', response.session_id)
+                            window.location.href = urlToRedirect
+                        }
                     })
                         .fail(function (error) {
                             console.error('Error:', error);
                         });
+
+                } else if (selectedOption == 'return-to-progress'){
+                    urlToRedirect = redirectURL.replace('0', sessionAlreadyExists)
+                    window.location.href = urlToRedirect
 
                 } else {
                     $('.no-learning-option-selected').html('Nu ati selectat nici o optiune!')
@@ -98,6 +137,7 @@ $(document).ready(function () {
                 searchResultsContainer.empty();
 
                 if (filteredResults.length > 0 && searchText.length > 0) {
+                    searchResultsContainer.removeClass('hidden')
                     filteredResults.forEach(result => {
                         const resultItem = $("<div class='search-result-item'>" + result + "</div>");
                         resultItem.on("click", function () {

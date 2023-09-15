@@ -14,7 +14,8 @@
 const token = "{{csrf_token}}"
 let tabIndex = "{% url 'chapter-select-specific' category_id=0 %}";
 let backendURL = "{% url 'start-learning-session' %}"; //backend link
-let redirectURL = "{% url 'learning-session' %}" // redirect link frontend
+let redirectURL = "{% url 'learning-session' session_id=0 %}" // redirect link frontend
+let lastSessionURL = "{% url 'last-session' %}" // redirect link frontend
 </script>
 <script src="{% static 'js/learning.js' %}"></script>
 {% endblock %}

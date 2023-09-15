@@ -1,0 +1,37 @@
+    <!-- <h4>{{progress_obj}}</h4> -->
+    <div class="learning__top">
+        <div class="back--button">
+            <i class="fa-solid fa-arrow-left"></i>
+        </div>
+        <div class="progress__wrapper">
+            <div class="progress__bar"></div>
+        </div>
+    </div>
+   
+    <div class="quiz__heading">
+        <div class="chip__group">
+            <div class="chip">{{progress_obj.statistics}}</div>
+        </div>
+        <div class="quiz__title">Q: {{progress_obj.category.name}} </div>
+    </div>
+
+    <div class="options__list">
+        {% for answer in question.answers %}
+        <div class="options__list--answer input-disabled  {% if answer.id in question.correct_answers  %}
+            correct-answer
+        {% else %}
+            wrong-answer
+        {% endif %}  "> 
+            <label for="{{answer.id}}">{{answer.content}}</label>
+            <input type="{% if progress_obj.last_unanswered_question.multiple != True %}radio{% else %}checkbox{% endif %}" class="{% if progress_obj.last_unanswered_question.multiple != True %}options__list--radio{% else %}options__list--checkbox{% endif %} {% if answer.id in question.user_answers_ids %} question__checked
+            {% endif %} " id="{{answer.id}}" {% if answer.id in question.user_answers_ids %} checked {% endif %} >
+        </div>
+        {% endfor %}
+    </div>
+    <div class="points__message">La aceasta sesiune ai facut {{question.points}} puncte </div>
+    <div class="quiz__navigation">
+        <button id="back" class="button button--outline"><i class="fa-solid fa-arrow-left"></i> Back</button>
+        <button id="show" class="button disabled-button button--secondary">See answer <i class="fa-solid fa-eye"></i></button>
+        <button id="next" class="button button--primary">Next <i class="fa-solid fa-arrow-right"></i></button>
+    </div>
+</div>
