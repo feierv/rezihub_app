@@ -91,13 +91,6 @@ class NavigateBetweenCompletedQuestionsView(View):
         user = request.user
         progress = user.progress
         indexes_to_deduct = int(request.GET.get('indexes_to_deduct'))
-        print()
-        print()
-        print('* * * * * * * ')
-        print(indexes_to_deduct)
-        print('* * * * * * * ')
-        print()
-        print()
         question = progress.get_previous_question(indexes_to_deduct)
         is_completed = False
         if progress.has_all_questions_answered:
